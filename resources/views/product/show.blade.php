@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            @include('admin.sidebar')
+            
 
             <div class="col-md-9">
                 <div class="card">
@@ -26,16 +26,16 @@
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <th>ID</th><td>{{ $product->id }}</td>
+                                        <th>รหัสสินค้า</th><td>{{ $product->id }}</td>
                                     </tr>
-                                    <tr><th> Title </th><td> {{ $product->title }} </td></tr>
-                                    <tr><th> Content </th><td> {{ $product->content }} </td></tr
-                                    ><tr><th> Price </th><td> {{ $product->price }} </td></tr>
+                                    <tr><th> ชื่อสินค้า </th><td> {{ $product->title }} </td></tr>
+                                    <tr><th> รายละเอียดสินค้า </th><td> {{ $product->content }} </td></tr
+                                    ><tr><th> ราคา </th><td> {{ $product->price }} </td></tr>
                                     @if (Auth::user()->role === "admin" )
-                                    <tr><th> Cost </th><td> {{ $product->cost }} </td></tr>
+                                    <tr><th> ต้นทุน </th><td> {{ $product->cost }} </td></tr>
                                     @endif
-                                    <tr><th> Photo </th><td> <img src="{{ url('storage/'.$product->photo )}}" width="100" /></td> </tr>
-                                    <tr><th> Quantity </th><td> {{ $product->quantity }} </td></tr>
+                                    <tr><th> รูปสินค้า </th><td> <img src="{{ url('storage/'.$product->photo )}}" width="100" /></td> </tr>
+                                    <!-- <tr><th> จำนวน </th><td> {{ $product->quantity }} </td></tr> -->
                                 </tbody>
                             </table>
                         </div>
@@ -44,14 +44,16 @@
 
                              <input class="d-none" name="order_id" type="number" id="order_id" value="" >                                
                              <input class="d-none" name="product_id" type="number" id="product_id" value="{{ $product->id }}" >                                
-                            <input class="d-none" name="user_id" type="number" id="user_id" value="" >                                
+                            <input class="d-none" name="user_id" type="number" id="user_id" value="" >           
+                            <hr>                     
                             <input class="" name="quantity" type="number" id="quantity" value="1" >                                
                              <input class="d-none" name="price" type="number" id="price" value="{{ $product->price }}" >                                
                             <input class="d-none" name="total" type="number" id="total" value="" >
 
                             <button type="submit" class="btn btn-sm btn-warning" >
-                              <i class="fa fa-shopping-cart"></i> เพิ่มสินค้าลงตะกร้า
-    </button> 
+                              <i class="fa fa-shopping-cart"></i> เพิ่มสินค้าลงตะกร้า 
+    </button> &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:gray">มีสินค้า {{ $product->quantity }} ชิ้น</span>
+    
                          </form>
                     </div>
                 </div>

@@ -1,4 +1,5 @@
-<div class="col-md-3">
+
+<div class="col-md-2">
     <div class="card">
         <div class="card-header">
             เมนู

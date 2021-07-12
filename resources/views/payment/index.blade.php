@@ -24,12 +24,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    
                                 @foreach($payment as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->total }}</td>
                                         <td>{{ $item->user->name }}</td>
-                                        <td>{{ $item->id }}</td>
+                                        <td>{{ $item->order_id }}</td>
                                         <td><img src="{{ url('/storage/'.$item->slip )}}" width="100" /></td>
                                         <td>
                                             

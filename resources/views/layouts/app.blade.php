@@ -25,8 +25,8 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'LuckyShop') }}
+                <a class="navbar-brand" href="{{ url('/home') }}">
+                    LuckyShop
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -57,23 +57,36 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                    
+                                    <a class="dropdown-item" href="{{ url('/order') }}">
+                                        <i class="fa fa-box" style="color:#2BDEF2"></i> คำสั่งซื้อของฉัน
                                     </a>
+
+                                    <a class="dropdown-item" href="{{ url('/order-product') }}">
+                                        <i class="fa fa-shopping-cart" style="color:#2BDEF2"></i> ตะกร้าของฉัน
+                                    </a> 
+
+                                    <a class="dropdown-item" href="{{ url('/payment') }}">
+                                        <i style="color:#2BDEF2" class="fa fa-credit-card"></i> แจ้งการชำระเงิน
+                                    </a> 
                                     @if (Auth::user()->role  == "admin" )
                                     <a class="dropdown-item" href="{{ route('admin.users.index') }}">
-                                        User Management
+                                        แก้ไขข้อมูลสมาชิก
                                     </a>
                                     @endif
 
                                     @if (Auth::user()->role  == "guest" )
                                     <a class="dropdown-item" href="{{ url('admin/users/' . Auth::user()->id . '/edit') }}">
-                                        User Management
+                                        แก้ไขข้อมูลส่วนตัว
                                     </a>
                                     @endif
 
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('ออกจากระบบ') }}
+                                    </a>
+                                   
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
@@ -89,5 +102,9 @@
             @yield('content')
         </main>
     </div>
+    <script src="./src/bootstrap-input-spinner.js"></script>
+<script>
+    $("input[type='number']").inputSpinner()
+</script>
 </body>
 </html>

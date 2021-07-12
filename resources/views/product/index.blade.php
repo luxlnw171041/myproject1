@@ -3,12 +3,42 @@
 @section('content')
 
     <div class="container">
-    
-        <div class="row">
-            @include('admin.sidebar')
+    <div class="col-md12">
+        <div class="row d-flex justify-content-center">
+           
+            
+            <div class="col-md-12  d-flex justify-content-end">
+                @if (Auth::user()->role  == "admin" )
+                                <a href="{{ url('/product/create') }}" class="btn btn-success btn-sm" title="Add New Product">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> Add New
+                                </a>
+                @endif
+            </div>
+            @foreach($product as $item)
 
-        
-            <div class="col-md-9">
+            <div class="col-md-2 ">
+            <div class="row">
+                    <br>
+                    <div class="card" style="width: 18rem;">
+                        <a href="{{ url('/product/' . $item->id) }}">
+                            <center><img class="d-flex justify-content-center" style="width: 100%;height: 200px;object-fit: contain;" src="{{ url('storage/'.$item->photo )}}" width="120" /></center>
+                            <div class="card-body">
+                                <h5 class="card-title" style="margin-top:-10px;white-space: nowrap;width: 150px;overflow: hidden;text-overflow: ellipsis;font-size:15px ">{{ $item->title }} </h5>
+                                <!-- <p class="card-text">{{ $item->content }}</p> -->
+                                <p style="color:red;float:right">฿<b>{{ $item->price }}</b></p>
+                                @if (Auth::user()->role === "admin" )
+                                            <hr style="margin-top:45px">
+                                            <a href="{{ url('/product/' . $item->id . '/edit') }}" title="Edit Product"><button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button></a>
+                                            <button style="float:right;" type="submit" class="btn btn-danger btn-sm" title="Delete Product" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="far fa-trash-alt"></i> </button>
+                                @endif  
+                            </div>
+                        </a>
+                    </div>
+                </div> 
+                <br>
+            </div>&nbsp;&nbsp;&nbsp;
+            @endforeach
+            <!-- <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">Product</div>
                     <div class="card-body">
@@ -84,8 +114,36 @@
                     </div>
                    
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     </div>
+    </div>
 @endsection
+<style>
+/* unvisited link */
+a:link {
+  color: black;
+}
+
+/* visited link */
+a:visited {
+  color: black;
+}
+
+/* mouse over link */
+a:hover {
+    color:black;
+    text-decoration:none;
+    cursor:pointer;
+}
+
+/* selected link */
+a:active {
+  color: black;
+}
+a {
+text-decoration: none !important;
+color: black;
+}
+</style>
