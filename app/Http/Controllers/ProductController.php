@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-
+use Illuminate\Support\Facades\DB;
 use App\Product;
+use App\ProductAttribute;
+use App\product_attributes;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -22,17 +24,13 @@ class ProductController extends Controller
 
         if (!empty($keyword)) {
             $product = Product::where('title', 'LIKE', "%$keyword%")
-                ->orWhere('content', 'LIKE', "%$keyword%")
-                ->orWhere('price', 'LIKE', "%$keyword%")
                 ->orWhere('cost', 'LIKE', "%$keyword%")
-                ->orWhere('photo', 'LIKE', "%$keyword%")
-                ->orWhere('quantity', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
             $product = Product::latest()->paginate($perPage);
         }
 
-        return view('product.index', compact('product'));
+        return view('product.index', compact('product' ));
     }
 
     /**
@@ -76,8 +74,26 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::findOrFail($id);
+        $product_attribute = DB::table('product_attributes')->get();
+        
 
-        return view('product.show', compact('product'));
+        $size = ProductAttribute::selectRaw('size')
+        ->where('product_id', $product->id)
+        ->groupBy('size')
+        ->get();
+
+        $color = ProductAttribute::selectRaw('color')
+        ->where('product_id', $product->id)
+        ->groupBy('color')
+        ->get();
+
+        $stock = ProductAttribute::selectRaw('stock')
+        ->where('id', $id)
+        ->groupBy('stock')
+        ->get();
+
+        return view('product.show', compact('product' , 'size' , 'color' ,'stock' ,'product_attribute'));
+        
     }
 
     /**
@@ -132,4 +148,19 @@ class ProductController extends Controller
         return redirect('product')->with('flash_message', 'Product deleted!');
     }
    
+    public function stock(Request $request)
+    {
+        $perPage = 25;
+        
+        if (!empty($keyword)) {
+            $product = Product::where('title', 'LIKE', "%$keyword%")
+                ->orWhere('cost', 'LIKE', "%$keyword%")
+                ->latest()->paginate($perPage);
+        } else {
+            $product = Product::latest()->paginate($perPage);
+        }
+
+        return view('product.stock', compact('product' ));
+    
+    }
 }

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -21,18 +22,54 @@ class UserController extends Controller
         
         switch(Auth::user()->role)
         {
-            case "admin" : 
-                $users = User::latest()->paginate($perPage);
-
-               
-
-                break;
+                case "admin" : 
+                    $users = User::latest()->paginate($perPage);
+    
+                    if (!empty($keyword)) {
+                        $users = User::where('user_id', 'LIKE', "%$keyword%")
+                            ->orWhere('name', 'LIKE', "%$keyword%")
+                            ->orWhere('email', 'LIKE', "%$keyword%")
+                            ->orWhere('role', 'LIKE', "%$keyword%")
+                            ->latest()->paginate($perPage);
+                    } else {
+                        $users = User::latest()->paginate($perPage);
+                    }
+                    break;
             default : 
                 //means guest
                 $users = User::where('id',Auth::id() )->latest()->paginate($perPage);      
         }  
         
         return view('admin.users.index', compact('users'));
+
+        }
+
+    public function profile1(Request $request)
+    {
+        $perPage = 25;
+        $users = User::all();
+        
+        switch(Auth::user()->role)
+        {
+                case "admin" : 
+                    $users = User::latest()->paginate($perPage);
+    
+                    if (!empty($keyword)) {
+                        $users = User::where('user_id', 'LIKE', "%$keyword%")
+                            ->orWhere('name', 'LIKE', "%$keyword%")
+                            ->orWhere('email', 'LIKE', "%$keyword%")
+                            ->orWhere('role', 'LIKE', "%$keyword%")
+                            ->latest()->paginate($perPage);
+                    } else {
+                        $users = User::latest()->paginate($perPage);
+                    }
+                    break;
+            default : 
+                //means guest
+                $users = User::where('id',Auth::id() )->latest()->paginate($perPage);      
+        }  
+        
+        return view('admin_shop.users' , compact('payment'));
 
         }
 
@@ -111,18 +148,7 @@ class UserController extends Controller
         return redirect('admin/users')->with('flash_message', 'User deleted!');
     }
 
-    public function profile(Request $request)
-    {
-       
-        $model = new User();
-        $user = $model->select_search($q);
-
-        $data = [
-            'profile' => $user,
-            'q' => $q
-        ];
-        return view('/admin/users/profile',$data);
-    }
+    // 
 
     public function store(Request $request)
     {

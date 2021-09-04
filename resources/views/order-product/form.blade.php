@@ -15,7 +15,7 @@
 </div>
 <div class="form-group {{ $errors->has('quantity') ? 'has-error' : ''}}">
     <label for="quantity" class="control-label">{{ 'จำนวน' }}</label>
-    <input class="form-control" name="quantity" type="number" id="quantity" value="{{ isset($orderproduct->quantity) ? $orderproduct->quantity : ''}}" >
+    <input class="form-control" name="quantity" type="number" id="quantity" value="{{ isset($orderproduct->product->quantity) ? $orderproduct->product->quantity : ''}}" >
     {!! $errors->first('quantity', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('price') ? 'has-error' : ''}}">

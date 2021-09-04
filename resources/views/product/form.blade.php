@@ -28,6 +28,22 @@
     <input class="form-control" name="quantity" type="number" id="quantity" value="{{ isset($product->quantity) ? $product->quantity : ''}}" >
     {!! $errors->first('quantity', '<p class="help-block">:message</p>') !!}
 </div>
+<!-- <div class="form-group {{ $errors->has('price') ? 'has-error' : ''}}">
+    <label for="price" class="control-label">{{ 'Price' }}</label>
+    <input class="form-control" name="price" type="number" id="price" value="{{ isset($productattribute->price) ? $productattribute->price : ''}}" >
+    {!! $errors->first('price', '<p class="help-block">:message</p>') !!}
+</div>
+<div class="form-group {{ $errors->has('stock') ? 'has-error' : ''}}">
+    <label for="stock" class="control-label">{{ 'Stock' }}</label>
+    <input class="form-control" name="stock" type="number" id="stock" value="{{ isset($productattribute->stock) ? $productattribute->stock : ''}}" >
+    {!! $errors->first('stock', '<p class="help-block">:message</p>') !!}
+</div>
+
+<div class="form-group {{ $errors->has('color') ? 'has-error' : ''}}">
+    <label for="color" class="control-label">{{ 'Color' }}</label>
+    <input class="form-control" name="color" type="text" id="color" value="{{ isset($productattribute->color) ? $productattribute->color : ''}}" >
+    {!! $errors->first('color', '<p class="help-block">:message</p>') !!}
+</div>   -->
 
 
 <div class="form-group">

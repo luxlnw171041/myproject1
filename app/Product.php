@@ -30,4 +30,14 @@ class Product extends Model
     public function order_products(){
         return $this->hasMany('App\OrderProduct', 'product_id'); 
     }  
+    public function productattribute(){
+        return $this->hasMany('App\ProductAttribute', 'product_id'); 
+    } 
+
+    public function product_attributes(){
+        return $this->hasMany('App\product_attributes', 'product_id'); 
+    } 
+    public function users(){
+        return $this->hasMany('App\User', 'user_id'); 
+    }  
 }

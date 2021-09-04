@@ -22,7 +22,8 @@ class OrderController extends Controller
     {
         $keyword = $request->get('search');
         $perPage = 25;
-
+        $user = Auth::user();
+        
         switch(Auth::user()->role)
         {
             case "admin" : 
@@ -39,9 +40,7 @@ class OrderController extends Controller
                 
             default : 
                 //means guest
-                $order = Order::where('user_id',Auth::id() )->latest()->paginate($perPage);   
-                
-              
+                $order = Order::where('user_id',Auth::id() )->latest()->paginate($perPage);      
         }
 
 

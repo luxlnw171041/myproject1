@@ -55,20 +55,38 @@
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> 
+                                    <a class="dropdown-item" href="{{ url('/product') }}">
+                                        <i class="fa fa-home text-primary"></i> หน้าหลัก
+                                    </a>
+                                
+                                    <a class="dropdown-item" href="{{ url('/order-product') }}">
+                                        <i class="fa fa-shopping-cart text-primary"></i> ตะกร้าของฉัน
+                                    </a> 
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    
                                     <a class="dropdown-item" href="{{ url('/order') }}">
-                                        <i class="fa fa-box" style="color:#2BDEF2"></i> คำสั่งซื้อของฉัน
+                                        <i class="fa fa-box text-primary" ></i> คำสั่งซื้อของฉัน
                                     </a>
 
-                                    <a class="dropdown-item" href="{{ url('/order-product') }}">
-                                        <i class="fa fa-shopping-cart" style="color:#2BDEF2"></i> ตะกร้าของฉัน
-                                    </a> 
-
                                     <a class="dropdown-item" href="{{ url('/payment') }}">
-                                        <i style="color:#2BDEF2" class="fa fa-credit-card"></i> แจ้งการชำระเงิน
+                                        <i class="fa fa-credit-card text-primary"></i> แจ้งการชำระเงิน
                                     </a> 
+                                    @if(Auth::check())
+                                        @if(Auth::user()->role == "admin")
+                                            <!-- <a class="dropdown-item" href="{{ url('/order-product/reportdaily') }}">
+                                                <i class="fa fa-file text-primary"></i> รายงานรายวัน
+                                            </a>
+                                            <a class="dropdown-item" href="{{ url('/order-product/reportmonthly') }}">
+                                                <i class="fa fa-file text-primary"></i> รายงานรายเดือน
+                                            </a>
+                                            <a class="dropdown-item" href="{{ url('/order-product/reportyearly') }}">
+                                                <i class="fa fa-file text-primary"></i> รายงานรายปี
+                                            </a> -->
+                                            <a class="dropdown-item" href="{{ url('/admin/dashboard') }}">
+                                                <i class="fas fa-users-cog text-primary"></i> Admin
+                                            </a>
+                                        @endif
+                                    @endif
                                     @if (Auth::user()->role  == "admin" )
                                     <a class="dropdown-item" href="{{ route('admin.users.index') }}">
                                         แก้ไขข้อมูลสมาชิก
@@ -102,9 +120,16 @@
             @yield('content')
         </main>
     </div>
+    <script src="{{ asset('js/product/jquery.multifield.min.js')}}"></script>
+    <script src="{{ asset('js/product/jquery.multifield.js')}}"></script>
     <script src="./src/bootstrap-input-spinner.js"></script>
 <script>
     $("input[type='number']").inputSpinner()
+</script>
+<script>
+  function goBack() {
+    window.history.back();
+  }
 </script>
 </body>
 </html>

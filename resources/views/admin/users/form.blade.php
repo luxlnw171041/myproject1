@@ -23,7 +23,7 @@
 </div>
 @endif
 
-
+<!-- 
 <div class="form-group">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'save' : 'Create' }}">
-</div>
+</div> -->

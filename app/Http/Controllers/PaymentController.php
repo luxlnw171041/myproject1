@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use App\Order;
+
 use App\Payment;
-use Illuminate\Support\Facades\Auth;
-use PDF;
 use Illuminate\Http\Request;
+use App\Order;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
@@ -19,18 +19,35 @@ class PaymentController extends Controller
      */
     public function index(Request $request)
     {
+        $keyword = $request->get('search');
         $perPage = 25;
+
         switch(Auth::user()->role)
         {
             case "admin" : 
                 $payment = Payment::latest()->paginate($perPage);
+
+                if (!empty($keyword)) {
+                    $payment = Payment::where('total', 'LIKE', "%$keyword%")
+                        ->orWhere('user_id', 'LIKE', "%$keyword%")
+                        ->orWhere('order_id', 'LIKE', "%$keyword%")
+                        ->orWhere('slip', 'LIKE', "%$keyword%")
+                        ->latest()->paginate($perPage);
+                } else {
+                    $payment = Payment::latest()->paginate($perPage);
+                }
                 break;
+                
             default : 
                 //means guest
-                $payment = Payment::where('user_id',Auth::id() )->latest()->paginate($perPage);            
+                $payment = Payment::where('user_id',Auth::id() )->latest()->paginate($perPage);   
+                
+              
         }
 
-        return view('payment.index', compact('payment'));
+       
+
+        return view('payment.index' , compact('payment'));
     }
 
     /**
@@ -45,8 +62,6 @@ class PaymentController extends Controller
         //query order จาก db ด้วย order_id ถ้าไม่มี order แสดง Not found
         $order = Order::findOrFail($order_id);
         return view('payment.create' , compact('order') );
-
-        
     }
 
     /**
@@ -60,11 +75,10 @@ class PaymentController extends Controller
     {
         
         $requestData = $request->all();
-                if ($request->hasFile('slip')) {
+        if ($request->hasFile('slip')) {
             $requestData['slip'] = $request->file('slip')
                 ->store('uploads', 'public');
         }
-
         Payment::create($requestData);
 
         //update order status เป็น checking
@@ -73,8 +87,6 @@ class PaymentController extends Controller
                 'status'=>'checking',
                 'checking_at'=>date("Y-m-d H:i:s"), //timestamp ปัจจุบัน
             ]);
-                
-
         return redirect('payment')->with('flash_message', 'Payment added!');
     }
 
@@ -101,9 +113,14 @@ class PaymentController extends Controller
      */
     public function edit($id)
     {
-        $payment = Payment::findOrFail($id);
 
-        return view('payment.edit', compact('payment'));
+        
+        $payment = Payment::findOrFail($id);
+        
+        //query order มาจาก relationship
+        $order = $payment->order;
+
+        return view('payment.edit', compact('payment','order'));
     }
 
     /**
@@ -118,11 +135,11 @@ class PaymentController extends Controller
     {
         
         $requestData = $request->all();
-                if ($request->hasFile('slip')) {
+        if ($request->hasFile('slip')) {
             $requestData['slip'] = $request->file('slip')
                 ->store('uploads', 'public');
         }
-
+        
         $payment = Payment::findOrFail($id);
         $payment->update($requestData);
 
@@ -143,10 +160,34 @@ class PaymentController extends Controller
         return redirect('payment')->with('flash_message', 'Payment deleted!');
     }
 
-    public function pdf_index() {
-        $data = [ ];
-        $pdf = PDF::loadView('payment/test_pdf',$data);
-        return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
-        //return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
-  }
+    public function payment(Request $request)
+    {
+        $keyword = $request->get('search');
+        $perPage = 25;
+
+        switch(Auth::user()->role)
+        {
+            case "admin" : 
+                $payment = Payment::latest()->paginate($perPage);
+
+                if (!empty($keyword)) {
+                    $payment = Payment::where('total', 'LIKE', "%$keyword%")
+                        ->orWhere('user_id', 'LIKE', "%$keyword%")
+                        ->orWhere('order_id', 'LIKE', "%$keyword%")
+                        ->orWhere('slip', 'LIKE', "%$keyword%")
+                        ->latest()->paginate($perPage);
+                } else {
+                    $payment = Payment::latest()->paginate($perPage);
+                }
+                break;
+                
+            default : 
+                //means guest
+                $payment = Payment::where('user_id',Auth::id() )->latest()->paginate($perPage);   
+                
+              
+        }
+
+        return view('admin_shop.payment' , compact('payment'));
+    }
 }

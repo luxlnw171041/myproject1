@@ -1,0 +1,41 @@
+{
+    "fields": [
+        {
+            "name": "productattribute_id",
+            "type": "integer"
+        },
+        {
+            "name": "product_id",
+            "type": "integer"
+        },
+        
+        {
+            "name": "size",
+            "type": "string"
+        },
+        {
+            "name": "price",
+            "type": "float"
+        },
+        {
+            "name": "stock",
+            "type": "integer"
+        },
+        {
+            "name": "sku",
+            "type": "string"
+        },
+        {
+            "name": "status",
+            "type": "integer"
+        },
+        {
+            "name": "created_at",
+            "type": "timestamp"
+        },
+        {
+            "name": "updated_at",
+            "type": "timestamp"
+        }
+    ]
+}

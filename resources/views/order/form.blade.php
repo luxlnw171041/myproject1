@@ -3,13 +3,6 @@
     <input class="form-control" name="user_id" type="number" id="user_id" value="{{ isset($order->user_id) ? $order->user_id : ''}}" >
     {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
 </div>
-
-<div class="form-group display-none {{ $errors->has('order_id') ? 'has-error' : ''}}">
-    <label for="order_id" class="control-label">{{ 'Order Id' }}</label>
-    <input class="form-control" name="order_id" type="number" id="order_id" value="{{ isset($order->id) ? $order->id : ''}}" readonly>
-    {!! $errors->first('order_id', '<p class="help-block">:message</p>') !!}
-</div>
-
 <div class="form-group {{ $errors->has('remark') ? 'has-error' : ''}}">
     <label for="remark" class="control-label">{{ 'Remark' }}</label>
     <textarea class="form-control" rows="5" name="remark" type="textarea" id="remark" >{{ isset($order->remark) ? $order->remark : ''}}</textarea>
