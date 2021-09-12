@@ -71,7 +71,7 @@
                         
                   <thead class="text-center">
                   <tr>
-                  <th>user</th><th>วันที่สั่งซืื้อ</th><th>เลขที่สั่งซื้อ</th><th>สินค้า</th><th>จำนวน</th><th>ราคา</th><th>รวม</th>
+                  <th>user</th><th>วันที่สั่งซืื้อ</th><th>เลขที่สั่งซื้อ</th><th>สินค้า</th><th>จำนวน</th><th>ราคา</th><th>รวม</th><th>ต้นทุน</th>
                   </tr>
                   </thead>
                   <tbody class="text-center">
@@ -84,14 +84,17 @@
                         <div><img src="{{ url('storage/'.$item->product->photo )}}" width="100" /> </div>                                            
                         <div>{{ $item->product->title }}</div>
                     </td>
-                    <td>{{ $item->quantity }}</td>
-                    <td>{{ $item->price }}</td>
-                    <td>{{ $item->total }}</td>    
+                    <td>{{ $item->sum_quantity }} </td>
+                    <td>{{ number_format($item->avg_price) }}</td>
+                    <td>{{ number_format($item->sum_total) }}</td>   
+                    <td>{{ number_format($item->sum_cost) }}</td>   
                   </tr>
                   @endforeach
                   </tfoot>
                 </table>
                 <h2>รวมราคาสินค้า {{ number_format($orderproduct->sum('sum_total')) }} บาท</h2>
+                <h2>ราคาต้นทุน {{ number_format( (($orderproduct->sum('sum_total'))) -  (($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost')))) }} บาท</h2>
+                <h2>กำไร {{ number_format(($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost'))) }} บาท</h2>
               </div>
               <!-- /.card-body -->
             </div>

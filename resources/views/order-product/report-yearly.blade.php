@@ -65,9 +65,18 @@
                     <td>{{ $item->user->name }}</td>
                     <td>{{ $item->created_at  }}</td>
                     <td>{{ $item->order_id }}</td>
+                    <td>{{ number_format($item->sum_total) }}</td>   
                     <td>                                            
-                        <div><img src="{{ url('storage/'.$item->product->photo )}}" width="100" /> </div>                                            
-                        <div>{{ $item->product->title }}</div>
+                        <div>
+                            @if(!empty($item->product->photo))
+                                <img src="{{ url('storage/'.$item->product->photo )}}" width="100" /> 
+                            @endif
+                        </div>                                            
+                        <div>
+                            @if(!empty($item->product->title))
+                                {{ $item->product->title }}
+                            @endif
+                        </div>
                     </td>
                     <td>{{ $item->sum_quantity }}</td>
                     <td>{{ number_format($item->avg_price) }}</td>
@@ -77,7 +86,13 @@
                   </tfoot>
                 </table>
                 <h2>รวมราคาสินค้า {{ number_format($orderproduct->sum('sum_total')) }} บาท</h2>
+                <h2>ราคาต้นทุน {{ number_format( (($orderproduct->sum('sum_total'))) -  (($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost')))) }} บาท</h2>
+                <h2>กำไร {{ number_format(($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost'))) }} บาท</h2>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <div id="chart_div"></div>
+      
               </div>
+              
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
@@ -88,7 +103,7 @@
       </div>
       <!-- /.container-fluid -->
     </section>
-
+   
     <!-- <div class="container">
         <div class="row">
             @include('admin.sidebar')
