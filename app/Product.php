@@ -25,7 +25,7 @@ class Product extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'content', 'price', 'cost', 'photo', 'quantity'];
+    protected $fillable = ['title', 'content', 'price', 'cost', 'photo', 'quantity' , 'category_id'];
 
     public function order_products(){
         return $this->hasMany('App\OrderProduct', 'product_id'); 
@@ -40,4 +40,12 @@ class Product extends Model
     public function users(){
         return $this->hasMany('App\User', 'user_id'); 
     }  
+    
+    public function order(){
+        return $this->hasMany('App\Order', 'product_id'); 
+    } 
+
+    public function categorys(){
+        return $this->belongsTo('App\Category', 'category_id'); 
+    } 
 }

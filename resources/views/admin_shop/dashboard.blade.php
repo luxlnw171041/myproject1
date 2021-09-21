@@ -1,41 +1,37 @@
 @extends('layouts.admin')
 
 @section('content')
-คนลงทะเบียน{{ $all_user }} 
-<!-- <div class="row">
-    <canvas id="vmarket_motorcycleChart"></canvas>
-<script>
-var ctx = document.getElementById('vmarket_motorcycleChart').getContext('2d');
-var vmarket_motorcycleChart = new Chart(ctx, {
-    type: 'horizontalBar',
-    data: {
-        datasets: [{
-            label: '',
-            data: [<?php echo$vmarket_desc[0] ?>, <?php echo$vmarket_desc[1] ?>, <?php echo$vmarket_desc[2] ?>, <?php echo$vmarket_desc[3] ?>, <?php echo$vmarket_desc[4] ?>],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)'
-            ],
-            borderWidth: 1.5
-        }]
-    }
-});
-</script> -->
-</div>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Flot Charts</title>
 
+  <!-- Google Font: Source Sans Pro -->
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link href="{{ asset('admin/plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+  <!-- Theme style -->
+  <link href="{{ asset('admin/dist/css/adminlte.min.css') }}" rel="stylesheet">
+</head>
+<!-- Main content -->
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">หน้าแรก</a></li>
+              <li class="breadcrumb-item active">สมาชิก</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -192,16 +188,26 @@ var vmarket_motorcycleChart = new Chart(ctx, {
         <!-- /.row -->
       </div><!-- /.container-fluid -->
     </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
 </div>
-<!-- ./wrapper -->
+
+
+
+
+@endsection
+<!-- jQuery -->
+<script src="{{ asset('admin/plugins/jquery/jquery.min.js')}}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('admin/dist/js/adminlte.min.js')}}"></script>
+<!-- FLOT CHARTS -->
+<script src="{{ asset('admin/plugins/flot/jquery.flot.js')}}"></script>
+<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+<script src="{{ asset('admin/plugins/flot/plugins/jquery.flot.resize.js')}}"></script>
+<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+<script src="{{ asset('admin/plugins/flot/plugins/jquery.flot.pie.js')}}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{ asset('admin/dist/js/demo.js')}}"></script>
 <!-- Page specific script -->
 <script>
   $(function () {
@@ -491,7 +497,3 @@ var vmarket_motorcycleChart = new Chart(ctx, {
       + Math.round(series.percent) + '%</div>'
   }
 </script>
-</body>
-</html>
-
-@endsection

@@ -1,0 +1,13 @@
+{
+    "fields": [
+        {
+            "name": "product_id",
+            "type": "integer"
+        },
+        {
+            "name": "catagory_id",
+            "type": "integer"
+        }
+        
+    ]
+}

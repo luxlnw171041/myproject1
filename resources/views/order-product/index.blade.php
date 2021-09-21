@@ -1,10 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div class="container">
         <div class="row">
-           
-
             <div class="col-md-12">
                 <div class="card">
                     <!-- <div class="card-header">Orderproduct</div> -->
@@ -24,95 +23,85 @@
                                 </span>
                             </div>
                         </form> -->
-                        <h2 class="text-center">ตะกร้าสินค้า</h2>
-                        @foreach($orderproduct as $item)
-                        <div class="table-responsive">
-                            
-                            <hr>
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <center>
-                                            <img style="width: 100px;height: 120px;object-fit: contain;" src="{{ url('storage/'.$item->product->photo)}}" width="120" />
-                                        </center>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <h5>{{ $item->product->title }}</h5>
-                                        <td>{{ $item->user->name }}</td>
-                                        <h6>จำนวน {{ $item->quantity }} ชิ้น</h6>
-                                        <h6>ราคาต่อชิ้น ฿ {{ number_format($item->price) }}</h6>
-                                        <h6>ยอดรวม ฿ {{ number_format($item->total) }}</h6>
-                                    </div>
-                                    <div class="col-md-1">
 
-                                    <a href="{{ url('/order-product/' . $item->id) }}" title="ดูรายละเอียดสินค้า"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
-                                            <!-- <a href="{{ url('/order-product/' . $item->id . '/edit') }}" title="แก้ไข"><button  style="margin-top:10px;" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a> -->
-
-                                            <form method="POST" action="{{ url('/order-product' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
-                                                {{ method_field('DELETE') }}
-                                                {{ csrf_field() }}
-                                                <button  style="margin-top:10px;" type="submit" class="btn btn-danger btn-sm" title="ลบสินค้า" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="far fa-trash-alt"></i></button>
-                                            </form>
-                                    </div>
-                                </div>
+                        <section class="py-5" style="margin-top:-20px">
+          <h2 class="h5 text-uppercase mb-4"> <b>Shopping cart</b> </h2>
+          <div class="row">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+              <!-- CART TABLE-->
+              <div class="table-responsive mb-4">
+                <table class="table">
+                  <thead class="bg-light">
+                    <tr>
+                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Product</strong></th>
+                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Price</strong></th>
+                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Quantity</strong></th>
+                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Total</strong></th>
+                      <th class="border-0" scope="col"> </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  @foreach($orderproduct as $item)   
+                    <tr>
+                        <th class="pl-0 border-0" scope="row">
+                            <div class="media align-items-center"><a class="reset-anchor d-block animsition-link" href="detail.html"><img style="width: 100px;height: 120px;object-fit: contain;" src="{{ url('storage/'.$item->product->photo)}}" width="120" />
+                            <div class="media-body ml-3"><strong class="h6"><a class="reset-anchor animsition-link" href="detail.html"> <b class="text-dark">{{ $item->product->title }}</b> </a></strong></div>
                             </div>
-
-
-                            <!-- <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>รหัสออร์เดอร์</th>
-                                        <th>รูป</th>
-                                        <th>รหัสผู้ใช้</th>
-                                        <th>จำนวน</th>
-                                        <th>ราคา</th>
-                                        <th>ราคารวม</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->order_id }}</td>
-                                        <td>
-                                        <div><img src="{{ url('storage/'.$item->product->photo)}}" width="100" /> </div>            
-                                        <div>{{ $item->product->title }}</div>
-                                        </td>
-                                        <td>{{ $item->user->name }} </td>
-                                        <td>{{ $item->quantity }}</td>
-                                        <td>{{ $item->price }}</td>
-                                        <td>{{ $item->total }}</td>
-                                        <td>
-                                            <a href="{{ url('/order-product/' . $item->id) }}" title="View OrderProduct"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/order-product/' . $item->id . '/edit') }}" title="Edit OrderProduct"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-
-                                            <form method="POST" action="{{ url('/order-product' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
-                                                {{ method_field('DELETE') }}
-                                                {{ csrf_field() }}
-                                                <button type="submit" class="btn btn-danger btn-sm" title="Delete OrderProduct" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                
-                                </tbody>
-                            </table> -->@endforeach
-                            <div class="pagination-wrapper"> {!! $orderproduct->appends(['search' => Request::get('search')])->render() !!} </div>
-                        </div>
-                         <form method="POST" action="{{ url('/order') }}" accept-charset="UTF-8" class="form-horizontal text-center" enctype="multipart/form-data">
-                            {{ csrf_field() }}
-
-                        <h1>รวมราคาสินค้า <b style="color:red;">{{ number_format($orderproduct->sum('total')) }}</b> บาท</h1>
-
-                        <button class="btn btn-primary" type="submit">
-                            สั่งสินค้า
-                        </button>    
-                    </form>
-
-                    </div>
+                        </th>
+                        <td class="align-middle border-0">
+                            <p class="mb-0 small">฿ {{ number_format($item->price) }}</p>
+                        </td>
+                        <td class="align-middle border-0">
+                            <p class="mb-0 small text-center">{{ $item->quantity }}  </p>
+                        </td>
+                        
+                        <td class="align-middle border-0">
+                            <p class="mb-0 small">฿ {{ number_format($item->total) }}</p>
+                        </td>
+                        <td class="align-middle border-0">
+                            <form method="POST" action="{{ url('/order-product' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
+                                {{ method_field('DELETE') }}
+                                {{ csrf_field() }}
+                                    <button  style="margin-top:10px;" type="submit" class="btn btn-danger btn-sm" title="ลบสินค้า" onclick="return confirm(&quot;ต้องการลบใช่หรือไม่?&quot;)"><i class="far fa-trash-alt"></i></button>
+                            </form>
+                        </td>
+                            
+                    </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
+              <!-- CART NAV-->
+              <div class="bg-light px-4 py-3">
+                <div class="row align-items-center text-center">
+                  <div class="col-md-6 mb-3 mb-md-0 text-md-left"><a class="btn btn-link p-0 text-dark btn-sm" href="{{ url('/product') }}"><i class="fas fa-long-arrow-alt-left mr-2"> </i>Continue shopping</a></div>
+                  
                 </div>
+              </div>
             </div>
-        </div>
-    </div>
+            <!-- ORDER TOTAL-->
+            <div class="col-lg-4">
+              <div class="card border-0 rounded-0 p-lg-4 bg-light">
+                <div class="card-body">
+                  <h5 class="text-uppercase mb-4">Cart total</h5>
+                  <ul class="list-unstyled mb-0">
+                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Subtotal</strong><span class="text-muted small">{{ number_format($orderproduct->sum('total')) }}</span></li>
+                    <li class="border-bottom my-2"></li>
+                    <li class="d-flex align-items-center justify-content-between mb-4"><strong class="text-uppercase small font-weight-bold">Total</strong><span>{{ number_format($orderproduct->sum('total')) }}</span></li>
+                    <li>
+                        <div class="form-group mb-0">
+                            <form method="POST" action="{{ url('/order') }}" accept-charset="UTF-8" class="form-horizontal text-center" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                        <button class="btn btn-dark btn-sm btn-block" type="submit"> checkout</button>
+                            </form>
+                        </div>
+                      </form>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+                        
 @endsection

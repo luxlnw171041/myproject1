@@ -2,14 +2,13 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
-            @include('admin.sidebar')
+        <div class="row d-flex justify-content-center">
 
-            <div class="col-md-9">
+            <div class="col-md-10">
                 <div class="card">
                     <div class="card-header">Edit Order #{{ $order->id }}</div>
                     <div class="card-body">
-                        <a href="{{ url('/order') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="#" onclick="goBack()" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
 
@@ -34,4 +33,6 @@
             </div>
         </div>
     </div>
+
+    
 @endsection

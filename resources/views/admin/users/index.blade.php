@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
 <!-- Main content -->
@@ -12,8 +12,8 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">หน้าแรก</a></li>
-              <li class="breadcrumb-item active">สมาชิก</li>
+              <li class="breadcrumb-item"><a href="{{ url('product') }}">home</a></li>
+              <li class="breadcrumb-item active">profile</li>
             </ol>
           </div>
         </div>
@@ -25,18 +25,18 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">ข้อมูลสมาชิก</h3>
+                <h3 class="card-title">Profile</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="datatable" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>รหัสสมาชิก</th>
-                    <th>ชื่อสมาชิก</th>
-                    <th>อีเมล</th>
-                    <th>สถานะ</th>
-                    <th>เครื่อมือ</th>
+                    <th>User id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>role</th>
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -47,9 +47,9 @@
                     <td>{{ $user->email }}</td>
                     <td> {{ $user->role }}</td>
                     <td class="text-center">
-                    <div class="btn-group">
+                    <!-- <div class="btn-group">
                             <a class="btn btn-primary editbtn" data-toggle="modal" data-target="#editModal">Edit</a>
-                  </div>
+                  </div> -->
                         <a href="{{ url('admin/users/' . $user->id . '/edit') }}" title="Edit User">
                         <button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
                         @if (Auth::user()->role === "admin" )
@@ -64,7 +64,7 @@
                     </td>
                   </tr>
                   @endforeach
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button>
+                  <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button> -->
                   
                   <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">

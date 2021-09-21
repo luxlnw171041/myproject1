@@ -28,7 +28,11 @@
     <input class="form-control" name="total" type="number" id="total" value="{{ isset($orderproduct->total) ? $orderproduct->total : ''}}" >
     {!! $errors->first('total', '<p class="help-block">:message</p>') !!}
 </div>
-
+<div class="form-group {{ $errors->has('cost') ? 'has-error' : ''}}">
+    <label for="cost" class="control-label">{{ 'cost' }}</label>
+    <input class="form-control" name="cost" type="number" id="cost" value="{{ isset($orderproduct->cost) ? $orderproduct->cost : ''}}" >
+    {!! $errors->first('cost', '<p class="help-block">:message</p>') !!}
+</div>
 
 <div class="form-group">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">

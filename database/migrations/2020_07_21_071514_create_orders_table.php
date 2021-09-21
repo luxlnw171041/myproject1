@@ -34,6 +34,8 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('orders');
+        Schema::table('orders', function (Blueprint $table) {
+            //
+        });
     }
 }

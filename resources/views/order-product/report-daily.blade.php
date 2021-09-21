@@ -12,8 +12,8 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ url('/home') }}">หน้าแรก</a></li>
-              <li class="breadcrumb-item active">รายงานรายวัน</li>
+              <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
+              <li class="breadcrumb-item active">Daily Sale Report</li>
             </ol>
           </div>
         </div>
@@ -25,7 +25,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">รายงานรายวัน</h3>
+                <h3 class="card-title">Daily Sale Report</h3>
               </div><br>
                 <form method="GET" action="{{ url('/order-product/reportdaily') }}" accept-charset="UTF-8" >
                     <div class="form-row" >
@@ -44,14 +44,15 @@
                 <table id="example1" class="table table-bordered table-striped" >
                   <thead class="text-center">
                   <tr>
-                  <th>user</th><th>วันที่สั่งซืื้อ</th><th>เลขที่สั่งซื้อ</th><th>สินค้า</th><th>จำนวน</th><th>ราคา</th><th>รวม</th><th>ต้นทุน</th>
+                  <th>User</th><th>Order Time</th><th>Order id</th><th>Product</th><th>Quantity</th><th>Price</th><th>Total</th><th>Cost</th>
                   </tr>
                   </thead>
                   <tbody class="text-center">
                   @foreach($orderproduct as $item)
                   <tr>
                     <td>{{ $item->user->name }}</td>
-                    <td> {{ $item->created_at->thaidate('l j F Y') }} <br> เวลา {{ $item->created_at->format('h:m') }}</td>
+                    <td class="text-center">{{ $item->created_at->format('l d F Y') }}  <br> Time {{ $item->created_at->format('H:i') }}</td>
+                    <!-- <td> {{ $item->created_at->thaidate('l j F Y') }} <br> เวลา {{ $item->created_at->format('h:i') }}</td> -->
                     <td>{{ $item->order_id }}</td> 
                     <td>                                            
                         <div><img src="{{ url('storage/'.$item->product->photo )}}" width="100" /> </div>                                            
@@ -64,9 +65,9 @@
                   </tr>
                   @endforeach
                 </table>
-                <h2>รวมราคาสินค้า {{ number_format($orderproduct->sum('sum_total')) }} บาท</h2>
-                <h2>ราคาต้นทุน {{ number_format( (($orderproduct->sum('sum_total'))) -  (($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost')))) }} บาท</h2>
-                <h2>กำไร {{ number_format(($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost'))) }} บาท</h2>
+                <h2>Total Price {{ number_format($orderproduct->sum('sum_total')) }} Bath</h2>
+                <h2>Total Cost {{ number_format( (($orderproduct->sum('sum_total'))) -  (($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost')))) }} Bath</h2>
+                <h2>Net Profit {{ number_format(($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost'))) }} Bath</h2>
               </div>
               <!-- /.card-body -->
             </div>

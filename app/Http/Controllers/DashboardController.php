@@ -11,6 +11,7 @@ class DashboardController extends Controller
     
     public function dashboard()
     {
+        $users = User::all();
         $total_user = User::selectRaw('count(id) as count')
                     	->get();
 				        foreach ($total_user as $key ) {
@@ -68,21 +69,29 @@ class DashboardController extends Controller
 
 
     }
-    public function edit(User $user)
+    public function editadmin($id)
     {
-        $users = User::all();
-        return view ('modal.edit')->with([
-            'user' => $user ,
-            
-        ]);
+        $user = User::findOrFail($id);
+        return view('admin.users.editadmin', compact('user'));
+
+        
         
     }
+    // public function edit(User $user)
+    // {
+    //     $users = User::all();
+    //     return view ('admin.users.editadmin')->with([
+    //         'user' => $user ,
+            
+    //     ]);
+        
+    // }
     public function update(Request $request,$id)
     {
         $requestData = $request->all();
         $users = User::findOrFail($id);
         $users->update($requestData);
-        return redirect('admin/users')->with('flash_message', 'User updated!');
+        return redirect('admin/user')->with('flash_message', 'User updated!');
     }
 
 }

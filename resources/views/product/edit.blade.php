@@ -1,37 +1,56 @@
-@extends('layouts.app')
+
+@extends('layouts.admin')
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            @include('admin.sidebar')
-
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="card-header">Edit Product #{{ $product->id }}</div>
-                    <div class="card-body">
-                        <a href="{{ url('/product') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <br />
-                        <br />
-
-                        @if ($errors->any())
-                            <ul class="alert alert-danger">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        @endif
-
-                        <form method="POST" action="{{ url('/product/' . $product->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                            {{ method_field('PATCH') }}
-                            {{ csrf_field() }}
-
-                            @include ('product.form', ['formMode' => 'edit'])
-
-                        </form>
-
-                    </div>
-                </div>
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+            <div class="col-sm-6">
             </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{{ url('product') }}">Home</a></li>
+                <li class="breadcrumb-item active">stock</li>
+                </ol>
+            </div>
+            </div>
+    </div><!-- /.container-fluid -->
+</section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+            <div class="col-12">
+                <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Edit {{ $product->title }}</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    @if ($errors->any())
+                                <ul class="alert alert-danger">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
+
+                            <form method="POST" action="{{ url('/product/' . $product->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                {{ method_field('PATCH') }}
+                                {{ csrf_field() }}
+
+                                @include ('product.form', ['formMode' => 'edit'])
+                            </form>
+                </div>
+                <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+            </div>
+            <!-- /.row -->
         </div>
-    </div>
+        <!-- /.container-fluid -->
+    </section>
 @endsection

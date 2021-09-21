@@ -32,6 +32,7 @@ class OrderController extends Controller
                 if (!empty($keyword)) {
                     $order = Order::where('id', 'LIKE', "%$keyword%")
                         ->orWhere('tracking', 'LIKE', "%$keyword%")
+                        ->orWhere('created_at', 'LIKE', "%$keyword%")
                         ->latest()->paginate($perPage);
                 } else {
                     $order = Order::latest()->paginate($perPage);
@@ -118,6 +119,7 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
 
         return view('order.edit', compact('order'));
+        
     }
 
     /**
@@ -152,6 +154,10 @@ class OrderController extends Controller
                 }
                 break;
         }
+        if (\Auth::user()->role == 'admin') {
+            return redirect('admin/order')->with('flash_message', 'Product deleted!');
+            // or return route('routename');
+        }
 
         return redirect('order')->with('flash_message', 'Order updated!');
     }
@@ -168,5 +174,33 @@ class OrderController extends Controller
         Order::destroy($id);
 
         return redirect('order')->with('flash_message', 'Order deleted!');
+    }
+    public function order(Request $request)
+    {
+        $keyword = $request->get('search');
+        $perPage = 25;
+        $user = Auth::user();
+        
+        switch(Auth::user()->role)
+        {
+            case "admin" : 
+                $order = Order::latest()->paginate($perPage);
+
+                if (!empty($keyword)) {
+                    $order = Order::where('id', 'LIKE', "%$keyword%")
+                        ->orWhere('tracking', 'LIKE', "%$keyword%")
+                        ->latest()->paginate($perPage);
+                } else {
+                    $order = Order::latest()->paginate($perPage);
+                }
+                break;
+                
+            default : 
+                //means guest
+                $order = Order::where('user_id',Auth::id() )->latest()->paginate($perPage);      
+        }
+
+
+        return view('admin_shop.order', compact('order'));
     }
 }

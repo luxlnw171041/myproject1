@@ -1,17 +1,102 @@
 @extends('layouts.app')
 
 @section('content')
+<section class="content-header">
+      <div class="container">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{{ url('/product') }}">Home</a></li>
+              <li class="breadcrumb-item active">Payment</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
     <div class="container">
         <div class="row">
-            @include('admin.sidebar')
-
-            <div class="col-md-9">
+            <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header">Create New Payment</div>
                     <div class="card-body">
-                        <a href="{{ url('/order') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <br />
-                        <br />
+                        <h3 class="text-center">บัญชี</h3>
+                        <ul style="list-style-type: none;">
+                            <li>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <img src="{{ url('/img/SCB.jpg') }}" width="100" /> 
+                                    </div>
+                                    <div class="col-md-8" style="margin-left:80px;">
+                                        <span style="font-size: 19px;">ธนาคารไทยพาณิชย์</span> <br>
+                                        <span style="font-size: 19px;">045-289431-6</span> <br>
+                                        <span style="font-size: 19px;">ชื่อบัญชี : นาย ธีรศักดิ์ เสนารักษ์</span> <br>
+                                    </div>
+                                </div>
+                            </li>
+                            <hr>
+                            <li>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <img src="{{ url('/img/logo.jpg') }}" width="100" /> 
+                                    </div>
+                                    <div class="col-md-8" style="margin-left:80px;">
+                                        <span style="font-size: 19px;">ธนาคารไทยพาณิชย์</span> <br>
+                                        <span style="font-size: 19px;">045-289431-6</span> <br>
+                                        <span style="font-size: 19px;">ชื่อบัญชี : นาย ธีรศักดิ์ เสนารักษ์</span> <br>
+                                    </div>
+                                </div>
+                            </li>
+                            <hr>
+                            <li>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <img src="{{ url('/img/ธนาคารกรุงไทย.jpg') }}" width="100" /> 
+                                    </div>
+                                    <div class="col-md-8" style="margin-left:80px;">
+                                        <span style="font-size: 19px;">ธนาคารกรุงไทย</span> <br>
+                                        <span style="font-size: 19px;">045-289431-6</span> <br>
+                                        <span style="font-size: 19px;">ชื่อบัญชี : นาย ธีรศักดิ์ เสนารักษ์</span> <br>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <div class="row" style="font-size:15px">
+                                <div class="col-md-12">
+                                    <br>
+                                        <h5> Order No {{ $order->id }}</h5>
+                                    <br>
+                                </div>
+                                <div class="col-md-2 ">
+                                   <b>Name</b> 
+                                </div>
+                                <div class="col-md-6">
+                                    {{ $order->user->name }}
+                                </div>
+                                <div class="col-md-12"><hr></div>
+                                <div class="col-md-2">
+                                    <b>Date</b> 
+                                </div>
+                                <div class="col-md-6">
+                                    {{ $order->created_at->thaidate('l j F Y') }} 
+                                </div>
+                                <div class="col-md-12"><hr></div>
+                                <div class="col-md-2">
+                                    <b>Price</b> 
+                                </div>
+                                <div class="col-md-6">
+                                    {{ number_format($order->total) }} บาท
+                                </div>
+                                <div class="col-md-12"><hr></div>
+                        </div>
 
                         @if ($errors->any())
                             <ul class="alert alert-danger">
@@ -33,4 +118,5 @@
             </div>
         </div>
     </div>
+
 @endsection

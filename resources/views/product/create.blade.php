@@ -1,19 +1,35 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            @include('admin.sidebar')
 
-            <div class="col-md-9">
+
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+            <div class="col-sm-6">
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{{ url('product') }}">Home</a></li>
+                <li class="breadcrumb-item active">stock</li>
+                </ol>
+            </div>
+            </div>
+    </div><!-- /.container-fluid -->
+</section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+            <div class="col-12">
                 <div class="card">
-                    <div class="card-header">Create New Product</div>
-                    <div class="card-body">
-                        <a href="{{ url('/product') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <br />
-                        <br />
-
-                        @if ($errors->any())
+                <div class="card-header">
+                    <h3 class="card-title">Create New Product</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    @if ($errors->any())
                             <ul class="alert alert-danger">
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
@@ -30,10 +46,15 @@
 
                        
                         </form>
-
-                    </div>
                 </div>
+                <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
             </div>
+            <!-- /.col -->
+            </div>
+            <!-- /.row -->
         </div>
-    </div>
+        <!-- /.container-fluid -->
+    </section>
 @endsection

@@ -36,7 +36,7 @@ class PaymentController extends Controller
                 } else {
                     $payment = Payment::latest()->paginate($perPage);
                 }
-                break;
+            break;
                 
             default : 
                 //means guest

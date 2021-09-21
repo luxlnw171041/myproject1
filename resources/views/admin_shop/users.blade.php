@@ -12,8 +12,8 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">หน้าแรก</a></li>
-              <li class="breadcrumb-item active">สมาชิก</li>
+              <li class="breadcrumb-item"><a href="{{ url('product') }}">Home</a></li>
+              <li class="breadcrumb-item active">Users</li>
             </ol>
           </div>
         </div>
@@ -25,18 +25,18 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">ข้อมูลสมาชิก</h3>
+                <h3 class="card-title">Users</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>รหัสสมาชิก</th>
-                    <th>ชื่อสมาชิก</th>
-                    <th>อีเมล</th>
-                    <th>สถานะ</th>
-                    <th>เครื่อมือ</th>
+                    <th>User id</th>
+                    <th>name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -47,10 +47,9 @@
                     <td>{{ $user->email }}</td>
                     <td> {{ $user->role }}</td>
                     <td class="text-center">
-                        <a class="btn btn-primary btn-sm" href="{{ url('admin/users/' . $user->id . '/edit') }}" title="Edit User">Edit</a>
-                        
-                        <a href="#" data-toggle="modal" data-target="#ModalEdit{{$user->id}}" title="asd">asdad</a>
-                        <button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                        <!-- <a class="btn btn-primary btn-sm" href="{{ url('admin/users/' . $user->id . '/edit') }}" title="Edit User">Edit</a> -->
+                        <a class="btn btn-primary btn-sm" href="{{ url('admin/user/' . $user->id . '/edit') }}" title="Edit User">Edit</a>
+                       
                         @if (Auth::user()->role === "admin" )
                             <form method="POST" action="{{ url('admin/users/' . $user->id) }}" accept-charset="UTF-8" style="display:inline">
                                 {{ method_field('DELETE') }}
@@ -66,36 +65,6 @@
                   
                   @include('modal.edit')
 
-
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button>
-                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <form>
-                            <div class="form-group">
-                              <label for="recipient-name" class="col-form-label">Recipient:</label>
-                              <input type="text" class="form-control" id="recipient-name">
-                            </div>
-                            <div class="form-group">
-                              <label for="message-text" class="col-form-label">Message:</label>
-                              <textarea class="form-control" id="message-text"></textarea>
-                            </div>
-                          </form>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Send message</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                   </tfoot>
                 </table>
               </div>

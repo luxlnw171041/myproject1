@@ -27,7 +27,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example3" class="table table-bordered table-striped" >
+                <table id="example1" class="table table-bordered table-striped" >
                   <thead class="text-center">
                   <tr>
                   <tr>
@@ -36,12 +36,15 @@
                     <th>Order Id</th>
                     <th>Price</th>
                     <th>Slip</th>
+                    <th>address</th>
+                    <th>tel</th>
                   </tr>
                   </thead>
                   <tbody class="text-center">
                   @foreach($payment as $item)
                   <tr>
-                    <td>{{ $item->created_at  }}</td>
+                    <!-- <td>{{ $item->created_at->thaidate('l j F Y') }} <br> เวลา {{ $item->created_at->format('H:m') }}</td> -->
+                                <td class="text-center">{{ $item->created_at->format('l d F Y') }}  <br> Time {{ $item->created_at->format('H:i') }}</td>
                     <td>{{ $item->user->name }}</td>
                     <td>{{ $item->order_id }}</td>
                     <td>{{ $item->total }}</td>
@@ -50,6 +53,14 @@
                             <img src="{{ url('/storage/'.$item->slip )}}" width="100" />
                         </a>
                     </td>
+                    <td>{{ $item->address }}</td>
+
+                    @if(!empty($item->tel))
+                      <td>0{{ $item->tel}}</td>
+                    @else
+                      <td>{{ $item->tel}}</td>
+                    @endif
+
                   </tr>
                   @endforeach
                   </tfoot>

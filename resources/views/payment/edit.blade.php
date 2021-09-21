@@ -2,17 +2,14 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
-            @include('admin.sidebar')
+        <div class="row d-flex justify-content-center">
 
-            <div class="col-md-9">
+            <div class="col-md-10">
                 <div class="card">
                     <div class="card-header">Edit Payment #{{ $payment->id }}</div>
                     <div class="card-body">
-                        <a href="{{ url('/payment') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <br />
-                        <br />
-
+                        <!-- <a href="{{ url('/payment') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a> -->
+                        
                         @if ($errors->any())
                             <ul class="alert alert-danger">
                                 @foreach ($errors->all() as $error)
@@ -33,5 +30,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div><br><br>
 @endsection

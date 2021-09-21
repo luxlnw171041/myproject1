@@ -10,12 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/admin/user/{id}/edit', 'DashboardController@editadmin');
 Route::get('/', function () {
     return view('welcome');
 
 });
-
+Route::get('/product/category/{category}', 'ProductController@category');
+Route::get('/product/category/{category}/{id}', 'ProductController@show');
 Auth::routes();
 
 
@@ -25,6 +26,7 @@ Route::get('/admin/users/profile','UserController@profile');
 Route::get('admin/users/{id}','UserController@edit');
 Route::middleware(['auth', 'role:admin,guest'])->group(function () {
 Route::resource('contact','ContactController');
+
 
 Route::resource('payment/create?order_id={order_id}', 'PaymentController');
 
@@ -43,6 +45,7 @@ Route::resource('payment', 'PaymentController');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('admin/payment','PaymentController@payment');
+    Route::get('admin/order','OrderController@order');
     Route::get('admin/user','DashboardController@user');
     
 });
@@ -67,12 +70,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('order-product/reportdaily', 'OrderProductController@reportdaily');
         Route::get('order-product/reportmonthly', 'OrderProductController@reportmonthly');
         Route::get('order-product/reportyearly', 'OrderProductController@reportyearly');
-        Route::get('/stock', 'ProductController@stock');
+        Route::get('admin/stock', 'ProductController@stock');
     });
     
     Route::resource('order-product', 'OrderProductController');
     Route::resource('order', 'OrderController');
     Route::resource('payment', 'PaymentController');
     Route::resource('product', 'ProductController');
+    Route::get('product/{{ productattribute }}', 'ProductController@categorie');
 });
 
+
+Route::resource('admin/category', 'CategoryController');
+Route::resource('procat', 'ProcatController');

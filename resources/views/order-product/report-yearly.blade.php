@@ -10,8 +10,8 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ url('/home') }}">หน้าแรก</a></li>
-              <li class="breadcrumb-item active">รายงานรายปี</li>
+              <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
+              <li class="breadcrumb-item active">Yearly Sale Report</li>
             </ol>
           </div>
         </div>
@@ -23,7 +23,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">รายงานรายปี</h3>
+                <h3 class="card-title">Yearly Sale Report</h3>
               </div><br>
                         <form method="GET" action="{{ url('/order-product/reportyearly') }}" accept-charset="UTF-8" >
                             <div class="form-row" style="margin-left:20px">
@@ -56,16 +56,16 @@
                         
                   <thead class="text-center">
                   <tr>
-                  <th>user</th><th>วันที่สั่งซืื้อ</th><th>เลขที่สั่งซื้อ</th><th>สินค้า</th><th>จำนวน</th><th>ราคา</th><th>รวม</th>
+                  <th>User</th><th>Order Time</th><th>Order id</th><th>Product</th><th>Quantity</th><th>Price</th><th>Total</th><th>Cost</th>
                   </tr>
                   </thead>
                   <tbody class="text-center">
                   @foreach($orderproduct as $item)
                   <tr>
                     <td>{{ $item->user->name }}</td>
-                    <td>{{ $item->created_at  }}</td>
+                    <td class="text-center">{{ $item->created_at->format('l d F Y') }}  <br> Time {{ $item->created_at->format('H:i') }}</td>
+                    <!-- <td>{{ $item->created_at  }}</td> -->
                     <td>{{ $item->order_id }}</td>
-                    <td>{{ number_format($item->sum_total) }}</td>   
                     <td>                                            
                         <div>
                             @if(!empty($item->product->photo))
@@ -80,14 +80,15 @@
                     </td>
                     <td>{{ $item->sum_quantity }}</td>
                     <td>{{ number_format($item->avg_price) }}</td>
-                    <td>{{ number_format($item->sum_total) }}</td>      
+                    <td>{{ number_format($item->sum_total) }}</td>
+                    <td>{{ number_format($item->sum_cost) }}</td>        
                   </tr>
                   @endforeach
                   </tfoot>
                 </table>
-                <h2>รวมราคาสินค้า {{ number_format($orderproduct->sum('sum_total')) }} บาท</h2>
-                <h2>ราคาต้นทุน {{ number_format( (($orderproduct->sum('sum_total'))) -  (($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost')))) }} บาท</h2>
-                <h2>กำไร {{ number_format(($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost'))) }} บาท</h2>
+                <h2>Total Price {{ number_format($orderproduct->sum('sum_total')) }} Bath</h2>
+                <h2>Total Cost {{ number_format( (($orderproduct->sum('sum_total'))) -  (($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost')))) }} Bath</h2>
+                <h2>Net Profit {{ number_format(($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost'))) }} Bath</h2>
                 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <div id="chart_div"></div>
       
@@ -104,75 +105,4 @@
       <!-- /.container-fluid -->
     </section>
    
-    <!-- <div class="container">
-        <div class="row">
-            @include('admin.sidebar')
-
-            <div class="col-md-9">
-            <div class="card mb-4">
-                    <div class="card-header">รายงานรายปี</div>
-                    <div class="card-body">
-                        <form method="GET" action="{{ url('/order-product/reportyearly') }}" accept-charset="UTF-8" >
-                            <div class="form-row">
-                                <div class="col-4">
-                                    @php
-                                        $start_at = 2021;
-                                    @endphp
-                                    <select class="form-control" name="year" id="year" >
-                                        <option value="">เลือกปี</option>
-                                        @for($year = $start_at; $year > $start_at - 5 ; $year--)
-                                        <option value="{{ $year }}">{{ $year }}</option>
-                                        @endfor
-                                    </select>  
-                                    <script>
-                                        document.querySelector("#year").value = "{{ request('year') }}"
-                                    </script>
-                                </div>
-                                <div class="col-4">
-                                    <button class="btn btn-success" type="submit">
-                                        <i class="fa fa-search"></i> Search
-                                    </button>
-                                </div>
-                            </div>   
-                        </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">รายงานปี : {{ request('year') }}</div>
-                    <div class="card-body">                        
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>สมาชิก</th><th>วันที่สั่งซืื้อ</th><th>เลขที่สั่งซื้อ</th><th>สินค้า</th><th>จำนวน</th><th>ราคา</th><th>รวม</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($orderproduct as $item)
-                                    <tr>
-                                    <td>{{ $item->user->name }}</td>
-                                        <td>{{ $item->created_at  }}</td>
-                                        <td>{{ $item->order_id }}</td>
-                                        <td>                                            
-                                            <div><img src="{{ url('storage/'.$item->product->photo )}}" width="100" /> </div>                                            
-                                            <div>{{ $item->product->title }}</div>
-                                        </td>
-                                        <td>{{ $item->sum_quantity }}</td>
-                                        <td>{{ $item->avg_price }}</td>
-                                        <td>{{ $item->sum_total }}</td>                                        
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>                           
-                        </div>
-                        <h2>รวมราคาสินค้า {{ number_format($orderproduct->sum('sum_total')) }} บาท</h2>
-
-                        
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
 @endsection

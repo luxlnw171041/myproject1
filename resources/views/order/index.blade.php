@@ -1,135 +1,164 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <!-- @include('admin.sidebar') -->
-
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">Order</div>
-                    <div class="card-body">
-                        <!-- <a href="{{ url('/order/create') }}" class="btn btn-success btn-sm" title="Add New Order">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                        </a> -->
-
-                        <form method="GET" action="{{ url('/order') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
-                                <span class="input-group-append">
-                                    <button class="btn btn-secondary" type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
-                        </form>
-
-                        <br/>
-                        <br/>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>#Order Id</th>
-                                        <th>Date</th>
-                                        <th>User Id</th>
-                                        <!--th>Remark</th-->
-                                        <th>Total</th><th>Status</th>
-                                        <!--th>Checking At</th><th>Paid At</th><th>Cancelled At</th><th>Completed At</th-->
-                                        <!--th>Tracking</th-->
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($order as $item)
-                                    <tr>
-                                        <td>{{ $item->id }}</td>
-                                        <td>{{ $item->created_at }}</td>
-                                        <td>{{ $item->user->name }}</td>
-                                        <!--td>{{ $item->remark }}</td-->
-                                        <td>{{ $item->total }}</td>
-                                        <td>
-                                            
-                                            @switch($item->status)
-                                                @case("created") 
-                                                    <div>รอหลักฐานการชำระเงิน</div>
-                                                    <a class="btn btn-sm btn-warning" href="{{ url('payment/create?order_id='.$item->id) }}">ส่งหลักฐาน</a>
-
-                                                    <form method="POST" action="{{ url('/order/' . $item->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                                                        {{ method_field('PATCH') }}
-                                                        {{ csrf_field() }}
-                                                        <select class="d-none" name="status" id="status">
-                                                            <option value="cancelled">ยกเลิกออร์เดอร์</option>
-                                                        </select>
-                                                        <button class="btn btn-primary btn-sm" type="submit">ยกเลิกออร์เดอร์</button>       
-                                                    </form>
-                                                    
-                                                    @break
-                                                @case("checking") 
-                                                    <div>รอตรวจสอบ</div>
-                                                    <div><img src="{{ asset("storage/{$item->payment->slip}")  }}" width="100" /></div>
-                                                    @if(Auth::user()->role == "admin")
-                                                    <form method="POST" action="{{ url('/order/' . $item->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                                                        {{ method_field('PATCH') }}
-                                                        {{ csrf_field() }}
-                                                        <select class="" name="status" id="status" >
-                                                            <option value="paid">ชำระเงินเรียบร้อย</option>
-                                                            <option value="cancelled">ยกเลิกออร์เดอร์</option>
-                                                        </select>
-                                                        <button class="btn btn-primary btn-sm" type="submit">เปลี่ยนสถานะ</button>       
-                                                    </form>
-                                                    @endif
-                                                    @break
-                                                @case("paid") 
-                                                    <div>ชำระเงินแล้ว รอเลข tracking</div>
-                                                    @if(Auth::user()->role == "admin")
-                                                    <form method="POST" action="{{ url('/order/' . $item->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                                                        {{ method_field('PATCH') }}
-                                                        {{ csrf_field() }}                                                            
-                                                        <input name="tracking" type="text" id="tracking" value="" placeholder="ใส่เลข tracking...">
-                                                        <input name="status" type="hidden" id="status" value="completed" >
-                                                        <button class="btn btn-primary btn-sm" type="submit">ส่งเลข Tracking</button>       
-                                                    </form>
-                                                    @endif
-                                                    @break
-                                                @case("completed") 
-                                                    <div>ส่งสินค้าแล้ว</div>
-                                                    <div>เลขติดตามพัสดู</div>
-                                                    <div>{{ $item->tracking }}</div>
-                                                    @break
-                                                @case("cancelled") 
-                                                    <div>ยกเลิกออร์เดอร์แล้ว</div>                                                    
-                                                    @break
-                                            @endswitch
-                                        </td>
-                                        <!--td>{{ $item->checking_at }}</td><td>{{ $item->paid_at }}</td><td>{{ $item->cancelled_at }}</td><td>{{ $item->completed_at }}</td-->
-                                        <!--td>{{ $item->tracking }}</td-->
-                                        <td>
-                                            <a href="{{ url('/order/' . $item->id) }}" title="View Order"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/order/' . $item->id . '/edit') }}" title="Edit Order"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-
-                                            <form method="POST" action="{{ url('/order' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
-                                                {{ method_field('DELETE') }}
-                                                {{ csrf_field() }}
-                                                <button type="submit" class="btn btn-danger btn-sm" title="Delete Order" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                            <div class="pagination-wrapper"> {!! $order->appends(['search' => Request::get('search')])->render() !!} </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+<div class="content ">
+    <!-- Content Header (Page header) -->
+    <section class="content-header ">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+          </div>
+          <div class="col-sm-5">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
+              <li class="breadcrumb-item active">Order</li>
+            </ol>
+          </div>
         </div>
+      </div><!-- /.container-fluid -->
+    </section>
+<div class="content " >
+      <div class="container-fluid ">
+        <div class="row d-flex justify-content-center">
+          <div class="col-10">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Order</h3>
+              </div>
+              <!-- /.card-header -->
+            <div class="card-body">
+                <table id="example3" class="table table-bordered table-striped" >
+                  <thead class="text-center">
+                    <tr>
+                        <th>
+                        
+                            Order id</th>
+                        <th>Time</th>
+                        <th>Username</th>
+                        <th>total</th>
+                        <th>Status</th>
+                        <th>confirm</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-center">
+                    @foreach($order as $item)
+                        <tr>
+                            <td>
+                                {{ $item->id }} &nbsp;
+                                <a href="{{ url('/order/' . $item->id) }}" title="View OrderProduct"><i class="fas fa-eye"></i></a>
+                            </td>
+                            <td class="text-center">{{ $item->created_at->thaidate('l j F Y') }} <br> เวลา {{ $item->created_at->format('H:m') }}</td>
+                            <!-- <td class="text-center">{{ $item->created_at->format('l d F Y') }}  <br> Time {{ $item->created_at->format('H:m') }}</td> -->
+                            <td>{{ $item->user['name'] }} </td>
+                            
+                            <!--td>{{ $item->remark }}</td-->
+                            <td>{{ number_format($item->total) }} บาท</td>
+                            <td>
+                                
+                                @switch($item->status)
+                                    @case("created") 
+                                        <div>รอหลักฐานการชำระเงิน</div>
+                                        <div class="row">
+                                            <div class="col-sm-6 d-flex justify-content-end"> 
+                                                <a class="btn btn-sm btn-primary" href="{{ url('payment/create?order_id='.$item->id) }}">ส่งหลักฐาน</a>
+                                            </div>
+                                            <div class="col-sm-6 d-flex justify-content-start"> 
+                                                <form method="POST" action="{{ url('/order/' . $item->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                                {{ method_field('PATCH') }}
+                                                {{ csrf_field() }}
+                                                <select class="d-none" name="status" id="status">
+                                                    <option value="cancelled">ยกเลิกออร์เดอร์</option>
+                                                </select>
+                                                <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm(&quot;Confirm delete?&quot;)">ยกเลิกออร์เดอร์</button>       
+                                                </form>
+                                            </div>
+                                        </div>
+                                    @break
+                                    @case("checking") 
+                                        <div>รอตรวจสอบ</div>
+                                        <div><img src="{{ asset("storage/{$item->payment->slip}")  }}" width="100" /></div>
+                                        @if(Auth::user()->role == "admin")
+                                        <form method="POST" action="{{ url('/order/' . $item->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                            {{ method_field('PATCH') }}
+                                            {{ csrf_field() }}
+                                            <select class="" name="status" id="status" >
+                                                <option value="paid">ชำระเงินเรียบร้อย</option>
+                                                <option value="cancelled">ยกเลิกออร์เดอร์</option>
+                                            </select>
+                                            <button class="btn btn-primary btn-sm" type="submit">เปลี่ยนสถานะ</button>       
+                                        </form>
+                                        @endif
+                                        @break
+                                    @case("paid") 
+                                        <div>ชำระเงินแล้ว รอเลข tracking</div>
+                                        @if(Auth::user()->role == "admin")
+                                        <form method="POST" action="{{ url('/order/' . $item->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                            {{ method_field('PATCH') }}
+                                            {{ csrf_field() }}                                                            
+                                            <input name="tracking" type="text" id="tracking" value="" placeholder="ใส่เลข tracking...">
+                                            <input name="status" type="hidden" id="status" value="completed" >
+                                            <button class="btn btn-primary btn-sm" type="submit">ส่งเลข Tracking</button>       
+                                        </form>
+                                        @endif
+                                        @break
+                                    @case("completed") 
+                                        <div>ส่งสินค้าแล้ว</div>
+                                        <div>เลขติดตามพัสดู</div>
+                                        <div>{{ $item->tracking }}</div>
+                                        @break
+                                    @case("cancelled") 
+                                        <div>ยกเลิกออร์เดอร์แล้ว</div>                                                    
+                                        @break
+                                @endswitch
+                            </td>
+                            <td>
+                            @switch($item->status)
+                                @case("completed") 
+                                    @if(!empty($item->confirm))
+                                        @if(Auth::user()->role == "admin")
+                                            ลูกค้า{{ $item->confirm }}
+                                        @endif
+                                        @if(Auth::user()->role == "guest")
+                                            {{ $item->confirm }}
+                                        @endif
+                                    @elseif($item->confirm == null)
+                                        @if(Auth::user()->role == "admin")
+                                            ลูกค้ายังไม่ได้รับสินค้า
+                                        @endif
+                                        @if(Auth::user()->role == "guest")
+                                            ยังไม่ได้รับสินค้า
+                                            <form method="POST" action="{{ url('/order/' . $item->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                                {{ method_field('PATCH') }}
+                                                {{ csrf_field() }}
+                                                    <input class="d-none form-control" name="status" type="text" id="status" value="{{ isset($item->status) ? $item->status : ''}}" >
+                                                    <input class="d-none form-control" name="confirm" type="text" id="confirm" value="{{ isset($item->confirm) ? $item->confirm : 'ได้รับสินค้าแล้ว'}}" >                  
+                                                    <div><button type="submit" class="btn btn-primary">ได้รับสินค้าแล้ว</button></div>
+                                            </form>
+                                        @endif
+                                    @endif
+                                @break
+                            @endswitch
+                            </td>
+                            <!--td>{{ $item->checking_at }}</td><td>{{ $item->paid_at }}</td><td>{{ $item->cancelled_at }}</td><td>{{ $item->completed_at }}</td-->
+                            <!--td>{{ $item->tracking }}</td-->
+                        </tr>
+                        @endforeach
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
     </div>
+</div>
+<div class="row">
+    <div class="col-md-6"> 
+        
+    </div>
+</div>
 @endsection
-<script type="text/javascript">
-  function handleSelect(elm)
-  {
-     window.location = elm.value+".php";
-  }
-</script>

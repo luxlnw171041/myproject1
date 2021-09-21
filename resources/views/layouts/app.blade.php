@@ -1,25 +1,25 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lucky Shop</title>
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
-
+  <!-- Ekko Lightbox -->
+  <link rel="stylesheet" href="{{ asset('admin/plugins/ekko-lightbox/ekko-lightbox.css') }}">
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link href="{{ asset('') }}" rel="stylesheet">
+  <link href="{{ asset('admin/plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+  <!-- DataTables -->
+  <link href="https://cdn.datatables.net/1.11.1/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="{{ asset('admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}" rel="stylesheet">
+  <!-- Theme style -->
+  <link href="{{ asset('admin/dist/css/adminlte.min.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -34,12 +34,22 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ url('/product') }}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('/order') }}">Order</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('/payment') }}">Payment</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        <li>
+                        <form class="d-flex">
+                        <a href="{{ url('/order-product') }}" type="button" class="btn btn-outline-dark">
+                            <i class="fas fa-shopping-cart"></i> Cart 
+                            <!-- <span class="badge bg-dark text-white ms-1 rounded-pill">0</span> -->
+                        </a>
+                    </form>
+                        </li>
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
@@ -56,7 +66,7 @@
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> 
-                                    <a class="dropdown-item" href="{{ url('/product') }}">
+                                    <!-- <a class="dropdown-item" href="{{ url('/product') }}">
                                         <i class="fa fa-home text-primary"></i> หน้าหลัก
                                     </a>
                                 
@@ -70,7 +80,7 @@
 
                                     <a class="dropdown-item" href="{{ url('/payment') }}">
                                         <i class="fa fa-credit-card text-primary"></i> แจ้งการชำระเงิน
-                                    </a> 
+                                    </a>  -->
                                     @if(Auth::check())
                                         @if(Auth::user()->role == "admin")
                                             <!-- <a class="dropdown-item" href="{{ url('/order-product/reportdaily') }}">
@@ -82,27 +92,27 @@
                                             <a class="dropdown-item" href="{{ url('/order-product/reportyearly') }}">
                                                 <i class="fa fa-file text-primary"></i> รายงานรายปี
                                             </a> -->
-                                            <a class="dropdown-item" href="{{ url('/admin/dashboard') }}">
+                                            <a class="dropdown-item" href="{{ url('/admin/stock') }}">
                                                 <i class="fas fa-users-cog text-primary"></i> Admin
                                             </a>
                                         @endif
                                     @endif
-                                    @if (Auth::user()->role  == "admin" )
-                                    <a class="dropdown-item" href="{{ route('admin.users.index') }}">
-                                        แก้ไขข้อมูลสมาชิก
+                                    <!-- @if (Auth::user()->role  == "admin" )
+                                    <a class="dropdown-item" href="{{ url('/admin/user') }}">
+                                        Users
                                     </a>
-                                    @endif
+                                    @endif -->
 
                                     @if (Auth::user()->role  == "guest" )
                                     <a class="dropdown-item" href="{{ url('admin/users/' . Auth::user()->id . '/edit') }}">
-                                        แก้ไขข้อมูลส่วนตัว
+                                        Profile
                                     </a>
                                     @endif
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('ออกจากระบบ') }}
+                                        {{ __('Logout') }}
                                     </a>
                                    
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -115,16 +125,82 @@
                 </div>
             </div>
         </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
     </div>
-    <script src="{{ asset('js/product/jquery.multifield.min.js')}}"></script>
-    <script src="{{ asset('js/product/jquery.multifield.js')}}"></script>
-    <script src="./src/bootstrap-input-spinner.js"></script>
+    <br>
+    <div class="col-md-12">
+        @yield('content')
+    </div>
+            
+      
+<!-- ./wrapper -->
+
+<!-- Ekko Lightbox -->
+<script src="{{ asset('admin/plugins/ekko-lightbox/ekko-lightbox.min.js')}}"></script>
+<!-- Filterizr-->
+<script src="{{ asset('admin/plugins/filterizr/jquery.filterizr.min.js')}}"></script>
+<!-- FLOT CHARTS -->
+<script src="{{ asset('admin/plugins/flot/jquery.flot.js')}}"></script>
+<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+<script src="{{ asset('admin/plugins/flot/plugins/jquery.flot.resize.js')}}"></script>
+<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+<script src="{{ asset('admin/plugins/flot/plugins/jquery.flot.pie.js')}}"></script>
+<!-- jQuery -->
+<script src="{{ asset('admin/plugins/jquery/jquery.min.js')}}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- DataTables  & Plugins -->
+<script src="{{ asset('admin/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{ asset('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{ asset('admin/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{ asset('admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{ asset('admin/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+<script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+<script src="{{ asset('admin/plugins/jszip/jszip.min.js')}}"></script>
+<script src="{{ asset('admin/plugins/pdfmake/pdfmake.min.js')}}"></script>
+<script src="{{ asset('admin/plugins/pdfmake/vfs_fonts.js')}}"></script>
+<script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
+<script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
+<script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('admin/dist/js/adminlte.min.js')}}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{ asset('admin/dist/js/demo.js')}}"></script>
+
+<!-- Page specific script -->
 <script>
-    $("input[type='number']").inputSpinner()
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $("#example3").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "order": [[5, "asc"]]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+
+    $(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                pageSize: 'LEGAL'
+            }
+        ]
+    } );
+} );
+  });
 </script>
 <script>
   function goBack() {

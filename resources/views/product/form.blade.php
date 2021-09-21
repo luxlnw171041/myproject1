@@ -1,33 +1,72 @@
 <div class="form-group {{ $errors->has('title') ? 'has-error' : ''}}">
-    <label for="title" class="control-label">{{ 'ชื่อสินค้า' }}</label>
-    <input class="form-control" name="title" type="text" id="title" value="{{ isset($product->title) ? $product->title : ''}}" >
+    <label for="title" class="control-label">{{ 'Product name' }}</label>
+    <input class="form-control" name="title" type="text" id="title" value="{{ isset($product->title) ? $product->title : ''}}" required>
     {!! $errors->first('title', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('content') ? 'has-error' : ''}}">
-    <label for="content" class="control-label">{{ 'รายละเอียด' }}</label>
+    <label for="content" class="control-label">{{ 'Product Detail' }}</label>
     <textarea class="form-control" rows="5" name="content" type="textarea" id="content" >{{ isset($product->content) ? $product->content : ''}}</textarea>
     {!! $errors->first('content', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('price') ? 'has-error' : ''}}">
-    <label for="price" class="control-label">{{ 'ราคา' }}</label>
-    <input class="form-control" name="price" type="number" id="price" value="{{ isset($product->price) ? $product->price : ''}}" >
-    {!! $errors->first('price', '<p class="help-block">:message</p>') !!}
+<div class="row">
+    <div class="col-md-6 form-group {{ $errors->has('price') ? 'has-error' : ''}}">
+        <label for="price" class="control-label">{{ 'Price' }}</label>
+        <input class="form-control" name="price" type="number" id="price" value="{{ isset($product->price) ? $product->price : ''}}" required>
+        {!! $errors->first('price', '<p class="help-block">:message</p>') !!}
+    </div>
+    <div class="col-md-6 form-group {{ $errors->has('cost') ? 'has-error' : ''}}">
+        <label for="cost" class="control-label">{{ 'Cost' }}</label>
+        <input class="form-control" name="cost" type="number" id="cost" value="{{ isset($product->cost) ? $product->cost : ''}}" required>
+        {!! $errors->first('cost', '<p class="help-block">:message</p>') !!}
+    </div>
+    <div class="col-md-6 form-group {{ $errors->has('photo') ? 'has-error' : ''}}">
+        <label for="photo" class="control-label">{{ 'Photo' }}</label>
+        <input class="form-control" name="photo" type="file" id="photo" value="{{ isset($product->photo) ? $product->photo : ''}}" required>
+        {!! $errors->first('photo', '<p class="help-block">:message</p>') !!}
+    </div>
+    <div class="col-md-6 form-group {{ $errors->has('quantity') ? 'has-error' : ''}}">
+        <label for="quantity" class="control-label">{{ 'Quantity' }}</label>
+        <input class="form-control" name="quantity" type="number" id="quantity" value="{{ isset($product->quantity) ? $product->quantity : ''}}" required>
+        {!! $errors->first('quantity', '<p class="help-block">:message</p>') !!}
+    </div>
 </div>
-<div class="form-group {{ $errors->has('cost') ? 'has-error' : ''}}">
-    <label for="cost" class="control-label">{{ 'ต้นทุน' }}</label>
-    <input class="form-control" name="cost" type="number" id="cost" value="{{ isset($product->cost) ? $product->cost : ''}}" >
-    {!! $errors->first('cost', '<p class="help-block">:message</p>') !!}
+<!-- <div class="form-group {{ $errors->has('category_id') ? 'has-error' : ''}}">
+    <label for="category_id" class="control-label">{{ 'category' }}</label>
+    <input class="form-control" name="category_id" type="number" id="category_id" value="{{ isset($orderproduct->category_id) ? $orderproduct->category_id : ''}}" >
+    {!! $errors->first('category_id', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('photo') ? 'has-error' : ''}}">
-    <label for="photo" class="control-label">{{ 'รูปสินค้า' }}</label>
-    <input class="form-control" name="photo" type="file" id="photo" value="{{ isset($product->photo) ? $product->photo : ''}}" >
-    {!! $errors->first('photo', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('quantity') ? 'has-error' : ''}}">
-    <label for="quantity" class="control-label">{{ 'จำนวน' }}</label>
-    <input class="form-control" name="quantity" type="number" id="quantity" value="{{ isset($product->quantity) ? $product->quantity : ''}}" >
-    {!! $errors->first('quantity', '<p class="help-block">:message</p>') !!}
-</div>
+<div class="form-group {{ $errors->has('category') ? 'has-error' : ''}}">
+    <label for="category" class="control-label">{{ 'category' }}</label>
+    <input class="form-control" name="category" type="text" id="category" value="{{ isset($orderproduct->category) ? $orderproduct->category : ''}}" >
+    {!! $errors->first('category', '<p class="help-block">:message</p>') !!}
+</div> -->
+ 
+@if(!empty($product->category_id))
+    <div class="form-group {{ $errors->has('category') ? 'has-error' : ''}}">
+            <label for="category" class="control-label">{{ 'category' }}</label>
+            <select name="category_id" class="form-control">
+                    @php
+                        $item = $product->categorys;
+                    @endphp
+                <option value="0" selected="selected">{{ $item->category }}</option>
+                @foreach($category as $item)
+                    <option value="{{ isset($item->id) ? $item->id : ''}}">{{ $item->category }}</option>
+                @endforeach
+            </select>
+            {!! $errors->first('category', '<p class="help-block">:message</p>') !!}
+    </div>
+@else   
+    <div class="form-group {{ $errors->has('category') ? 'has-error' : ''}}">
+            <label for="category" class="control-label">{{ 'category' }}</label>
+            <select name="category_id" class="form-control">
+                <option value="0" selected="selected">Plese select</option>
+                @foreach($category as $item)
+                    <option value="{{ isset($item->id) ? $item->id : ''}}">{{ $item->category }}</option>
+                @endforeach
+            </select>
+            {!! $errors->first('category', '<p class="help-block">:message</p>') !!}
+    </div>
+@endif
 <!-- <div class="form-group {{ $errors->has('price') ? 'has-error' : ''}}">
     <label for="price" class="control-label">{{ 'Price' }}</label>
     <input class="form-control" name="price" type="number" id="price" value="{{ isset($productattribute->price) ? $productattribute->price : ''}}" >
@@ -45,7 +84,13 @@
     {!! $errors->first('color', '<p class="help-block">:message</p>') !!}
 </div>   -->
 
-
 <div class="form-group">
-    <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
+    <div class="row">
+        <div class="col-md-6">
+            <a href="#" onclick="goBack()" title="Back"><button class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+        </div>
+        <div class="col-md-6 d-flex justify-content-end">
+        <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
+        </div>
+    </div>
 </div>

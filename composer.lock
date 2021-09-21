@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e56f41d7ade4cf712ec63834a5caa141",
+    "content-hash": "9169da893c077ad2efe5774e0dc9afc9",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2422,6 +2422,57 @@
                 "random"
             ],
             "time": "2019-01-03T20:59:08+00:00"
+        },
+        {
+            "name": "phattarachai/thaidate",
+            "version": "1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phattarachai/thaidate.git",
+                "reference": "4a759081179f3401a5dd47a39db923aee51c301c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phattarachai/thaidate/zipball/4a759081179f3401a5dd47a39db923aee51c301c",
+                "reference": "4a759081179f3401a5dd47a39db923aee51c301c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.13",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Phattarachai\\Thaidate\\ThaidateServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phattarachai\\Thaidate\\": "src"
+                },
+                "files": [
+                    "src/function.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Phattarachai Chaimongkol",
+                    "email": "phatchai28@gmail.com"
+                }
+            ],
+            "description": "A Laravel, PHP package for thaidate() function",
+            "homepage": "https://phattarachai.dev",
+            "time": "2021-06-07T20:17:19+00:00"
         },
         {
             "name": "phenx/php-font-lib",

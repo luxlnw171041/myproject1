@@ -19,6 +19,10 @@ class ProductAttributeController extends Controller
     {
         $keyword = $request->get('search');
         $perPage = 25;
+        $pricemax  = $request->get('pricemax');
+        $pricemin  = $request->get('pricemin');
+
+        $needFilter =  !empty($pricemax)    || !empty($pricemin);
 
         if (!empty($keyword)) {
             $productattribute = ProductAttribute::where('productattribute_id', 'LIKE', "%$keyword%")
@@ -28,6 +32,7 @@ class ProductAttributeController extends Controller
                 ->orWhere('stock', 'LIKE', "%$keyword%")
                 ->orWhere('sku', 'LIKE', "%$keyword%")
                 ->orWhere('status', 'LIKE', "%$keyword%")
+                ->whereBetween('price', [$pricemin,$pricemax])
                 ->orWhere('created_at', 'LIKE', "%$keyword%")
                 ->orWhere('updated_at', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);

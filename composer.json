@@ -18,7 +18,8 @@
         "laravel/tinker": "^2.0",
         "laravelcollective/html": "^6.1",
         "mpdf/mpdf": "^8.0",
-        "paragonie/random_compat": "2.*"
+        "paragonie/random_compat": "2.*",
+        "phattarachai/thaidate": "^1.2"
     },
     "require-dev": {
         "appzcoder/crud-generator": "^3.2",

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use App\Product;
+use App\Procat;
+use App\Category;
 use App\ProductAttribute;
 use App\product_attributes;
 use Illuminate\Http\Request;
@@ -21,16 +23,30 @@ class ProductController extends Controller
     {
         $keyword = $request->get('search');
         $perPage = 25;
+        $pricemax  = $request->get('pricemax');
+        $pricemin  = $request->get('pricemin');
+        $title  = $request->get('title');
+        $cost  = $request->get('cost');
 
-        if (!empty($keyword)) {
-            $product = Product::where('title', 'LIKE', "%$keyword%")
-                ->orWhere('cost', 'LIKE', "%$keyword%")
+        $category = Category::all(['id', 'category']);
+        $category1  = $request->get('category');
+
+        $pricemin = empty($pricemin) ? 0 :$pricemin;
+        $pricemax = empty($pricemax) ? 99000000 :$pricemax;
+        
+        $needFilter =  !empty($pricemax)    || !empty($pricemin) || !empty($title) || !empty($cost);
+
+        if ($needFilter) {
+            $product = Product::where('title', 'LIKE', '%' .$title.'%')
+                ->where('cost',    'LIKE', '%' .$cost.'%')
+                ->whereBetween('price', [$pricemin,$pricemax])
                 ->latest()->paginate($perPage);
         } else {
             $product = Product::latest()->paginate($perPage);
         }
 
-        return view('product.index', compact('product' ));
+        
+        return view('product.index', compact('product' , 'category'));
     }
 
     /**
@@ -39,10 +55,23 @@ class ProductController extends Controller
      * @return \Illuminate\View\View
      */
     public function create()
+    
     {
-        return view('product.create');
+        $category = Category::all(['id', 'category']);
+
+        return view('product.create' , compact( 'category'));
     }
 
+    public function category(Request $request)
+    
+    {
+        $product = Product::findOrFail($request);
+
+        $categoryName = $request->category;
+        $productcat = DB::table('products')->leftJoin( 'categorys' , 'categorys.id' , '=', 'products.category_id')->where('categorys.category' , '=', $categoryName)->paginate(2);
+
+        return view('product.test', compact('productcat' ,'product'));
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -60,7 +89,7 @@ class ProductController extends Controller
         }
 
         Product::create($requestData);
-
+        
         return redirect('product')->with('flash_message', 'Product added!');
     }
 
@@ -73,6 +102,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
+        $product = Product::all()->random(3);
         $product = Product::findOrFail($id);
         $product_attribute = DB::table('product_attributes')->get();
         
@@ -92,7 +122,9 @@ class ProductController extends Controller
         ->groupBy('stock')
         ->get();
 
-        return view('product.show', compact('product' , 'size' , 'color' ,'stock' ,'product_attribute'));
+        $category = Category::all(['id', 'category']);
+        $procat = Procat::all(['id', 'product_id' ,'catagory_id']);
+        return view('product.show', compact('product' , 'size' , 'color' ,'stock' ,'product_attribute' ,'category' ,'procat'));
         
     }
 
@@ -107,8 +139,9 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
+        $category = Category::all(['id', 'category']);
 
-        return view('product.edit', compact('product'));
+        return view('product.edit', compact('product' ,'category'));
     }
 
     /**
@@ -130,7 +163,13 @@ class ProductController extends Controller
 
         $product = Product::findOrFail($id);
         $product->update($requestData);
+        $category = Category::all(['id', 'category']);
 
+        if (\Auth::user()->role == 'admin') {
+            return redirect('stock')->with('flash_message', 'Product updated!');
+            // or return route('routename');
+        }
+    
         return redirect('product')->with('flash_message', 'Product updated!');
     }
 
@@ -144,6 +183,11 @@ class ProductController extends Controller
     public function destroy($id)
     {
         Product::destroy($id);
+
+        if (\Auth::user()->role == 'admin') {
+            return redirect('stock')->with('flash_message', 'Product deleted!');
+            // or return route('routename');
+        }
 
         return redirect('product')->with('flash_message', 'Product deleted!');
     }
@@ -163,4 +207,5 @@ class ProductController extends Controller
         return view('product.stock', compact('product' ));
     
     }
+    
 }

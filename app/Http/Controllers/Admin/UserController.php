@@ -112,13 +112,29 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        
         $users = User::all();
         return view ('admin.users.edit')->with([
             'user' => $user ,
             
         ]);
+
+        
         
     }
+    public function editadmin($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.users.editadmin', compact('user'));
+
+        
+        
+    }
+    // public function editadmin($id)
+    // {
+    //     $users = User::findOrFail($id);
+    //     return view('admin.users.editadmin', compact('users'));
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -129,10 +145,21 @@ class UserController extends Controller
      */
     public function update(Request $request,$id)
     {
-        $requestData = $request->all();
-        $users = User::findOrFail($id);
-        $users->update($requestData);
-        return redirect('admin/users')->with('flash_message', 'User updated!');
+        
+
+        if (Auth::id() == $id or Auth::user()->role == "admin" )
+        {
+            $requestData = $request->all();
+            $users = User::findOrFail($id);
+            $users->update($requestData);
+            return redirect('admin/user')->with('flash_message', 'User updated!');
+            
+        }else
+            $requestData = $request->all();
+            $users = User::findOrFail($id);
+            $users->update($requestData);
+            return redirect('admin/users')->with('flash_message', 'User updated!');
+
     }
     
     
