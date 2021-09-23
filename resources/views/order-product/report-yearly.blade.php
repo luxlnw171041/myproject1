@@ -10,21 +10,20 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-              <li class="breadcrumb-item active">Yearly Sale Report</li>
+              <li class="breadcrumb-item"><a href="{{ url('/home') }}">หน้าหลัก</a></li>
+              <li class="breadcrumb-item active">ยอดขายรายปี</li>
             </ol>
           </div>
         </div>
       </div><!-- /.container-fluid -->
-    </section>
+    </section> <div>
+      <h1 class="col-md-12 text-center">ยอดขายรายปี</h1><br>
+    </div>
 <section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Yearly Sale Report</h3>
-              </div><br>
+            <div class="card"><br>
                         <form method="GET" action="{{ url('/order-product/reportyearly') }}" accept-charset="UTF-8" >
                             <div class="form-row" style="margin-left:20px">
                                 <div class="col-4">
@@ -43,27 +42,28 @@
                                 </div>
                                 <div class="col-4">
                                     <button class="btn btn-success" type="submit">
-                                        <i class="fa fa-search"></i> Search
+                                        <i class="fa fa-search"></i> ค้นหา
                                     </button>
                                 </div>
                             </div>   
                         </form>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="report" class="table table-bordered table-striped">
                     
                 
                         
                   <thead class="text-center">
                   <tr>
-                  <th>User</th><th>Order Time</th><th>Order id</th><th>Product</th><th>Quantity</th><th>Price</th><th>Total</th><th>Cost</th>
+                  <th>ชื่อผู้ใช้</th><th>เวลาสั่งซื้อ</th><th>รหัสสั่งซื้อ</th><th>สินค้า</th><th>จำนวน</th><th>ราคา</th><th>รวม</th><th>ต้นทุน</th>
                   </tr>
                   </thead>
                   <tbody class="text-center">
                   @foreach($orderproduct as $item)
                   <tr>
                     <td>{{ $item->user->name }}</td>
-                    <td class="text-center">{{ $item->created_at->format('l d F Y') }}  <br> Time {{ $item->created_at->format('H:i') }}</td>
+                    <td> {{ $item->created_at->thaidate('l j F Y') }} <br> เวลา {{ $item->created_at->format('h:i') }}</td>
+                    <!-- <td class="text-center">{{ $item->created_at->format('l d F Y') }}  <br> Time {{ $item->created_at->format('H:i') }}</td> -->
                     <!-- <td>{{ $item->created_at  }}</td> -->
                     <td>{{ $item->order_id }}</td>
                     <td>                                            
@@ -86,9 +86,9 @@
                   @endforeach
                   </tfoot>
                 </table>
-                <h2>Total Price {{ number_format($orderproduct->sum('sum_total')) }} Bath</h2>
-                <h2>Total Cost {{ number_format( (($orderproduct->sum('sum_total'))) -  (($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost')))) }} Bath</h2>
-                <h2>Net Profit {{ number_format(($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost'))) }} Bath</h2>
+                <h2>รวมทั้งหมด {{ number_format($orderproduct->sum('sum_total')) }} บาท</h2>
+                <h2>ต้นทุนทั้งหมด {{ number_format( (($orderproduct->sum('sum_total'))) -  (($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost')))) }} บาท</h2>
+                <h2>กำไล {{ number_format(($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost'))) }} บาท</h2>
                 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <div id="chart_div"></div>
       

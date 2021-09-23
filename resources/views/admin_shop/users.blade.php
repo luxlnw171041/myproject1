@@ -12,31 +12,31 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ url('product') }}">Home</a></li>
-              <li class="breadcrumb-item active">Users</li>
+              <li class="breadcrumb-item"><a href="{{ url('product') }}">หน้าหลัก</a></li>
+              <li class="breadcrumb-item active">ผู้ใช้</li>
             </ol>
           </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
+    <div>
+      <h1 class="col-md-12 text-center">ผู้ใช้ระบบ</h1><br>
+    </div>
 <section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Users</h3>
-              </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="user" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>User id</th>
-                    <th>name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Action</th>
+                    <th>รหัสผู้ใช้</th>
+                    <th>ชื่อผู้ใช้</th>
+                    <th>อีเมล</th>
+                    <th>สถานะ</th>
+                    <th>เครื่องมือ</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -48,15 +48,13 @@
                     <td> {{ $user->role }}</td>
                     <td class="text-center">
                         <!-- <a class="btn btn-primary btn-sm" href="{{ url('admin/users/' . $user->id . '/edit') }}" title="Edit User">Edit</a> -->
-                        <a class="btn btn-primary btn-sm" href="{{ url('admin/user/' . $user->id . '/edit') }}" title="Edit User">Edit</a>
+                        <a class="btn btn-primary btn-sm" href="{{ url('admin/user/' . $user->id . '/edit') }}" title="Edit User">แก้ไข</a>
                        
                         @if (Auth::user()->role === "admin" )
                             <form method="POST" action="{{ url('admin/users/' . $user->id) }}" accept-charset="UTF-8" style="display:inline">
                                 {{ method_field('DELETE') }}
                                 {{ csrf_field() }}
-                                <!-- <button type="submit" class="btn btn-danger btn-sm" title="Delete User" onclick="return confirm(&quot;Confirm delete?&quot;)">
-                                <i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button> -->
-                            
+                                
                             </form>
                         @endif
                     </td>

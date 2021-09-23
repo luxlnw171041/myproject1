@@ -11,32 +11,33 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ url('product') }}">Home</a></li>
-              <li class="breadcrumb-item active">stock</li>
+              <li class="breadcrumb-item"><a href="{{ url('product') }}">หน้าหลัก</a></li>
+              <li class="breadcrumb-item active">หมวดหมู่สินค้า</li>
             </ol>
           </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
+    <div>
+      <h1 class="col-md-12 text-center">หมวดหมู่สินค้า</h1><br>
+    </div>
+
+    
 <section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Category</h3>
-                <div class="d-flex justify-content-end">
-                <a href="{{ url('admin/category/create') }}" class="btn btn-success btn-sm" title="Add New Category">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                        </a>
-                </div>
-              </div>
-              <!-- /.card-header -->
               <div class="card-body">
-                <table id="example3" class="table table-bordered table-striped">
+              <div class="d-flex justify-content-end" style="margin-top:-10px;margin-bottom:10px;">
+                <a href="{{ url('admin/category/create') }}" class="btn btn-success btn-sm " title="Add New Category">
+                  <i class="fa fa-plus" aria-hidden="true"></i> เพิ่มหมวดหมู่
+                </a>
+              </div>
+                <table id="category1" class="table table-bordered table-striped">
                   <thead>
                     <tr>
-                        <th>id</th><th>Category</th><th>Actions</th>
+                        <th>รหัสหมวดหมู่</th><th>หมวดหมู่</th><th>เครื่อมือ</th>
                     </tr>
                   </thead>
                     <tbody>
@@ -46,12 +47,12 @@
                                 <td>{{ $item->category }} </td>
                                 <td>
                                     <!-- <a href="{{ url('/category/' . $item->id) }}" title="View Category"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a> -->
-                                    <a href="{{ url('admin/category/' . $item->id . '/edit') }}" title="Edit Category"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                    <a href="{{ url('admin/category/' . $item->id . '/edit') }}" title="Edit Category"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> แก้ไข</button></a>
 
                                     <form method="POST" action="{{ url('admin/category' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
                                         {{ method_field('DELETE') }}
                                         {{ csrf_field() }}
-                                        <button type="submit" class="btn btn-danger btn-sm" title="Delete Category" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                                        <button type="submit" class="btn btn-danger btn-sm" title="Delete Category" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> ลบ</button>
                                     </form>
                                 </td>
                             </tr>

@@ -1,12 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+        <div>
+    <h1 class="col-md-12 text-center">แก้ไขการชำระเงิน </h1><br>
+    </div>
     <div class="container">
         <div class="row d-flex justify-content-center">
 
             <div class="col-md-10">
                 <div class="card">
-                    <div class="card-header">Edit Payment #{{ $payment->id }}</div>
                     <div class="card-body">
                         <!-- <a href="{{ url('/payment') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a> -->
                         

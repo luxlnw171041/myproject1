@@ -26,6 +26,7 @@ class ProductController extends Controller
         $pricemax  = $request->get('pricemax');
         $pricemin  = $request->get('pricemin');
         $title  = $request->get('title');
+        $category_id  = $request->get('$category_id');
         $cost  = $request->get('cost');
 
         $category = Category::all(['id', 'category']);
@@ -34,11 +35,12 @@ class ProductController extends Controller
         $pricemin = empty($pricemin) ? 0 :$pricemin;
         $pricemax = empty($pricemax) ? 99000000 :$pricemax;
         
-        $needFilter =  !empty($pricemax)    || !empty($pricemin) || !empty($title) || !empty($cost);
+        $needFilter =  !empty($pricemax)    || !empty($pricemin) || !empty($title) || !empty($cost) || !empty($category_id);
 
         if ($needFilter) {
             $product = Product::where('title', 'LIKE', '%' .$title.'%')
                 ->where('cost',    'LIKE', '%' .$cost.'%')
+                ->where('cost',    'LIKE', '%' .$category_id.'%')
                 ->whereBetween('price', [$pricemin,$pricemax])
                 ->latest()->paginate($perPage);
         } else {
@@ -89,6 +91,10 @@ class ProductController extends Controller
         }
 
         Product::create($requestData);
+        if (\Auth::user()->role == 'admin') {
+            return redirect('admin/stock')->with('flash_message', 'Product updated!');
+            // or return route('routename');
+        }
         
         return redirect('product')->with('flash_message', 'Product added!');
     }
@@ -166,7 +172,7 @@ class ProductController extends Controller
         $category = Category::all(['id', 'category']);
 
         if (\Auth::user()->role == 'admin') {
-            return redirect('stock')->with('flash_message', 'Product updated!');
+            return redirect('admin/stock')->with('flash_message', 'Product updated!');
             // or return route('routename');
         }
     
@@ -185,7 +191,7 @@ class ProductController extends Controller
         Product::destroy($id);
 
         if (\Auth::user()->role == 'admin') {
-            return redirect('stock')->with('flash_message', 'Product deleted!');
+            return redirect('admin/stock')->with('flash_message', 'Product deleted!');
             // or return route('routename');
         }
 

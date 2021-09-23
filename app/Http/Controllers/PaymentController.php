@@ -81,12 +81,12 @@ class PaymentController extends Controller
         }
         Payment::create($requestData);
 
-        //update order status เป็น checking
         Order::where('id',$requestData['order_id'])
             ->update([
                 'status'=>'checking',
                 'checking_at'=>date("Y-m-d H:i:s"), //timestamp ปัจจุบัน
             ]);
+            
         return redirect('payment')->with('flash_message', 'Payment added!');
     }
 

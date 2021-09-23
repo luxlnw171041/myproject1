@@ -10,41 +10,41 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-              <li class="breadcrumb-item active">Payment</li>
+              <li class="breadcrumb-item"><a href="{{ url('/home') }}">หน้าหลัก</a></li>
+              <li class="breadcrumb-item active">รายการชำระเงิน</li>
             </ol>
           </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
+    <div>
+      <h1 class="col-md-12 text-center">รายการชำระเงิน</h1><br>
+    </div>
 <section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Payment</h3>
-              </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped" >
+                <table id="payment" class="table table-bordered table-striped" >
                   <thead class="text-center">
                   <tr>
                   <tr>
-                    <th>time</th>
-                    <th>User</th>
-                    <th>Order Id</th>
-                    <th>Price</th>
-                    <th>Slip</th>
-                    <th>address</th>
-                    <th>tel</th>
+                    <th>เวลาชำระเงิน</th>
+                    <th>ชื่อผู้ใช้</th>
+                    <th>เลขสั่งซื้อ</th>
+                    <th>ราคา</th>
+                    <th>หลักฐานการชำระเงิน</th>
+                    <th>ที่อยู่</th>
+                    <th>เบอร์โทรศัพท์</th>
                   </tr>
                   </thead>
                   <tbody class="text-center">
                   @foreach($payment as $item)
                   <tr>
-                    <!-- <td>{{ $item->created_at->thaidate('l j F Y') }} <br> เวลา {{ $item->created_at->format('H:m') }}</td> -->
-                                <td class="text-center">{{ $item->created_at->format('l d F Y') }}  <br> Time {{ $item->created_at->format('H:i') }}</td>
+                    <td>{{ $item->created_at->thaidate('l j F Y') }} <br> เวลา {{ $item->created_at->format('H:m') }}</td>
+                                <!-- <td class="text-center">{{ $item->created_at->format('l d F Y') }}  <br> Time {{ $item->created_at->format('H:i') }}</td> -->
                     <td>{{ $item->user->name }}</td>
                     <td>{{ $item->order_id }}</td>
                     <td>{{ $item->total }}</td>

@@ -70,10 +70,9 @@ class OrderController extends Controller
 
         $requestData = $request->all();
 
-        //รวมราคาสินค้าในตะกร้า
         $total = OrderProduct::whereNull('order_id')
             ->where('user_id', Auth::id() )->sum('total');
-        //กำหนดราคารวม, ผู้ใช้, สถานะ
+            
         $requestData['total'] = $total;
         $requestData['user_id'] = Auth::id();
         $requestData['status'] = "created"; 
@@ -83,7 +82,6 @@ class OrderController extends Controller
         OrderProduct::whereNull('order_id')
             ->where('user_id', Auth::id() )->update(['order_id'=> $order->id]);
 
-        //ปรับลดสินค้าในสต๊อก
         $order_products = $order->order_products;
         foreach($order_products as $item)
         {

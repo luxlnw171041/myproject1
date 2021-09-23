@@ -15,6 +15,9 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
+    <div>
+        <h1 class="col-md-12 text-center">ชำระเงิน</h1><br>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -72,25 +75,25 @@
                             <div class="row" style="font-size:15px">
                                 <div class="col-md-12">
                                     <br>
-                                        <h5> Order No {{ $order->id }}</h5>
+                                        <h5>หมายเลขสั่งซื้อที่ {{ $order->id }}</h5>
                                     <br>
                                 </div>
                                 <div class="col-md-2 ">
-                                   <b>Name</b> 
+                                   <b>ชื่อ</b> 
                                 </div>
                                 <div class="col-md-6">
                                     {{ $order->user->name }}
                                 </div>
                                 <div class="col-md-12"><hr></div>
                                 <div class="col-md-2">
-                                    <b>Date</b> 
+                                    <b>วันที่สั่งซื้อ</b> 
                                 </div>
                                 <div class="col-md-6">
                                     {{ $order->created_at->thaidate('l j F Y') }} 
                                 </div>
                                 <div class="col-md-12"><hr></div>
                                 <div class="col-md-2">
-                                    <b>Price</b> 
+                                    <b>ราคา</b> 
                                 </div>
                                 <div class="col-md-6">
                                     {{ number_format($order->total) }} บาท

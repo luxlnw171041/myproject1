@@ -12,11 +12,12 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="{{ url('product') }}">Home</a></li>
-                <li class="breadcrumb-item active">stock</li>
+                <li class="breadcrumb-item"><a href="{{ url('product') }}">หน้าหลัก</a></li>
+                <li class="breadcrumb-item active">เพิ่มสินค้า</li>
                 </ol>
             </div>
             </div>
+            <h1 class="col-md-12 text-center">เพิ่มสินค้า</h1><br>
     </div><!-- /.container-fluid -->
 </section>
     <section class="content">
@@ -24,9 +25,9 @@
             <div class="row">
             <div class="col-12">
                 <div class="card">
-                <div class="card-header">
+                <!-- <div class="card-header">
                     <h3 class="card-title">Create New Product</h3>
-                </div>
+                </div> -->
                 <!-- /.card-header -->
                 <div class="card-body">
                     @if ($errors->any())

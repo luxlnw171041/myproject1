@@ -37,7 +37,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{'user'}}" class="brand-link">
+    <a href="{{ url('/admin/stock') }}" class="brand-link">
       <span class="brand-text font-weight-light">Admin</span>
     </a>
 
@@ -52,7 +52,7 @@
             <a href="{{ url('admin/stock') }}" class="nav-link">
               <i class="nav-icon fas fa-cubes"></i>
               <p>
-                Stock
+                จัดการสินค้า
               </p>
             </a>
           </li>
@@ -60,7 +60,7 @@
             <a href="{{ url('admin/category') }}" class="nav-link">
               <i class="nav-icon fas fa-book"></i>
               <p>
-                Category
+                จัดการหมวดหมู่สินค้า
               </p>
             </a>
           </li>
@@ -68,7 +68,7 @@
             <a href="{{ url('/admin/order') }}" class="nav-link">
               <i class="nav-icon fas fa-shopping-cart"></i>
               <p>
-                Order
+                รายงานการสั่งซื้อ
               </p>
             </a>
           </li>
@@ -76,7 +76,7 @@
             <a href="{{ url('/admin/payment') }}" class="nav-link">
               <i class="nav-icon fas fa-money-bill-alt"></i>
               <p>
-                Payment
+                รายงานการชำระเงิน
               </p>
             </a>
           </li>
@@ -84,7 +84,7 @@
             <a href="{{ url('/admin/user') }}" class="nav-link">
                 <i class="nav-icon fas fa-users"></i>
               <p>
-                 User
+                 จัดการผู้ใช้
               </p>
             </a>
           </li>
@@ -92,7 +92,7 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>
-                Sale Report
+                รายงานยอดขาย
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -100,19 +100,19 @@
               <li class="nav-item">
                 <a href="{{ url('/order-product/reportdaily') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Daily sale report</p>
+                  <p>ยอดขายรายวัน</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ url('/order-product/reportmonthly') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Monthly sale report</p>
+                  <p>ยอดขายรายเดือน</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ url('/order-product/reportyearly') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Yearly sale report</p>
+                  <p>ยอดขายรายปี</p>
                 </a>
               </li>
             </ul>
@@ -162,7 +162,6 @@
 <script src="{{ asset('admin/plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{ asset('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{ asset('admin/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
-<script src="{{ asset('admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 <script src="{{ asset('admin/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
 <script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
 <script src="{{ asset('admin/plugins/jszip/jszip.min.js')}}"></script>
@@ -171,7 +170,6 @@
 <script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
 <script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
-
 <!-- AdminLTE App -->
 <script src="{{ asset('admin/dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
@@ -181,18 +179,155 @@
 <script>
   $(function () {
     $("#example1").DataTable({
-      "order": [],
       "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      
+      "buttons": [
+        { extend: 'print', key: 'p', text: 'พิมพ์' , title: "รายงานสินค้า"}],
+      "oLanguage": {
+                      "sLengthMenu": "แสดง _MENU_ เร็คคอร์ด ต่อหน้า",
+                      "sZeroRecords": "ไม่เจอข้อมูลที่ค้นหา",
+                      "sInfo": "แสดง _START_ ถึง _END_ ของ _TOTAL_ เร็คคอร์ด",
+                      "sInfoEmpty": "แสดง 0 ถึง 0 ของ 0 เร็คคอร์ด",
+                      "sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",
+                      "sSearch": "ค้นหา :",
+                    }
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
-    $("#example3").DataTable({
-      "order": [[1, "asc"]]
+    $("#stock").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": [
+        { extend: 'print', key: 'p', text: 'พิมพ์' , title: "<center>รายงานสินค้า</center>"}],
+      "oLanguage": {
+                      "sLengthMenu": "แสดง _MENU_ เร็คคอร์ด ต่อหน้า",
+                      "sZeroRecords": "ไม่เจอข้อมูลที่ค้นหา",
+                      "sInfo": "แสดง _START_ ถึง _END_ ของ _TOTAL_ เร็คคอร์ด",
+                      "sInfoEmpty": "แสดง 0 ถึง 0 ของ 0 เร็คคอร์ด",
+                      "sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",
+                      "sSearch": "ค้นหา :",
+                      "oPaginate": 
+                        {
+                          "sNext": "ถัดไป",
+                          "sPrevious": "กลับ"
+                        }
+                    }
+                    
+    }).buttons().container().appendTo('#stock_wrapper .col-md-6:eq(0)');
+
+  $("#order").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": [
+        { extend: 'print', key: 'p', text: 'พิมพ์' , title: "<center>รายงานการสั่งสินค้า</center>"}],
+      "oLanguage": {
+                      "sLengthMenu": "แสดง _MENU_ เร็คคอร์ด ต่อหน้า",
+                      "sZeroRecords": "ไม่เจอข้อมูลที่ค้นหา",
+                      "sInfo": "แสดง _START_ ถึง _END_ ของ _TOTAL_ เร็คคอร์ด",
+                      "sInfoEmpty": "แสดง 0 ถึง 0 ของ 0 เร็คคอร์ด",
+                      "sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",
+                      "sSearch": "ค้นหา :",
+                      "oPaginate": 
+                        {
+                          "sNext": "ถัดไป",
+                          "sPrevious": "กลับ"
+                        }
+                    }
+    }).buttons().container().appendTo('#order_wrapper .col-md-6:eq(0)');
+
+    $("#payment").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": [
+        {   extend: 'print', 
+            key: 'p', 
+            text: 'พิมพ์' , 
+            title: " <center> รายงานการชำระเงิน <center>"
+        }],
+      "oLanguage": {
+                      "sLengthMenu": "แสดง _MENU_ เร็คคอร์ด ต่อหน้า",
+                      "sZeroRecords": "ไม่เจอข้อมูลที่ค้นหา",
+                      "sInfo": "แสดง _START_ ถึง _END_ ของ _TOTAL_ เร็คคอร์ด",
+                      "sInfoEmpty": "แสดง 0 ถึง 0 ของ 0 เร็คคอร์ด",
+                      "sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",
+                      "sSearch": "ค้นหา :",
+                      "oPaginate": 
+                        {
+                          "sNext": "ถัดไป",
+                          "sPrevious": "กลับ"
+                        }
+                    }
+    }).buttons().container().appendTo('#payment_wrapper .col-md-6:eq(0)');
+
+
+    $("#user").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": [
+        {   extend: 'print', 
+            key: 'p', 
+            text: 'พิมพ์' , 
+            title: " <center> รายงานผู้ใช้ระบบ <center>"
+        }],
+      "oLanguage": {
+                      "sLengthMenu": "แสดง _MENU_ เร็คคอร์ด ต่อหน้า",
+                      "sZeroRecords": "ไม่เจอข้อมูลที่ค้นหา",
+                      "sInfo": "แสดง _START_ ถึง _END_ ของ _TOTAL_ เร็คคอร์ด",
+                      "sInfoEmpty": "แสดง 0 ถึง 0 ของ 0 เร็คคอร์ด",
+                      "sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",
+                      "sSearch": "ค้นหา :",
+                      "oPaginate": 
+                        {
+                          "sNext": "ถัดไป",
+                          "sPrevious": "กลับ"
+                        }
+                    }
+    }).buttons().container().appendTo('#user_wrapper .col-md-6:eq(0)');
+
+    $("#report").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": [
+        {   extend: 'print', 
+            key: 'p', 
+            text: 'พิมพ์' , 
+            title: " <center> รายงานยอดขาย <center>"
+        }],
+      "oLanguage": {
+                      "sLengthMenu": "แสดง _MENU_ เร็คคอร์ด ต่อหน้า",
+                      "sZeroRecords": "ไม่เจอข้อมูลที่ค้นหา",
+                      "sInfo": "แสดง _START_ ถึง _END_ ของ _TOTAL_ เร็คคอร์ด",
+                      "sInfoEmpty": "แสดง 0 ถึง 0 ของ 0 เร็คคอร์ด",
+                      "sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",
+                      "sSearch": "ค้นหา :",
+                      "oPaginate": 
+                        {
+                          "sNext": "ถัดไป",
+                          "sPrevious": "กลับ"
+                        }
+                    }
+    }).buttons().container().appendTo('#report_wrapper .col-md-6:eq(0)');
+
+    $("#category1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": [
+        {   extend: 'print', 
+            key: 'p', 
+            text: 'พิมพ์' , 
+            title: " <center> รายงานหมวดหมู่สินค้า <center>"
+        }],
+      "oLanguage": {
+                      "sLengthMenu": "แสดง _MENU_ เร็คคอร์ด ต่อหน้า",
+                      "sZeroRecords": "ไม่เจอข้อมูลที่ค้นหา",
+                      "sInfo": "แสดง _START_ ถึง _END_ ของ _TOTAL_ เร็คคอร์ด",
+                      "sInfoEmpty": "แสดง 0 ถึง 0 ของ 0 เร็คคอร์ด",
+                      "sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",
+                      "sSearch": "ค้นหา :",
+                      "oPaginate": 
+                        {
+                          "sNext": "ถัดไป",
+                          "sPrevious": "กลับ"
+                        }
+                    }
+    }).buttons().container().appendTo('#category1_wrapper .col-md-6:eq(0)');
+    $("#example3").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+
+
     }).buttons().container().appendTo('#example3_wrapper .col-md-6:eq(0)');
-
-
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
@@ -204,20 +339,18 @@
     });
 
     $(document).ready(function() {
-      doc.defaultStyle.font = 'Arial';
     $('#example').DataTable( {
         dom: 'Bfrtip',
         buttons: [
             {
-              
                 extend: 'pdfHtml5',
                 orientation: 'landscape',
                 pageSize: 'LEGAL'
             }
         ]
-    });
+    } );
+} );
   });
-});
 </script>
 
 

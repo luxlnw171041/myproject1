@@ -2,6 +2,7 @@
 @extends('layouts.admin')
 
 @section('content')
+
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -11,11 +12,15 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="{{ url('product') }}">Home</a></li>
-                <li class="breadcrumb-item active">stock</li>
+                <li class="breadcrumb-item"><a href="{{ url('product') }}">หน้าหลัก</a></li>
+                <li class="breadcrumb-item active">แก้ไขสินค้า</li>
                 </ol>
             </div>
+            
             </div>
+            <div>
+      <h1 class="col-md-12 text-center">แก้ไขสินค้า</h1><br>
+    </div>
     </div><!-- /.container-fluid -->
 </section>
     <section class="content">
@@ -23,9 +28,9 @@
             <div class="row">
             <div class="col-12">
                 <div class="card">
-                <div class="card-header">
+                <!-- <div class="card-header">
                     <h3 class="card-title">Edit {{ $product->title }}</h3>
-                </div>
+                </div> -->
                 <!-- /.card-header -->
                 <div class="card-body">
                     @if ($errors->any())

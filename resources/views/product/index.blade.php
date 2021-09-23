@@ -7,24 +7,36 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-        <form method="GET" action="{{URL::to('/product')}}" accept-charset="UTF-8"  role="search">
+            <form method="GET" action="{{URL::to('/product')}}" accept-charset="UTF-8"  role="search">
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
                         <div class="row">
-                            <div class="col-md-4 filter ">  
-                                 <input class="form-control" type="text" name="title" id="title" placeholder="title" value="{{ request('title') }}">
-                              </div> 
-                            <div class="col-md-4 filter ">  
-                                 <input class="form-control" type="text" name="pricemin" id="pricemin" placeholder="pricemin" value="{{ request('pricemin') }}">
-                              </div>  
-                              <div class="form-group col-md-4">
-                            <div class="input-group input-group-md ">
-                            <input class="form-control" type="text" name="pricemax" id="pricemax" placeholder="pricemax" value="{{ request('pricemax') }}">
-                                <div class="input-group-append">
-                                <button type="submit" class="btn btn-light bg-info"><i class="fa fa-search"></i></button>
+                            <div class="col-md-3 filter ">  
+                                <input class="form-control" type="text" name="title" id="title" placeholder="ชื่อสินค้า" value="{{ request('title') }}">
+                            </div> 
+                            <div class="col-md-3 filter ">  
+                                <select class="form-control" onchange="location = this.options[this.selectedIndex].value;" >
+                                    <option value="">เลือกหมวดหมู่</option>   
+                                    @foreach($category as $item)
+                                        <option value="{{ url('/product') }}?category_id={{ $item->id }}">{{ $item->category }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <!-- <div class="col-md-3 filter ">  
+                                <input class="form-control" type="text" name="category_id" id="category_id" placeholder="category_id" value="{{ request('category_id') }}">
+                            </div> -->
+                            <div class="col-md-3 filter ">  
+                                <input class="form-control" type="text" name="pricemin" id="pricemin" placeholder="ราคาต่ำสุด" value="{{ request('pricemin') }}">
+                            </div>  
+                            
+                            <div class="form-group col-md-3">
+                                <div class="input-group input-group-md ">
+                                    <input class="form-control" type="text" name="pricemax" id="pricemax" placeholder="ราคาสูงสุด" value="{{ request('pricemax') }}">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-light bg-info"><i class="fa fa-search"></i></button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         </div>
                         
                         <!-- <div class="col-md-2">
@@ -48,18 +60,19 @@
             </form>
         </div>
     </section>
-  </div>
-        <div class="container" style="margin-bottom:-45px">
-            @if (Auth::user()->role  == "admin" )
-                <a href="{{ url('/product/create') }}" class="btn btn-success btn-sm " style="float:right;" title="Add New Product">
-                    <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                </a>
-            @endif
-        </div>
+    <div class="container" style="margin-bottom:-45px">
+        @if (Auth::user()->role  == "admin" )
+            <a href="{{ url('/product/create') }}" class="btn btn-success btn-sm " style="float:right;" title="Add New Product">
+                <i class="fa fa-plus" aria-hidden="true"></i> เพิ่มสินค้าใหม่
+            </a>
+        @endif
+    </div>
+    @if($product->isNotEmpty())
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     @foreach($product as $item)
+                
                         <div class="col mb-5">
                             <div class="card h-100">
                                 <!-- Product image-->
@@ -102,7 +115,7 @@
                                     @if(!empty($item->quantity)>0)
                                     <form method="POST" action="{{ url('/order-product') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                                         {{ csrf_field() }}
-                                        <div class="text-center"><button type="submit" class="btn btn-outline-dark">Add to cart</button></div>
+                                        <div class="text-center"><button type="submit" class="btn btn-outline-dark">เพิ่มไปยังรถเข็น</button></div>
                                         <input class="d-none" name="order_id" type="number" id="order_id" value="" >                                
                                         <input class="d-none" name="product_id" type="number" id="product_id" value="{{ $item->id }}" >                                
                                         <input class="d-none" name="user_id" type="number" id="user_id" value="" >         
@@ -114,7 +127,7 @@
                                     </form>
                                     @else
                                         <hr>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red">สินค้าหมด!!</span>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red" class="text-center">สินค้าหมด!!</span>
                                     @endif
 
                                     <!-- <form method="POST" action="{{ url('/product') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
@@ -132,6 +145,16 @@
                 </div>
             </div>
         </section>
+    @else 
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <h1>ไม่พบสินค้า</h1> 
+                </div>
+            </div>
+        </section>
+    @endif
+        
    
     
     <!-- <div class="container">

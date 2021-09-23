@@ -18,17 +18,17 @@
 </div>
 
 <div class="form-group {{ $errors->has('slip') ? 'has-error' : ''}}">
-    <label for="slip" class="control-label">{{ 'Slip' }} <span class="text-danger">*</span></label>
+    <label for="slip" class="control-label">{{ 'หลักฐานการชำระเงิน' }} <span class="text-danger">*</span></label>
     <input class="form-control" name="slip" type="file" id="slip" value="{{ isset($payment->slip) ? $payment->slip : ''}}" required>
     {!! $errors->first('slip', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('tel') ? 'has-error' : ''}}">
-    <label for="tel" class="control-label">{{ 'Phone Number' }} <span class="text-danger">*</span></label>
+    <label for="tel" class="control-label">{{ 'หมายเลขโทรศัพท์' }} <span class="text-danger">*</span></label>
     <input class="form-control" name="tel" type="number" id="tel" value="{{ isset($payment->tel) ? $payment->tel : ''}}" required></input>
     {!! $errors->first('tel', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('address') ? 'has-error' : ''}}">
-    <label for="address" class="control-label">{{ 'Address' }} <span class="text-danger">*</span></label>
+    <label for="address" class="control-label">{{ 'ที่อยู่' }} <span class="text-danger">*</span></label>
     <textarea class="form-control" name="address" type="number" id="address" value="{{ isset($payment->address) ? $payment->address : ''}}" required></textarea>
     {!! $errors->first('address', '<p class="help-block">:message</p>') !!}
 </div>
@@ -39,10 +39,10 @@
 <div class="form-group">
     <div class="row">
         <div class="col-md-6">
-            <a href="#" onclick="goBack()" title="Back"><button class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+            <a href="#" onclick="goBack()" title="Back"><button class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> กลับ</button></a>
         </div>
         <div class="col-md-6 d-flex justify-content-end">
-            <a href="{{ url('/payment') }}" title="Back"><input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Submit' }}"></a>
+            <a href="{{ url('/payment') }}" title="Back"><input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'ยืนยัน' : 'ยืนยัน' }}"></a>
         </div>
     </div>
 

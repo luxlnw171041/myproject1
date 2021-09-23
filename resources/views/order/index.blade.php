@@ -10,34 +10,33 @@
           </div>
           <div class="col-sm-5">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-              <li class="breadcrumb-item active">Order</li>
+              <li class="breadcrumb-item"><a href="{{ url('/home') }}">หน้าหลัก</a></li>
+              <li class="breadcrumb-item active">รายการสั่งซื้อ</li>
             </ol>
           </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
+    <div>
+    <h1 class="col-md-12 text-center">รายการสั่งซื้อ</h1><br>
+    </div>
 <div class="content " >
       <div class="container-fluid ">
+          
         <div class="row d-flex justify-content-center">
           <div class="col-10">
             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Order</h3>
-              </div>
               <!-- /.card-header -->
             <div class="card-body">
                 <table id="example3" class="table table-bordered table-striped" >
                   <thead class="text-center">
                     <tr>
-                        <th>
-                        
-                            Order id</th>
-                        <th>Time</th>
-                        <th>Username</th>
-                        <th>total</th>
-                        <th>Status</th>
-                        <th>confirm</th>
+                        <th>เลขสั่งซื้อ</th>
+                        <th>เวลาสั่งซื้อ</th>
+                        <th>ชื่อผู้ใช้</th>
+                        <th>ราคารวม</th>
+                        <th>สถานะ</th>
+                        <th>ยืนยันรับสินค้า</th>
                     </tr>
                   </thead>
                   <tbody class="text-center">
@@ -52,7 +51,7 @@
                             <td>{{ $item->user['name'] }} </td>
                             
                             <!--td>{{ $item->remark }}</td-->
-                            <td>{{ number_format($item->total) }} บาท</td>
+                            <td>฿{{ number_format($item->total) }}</td>
                             <td>
                                 
                                 @switch($item->status)
@@ -78,17 +77,17 @@
                                         <div>รอตรวจสอบ</div>
                                         <div><img src="{{ asset("storage/{$item->payment->slip}")  }}" width="100" /></div>
                                         @if(Auth::user()->role == "admin")
-                                        <form method="POST" action="{{ url('/order/' . $item->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                                            {{ method_field('PATCH') }}
-                                            {{ csrf_field() }}
-                                            <select class="" name="status" id="status" >
-                                                <option value="paid">ชำระเงินเรียบร้อย</option>
-                                                <option value="cancelled">ยกเลิกออร์เดอร์</option>
-                                            </select>
-                                            <button class="btn btn-primary btn-sm" type="submit">เปลี่ยนสถานะ</button>       
-                                        </form>
+                                            <form method="POST" action="{{ url('/order/' . $item->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                                {{ method_field('PATCH') }}
+                                                {{ csrf_field() }}
+                                                <select class="" name="status" id="status" >
+                                                    <option value="paid">ชำระเงินเรียบร้อย</option>
+                                                    <option value="cancelled">ยกเลิกออร์เดอร์</option>
+                                                </select>
+                                                <button class="btn btn-primary btn-sm" type="submit">เปลี่ยนสถานะ</button>       
+                                            </form>
                                         @endif
-                                        @break
+                                    @break
                                     @case("paid") 
                                         <div>ชำระเงินแล้ว รอเลข tracking</div>
                                         @if(Auth::user()->role == "admin")

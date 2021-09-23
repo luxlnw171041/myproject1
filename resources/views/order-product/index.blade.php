@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-
+<div>
+    <h1 class="col-md-12 text-center">ตะกร้าสินค้า</h1><br>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -25,7 +27,6 @@
                         </form> -->
 
                         <section class="py-5" style="margin-top:-20px">
-          <h2 class="h5 text-uppercase mb-4"> <b>Shopping cart</b> </h2>
           <div class="row">
             <div class="col-lg-8 mb-4 mb-lg-0">
               <!-- CART TABLE-->
@@ -33,10 +34,10 @@
                 <table class="table">
                   <thead class="bg-light">
                     <tr>
-                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Product</strong></th>
-                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Price</strong></th>
-                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Quantity</strong></th>
-                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Total</strong></th>
+                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">สินค้า</strong></th>
+                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">ราคา</strong></th>
+                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">จำนวน</strong></th>
+                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">รวม</strong></th>
                       <th class="border-0" scope="col"> </th>
                     </tr>
                   </thead>
@@ -74,7 +75,7 @@
               <!-- CART NAV-->
               <div class="bg-light px-4 py-3">
                 <div class="row align-items-center text-center">
-                  <div class="col-md-6 mb-3 mb-md-0 text-md-left"><a class="btn btn-link p-0 text-dark btn-sm" href="{{ url('/product') }}"><i class="fas fa-long-arrow-alt-left mr-2"> </i>Continue shopping</a></div>
+                  <div class="col-md-6 mb-3 mb-md-0 text-md-left"><a class="btn btn-link p-0 text-dark btn-sm" href="{{ url('/product') }}"><i class="fas fa-long-arrow-alt-left mr-2"> </i>ซื้อสินค้าต่อ</a></div>
                   
                 </div>
               </div>
@@ -83,16 +84,16 @@
             <div class="col-lg-4">
               <div class="card border-0 rounded-0 p-lg-4 bg-light">
                 <div class="card-body">
-                  <h5 class="text-uppercase mb-4">Cart total</h5>
+                  <h5 class="text-uppercase mb-4">ยอดรวมรถเข็น</h5>
                   <ul class="list-unstyled mb-0">
-                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Subtotal</strong><span class="text-muted small">{{ number_format($orderproduct->sum('total')) }}</span></li>
+                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">ยอดรวม</strong><span class="text-muted small">{{ number_format($orderproduct->sum('total')) }}</span></li>
                     <li class="border-bottom my-2"></li>
-                    <li class="d-flex align-items-center justify-content-between mb-4"><strong class="text-uppercase small font-weight-bold">Total</strong><span>{{ number_format($orderproduct->sum('total')) }}</span></li>
+                    <li class="d-flex align-items-center justify-content-between mb-4"><strong class="text-uppercase small font-weight-bold">รวม</strong><span>{{ number_format($orderproduct->sum('total')) }}</span></li>
                     <li>
                         <div class="form-group mb-0">
                             <form method="POST" action="{{ url('/order') }}" accept-charset="UTF-8" class="form-horizontal text-center" enctype="multipart/form-data">
                                 {{ csrf_field() }}
-                                        <button class="btn btn-dark btn-sm btn-block" type="submit"> checkout</button>
+                                <button class="btn btn-dark btn-sm btn-block" type="submit"> ชำระเงิน</button>
                             </form>
                         </div>
                       </form>

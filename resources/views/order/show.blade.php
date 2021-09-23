@@ -38,6 +38,9 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
+    <div>
+    <h1 class="col-md-12 text-center">รายการสั่งซื้อที่ {{ $order->id }}</h1><br>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -82,39 +85,49 @@
                             <div class="row" style="font-size:15px">
                                 <div class="col-md-12">
                                     <br>
-                                        <h5> <b>Order No {{ $order->id }}</b> </h5>
+                                        <h5> <b>หมายเลขสั่งซื้อที่ {{ $order->id }}</b> </h5>
                                     <br>
                                 </div>
                                 <div class="col-md-2 ">
-                                   <b>Name</b> 
+                                   <b>ชื่อ</b> 
                                 </div>
                                 <div class="col-md-6">
                                     {{ $order->user->name }}
                                 </div>
                                 <div class="col-md-12"><hr></div>
                                 <div class="col-md-2">
-                                    <b>Total</b> 
+                                    <b>ราคารวม</b> 
                                 </div>
                                 <div class="col-md-6">
                                     {{ number_format($order->total) }} บาท
                                 </div>
                                 <div class="col-md-12"><hr></div>
                                 <div class="col-md-2">
-                                    <b>Status</b> 
+                                    <b>สถานะ</b> 
                                 </div>
                                 <div class="col-md-10">
-                                    {{ $order->status }}
+                                    @switch($order->status)
+                                        @case('checking')
+                                            <h6>รอตรวจสอบ</h6>
+                                        @break
+                                        @case('cancelled')
+                                            <h6>ยกเลิกออร์เดอร์</h6>
+                                        @break
+                                        @case('completed')
+                                            <h6>ออร์เดอร์เสร็จสิ้น</h6>
+                                        @break
+                                    @endswitch
                                 </div>
                                 <div class="col-md-12"><hr></div>
                                 <div class="col-md-3">
-                                    <b>Order Time</b> 
+                                    <b>เวลาสั่งซื้อ</b> 
                                 </div>
                                 <div class="col-md-5">
                                     {{ $order->created_at->thaidate('l j F Y') }} 
                                 </div>
                                 <div class="col-md-12"><hr></div>
                                 <div class="col-md-3">
-                                    <b>Payment Time</b> 
+                                    <b>เวลาชำระเงิน</b> 
                                 </div>
                                 <div class="col-md-5">
                                      @if(!empty($order->payment->created_at))

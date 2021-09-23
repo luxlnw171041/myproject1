@@ -35,9 +35,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ url('/product') }}">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url('/order') }}">Order</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url('/payment') }}">Payment</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ url('/product') }}">หน้าหลัก</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('/order') }}">สั่งซื้อ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('/payment') }}">ชำระเงิน</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -45,7 +45,7 @@
                         <li>
                         <form class="d-flex">
                         <a href="{{ url('/order-product') }}" type="button" class="btn btn-outline-dark">
-                            <i class="fas fa-shopping-cart"></i> Cart 
+                            <i class="fas fa-shopping-cart"></i> ตะกร้า 
                             <!-- <span class="badge bg-dark text-white ms-1 rounded-pill">0</span> -->
                         </a>
                     </form>
@@ -112,7 +112,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('ออกจากระบบ') }}
                                     </a>
                                    
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -176,8 +176,7 @@
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $("#example3").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
-      "order": [[5, "asc"]]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    }).buttons().container().appendTo('#example3_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,

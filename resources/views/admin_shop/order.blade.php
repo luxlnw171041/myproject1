@@ -10,33 +10,33 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-              <li class="breadcrumb-item active">Order</li>
+              <li class="breadcrumb-item"><a href="{{ url('/home') }}">หน้าหลัก</a></li>
+              <li class="breadcrumb-item active">รายงานการสั่งซื้อ</li>
             </ol>
           </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
+    <div>
+      <h1 class="col-md-12 text-center">รายงานการสั่งซื้อ</h1><br>
+    </div>
 <section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Order</h3>
-              </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped" >
+                <table id="order" class="table table-bordered table-striped" >
                   <thead class="text-center">
                   <tr>
                   <tr>
-                    <th>Order id</th>
-                    <th>Time</th>
-                    <th>Username</th>
-                    <th>total</th>
-                    <th>Status</th>
-                    <th>confirm</th>
+                    <th>รหัสสั่งซื้อ</th>
+                    <th>เวลาสั่งซื้อ</th>
+                    <th>ชื่อผู้ใช้</th>
+                    <th>ราคา</th>
+                    <th>สถานะ</th>
+                    <th>ยืนยันรับสินค้า</th>
                   </tr>
                   </thead>
                   <tbody class="text-center">
@@ -47,6 +47,8 @@
                           <a href="{{ url('/order/' . $item->id) }}" title="View OrderProduct"><i class="fas fa-eye"></i></a>
                         </td>
                         <td class="text-center">{{ $item->created_at->thaidate('l j F Y') }} <br> เวลา {{ $item->created_at->format('H:m') }}</td>
+                        
+                        <!-- <td class="text-center">{{ $item->created_at->format('l d F Y') }}  <br> Time {{ $item->created_at->format('H:i') }}</td> -->
                         <td>{{ $item->user['name'] }} </td>
                         
                         <!--td>{{ $item->remark }}</td-->

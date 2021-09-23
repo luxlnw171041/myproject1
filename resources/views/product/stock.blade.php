@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+<title>Lucky Shop</title>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -10,41 +11,47 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ url('product') }}">Home</a></li>
-              <li class="breadcrumb-item active">stock</li>
+              <li class="breadcrumb-item"><a href="{{ url('product') }}">หน้าหลัก</a></li>
+              <li class="breadcrumb-item active">สต๊อกสินค้า</li>
             </ol>
           </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
+    <div>
+      <h1 class="col-md-12 text-center">สต๊อกสินค้า</h1><br>
+    </div>
 <section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">product</h3>
                 <div class="d-flex justify-content-end">
                   <a href="{{ url('/product/create') }}" class="btn btn-success btn-sm" title="Add New Product">
-                      <i class="fa fa-plus" aria-hidden="true"></i> Add New
+                      <i class="fa fa-plus" aria-hidden="true"></i> เพิ่มสินค้าใหม่
                   </a>
                 </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="stock" class="table table-bordered table-striped">
                   <thead>
-                    <tr>
-                        <th>product_id</th> <th>photo</th> <th>name</th><th>quantity</th><th>price</th><th>Cost</th><th>action</th>
+                    <tr class="text-center">
+                        <th>รหัสสินค้า</th> <th>รูปสินค้า</th> <th>ชื่อสินค้า</th><th>จำนวน</th><th>ราคา</th><th>ต้นทุน</th><th>เครื่องมือ</th>
                     </tr>
                   </thead>
                     <tbody>
                         @foreach($product as $item)
-                            <tr>
+                            <tr class="text-center">
                                 <td>{{ $item->id }}</td>
                                 <td class="text-center"><img width="164px" src="{{ url('storage/'.$item->photo )}}" alt="..." /></td>
                                 <td>{{ $item->title }} </td>
-                                <td>{{ $item->quantity }}</td>      
+                                @if(($item->quantity < 5))
+                                  <td style="background-color:#E92E2B;">{{ $item->quantity }}</td>   
+                                @else
+                                  <td>{{ $item->quantity }}</td>  
+                                @endif
                                 <td>{{ $item->price }}</td>      
                                 <td>{{ $item->cost }}</td>  
                                 <td>

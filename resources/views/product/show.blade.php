@@ -18,19 +18,27 @@
             <!-- PRODUCT DETAILS-->
             <div class="col-lg-6">
               <h1>{{ $product->title }}</h1>
+
               <p class="text-muted lead">฿{{ number_format($product->price) }} <br> 
+                    @php
+                        $category = $product->categorys;
+                    @endphp
+                @if(!empty($product->category_id))   
+                    <p>หมวดหมู่ : {{ $category->category }} <br></p> 
+                @endif
                 @if (Auth::user()->role === "admin" )
-                <span class="text-danger"> Cost: ฿{{ number_format($product->cost) }}</span>
+                <span class="text-danger"> ต้นทุน: ฿{{ number_format($product->cost) }}</span>
                 @endif
               <p class="text-small mb-4">{{ ($product->content) }}</p>
-                <div class="row align-items-stretch mb-4">
+              <hr>
+                <div class="row  col-md-12">
                     @if(!empty($product->quantity)>0)
                         <form method="POST" action="{{ url('/order-product') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input class="d-none" name="order_id" type="number" id="order_id" value="" >                                
                             <input class="d-none" name="product_id" type="number" id="product_id" value="{{ $product->id }}" >                                
                             <input class="d-none" name="user_id" type="number" id="user_id" value="" >           
-                            <hr>                     
+                                                 
                             <input class="" name="quantity" type="number" id="quantity" value="1" >                                
                             <input class="d-none" name="price" type="number" id="price" value="{{ $product->price }}" >                                
                             <input class="d-none" name="total" type="number" id="total" value="" >
@@ -38,17 +46,16 @@
                             <input class="d-none" name="cost" type="number" id="cost" value="{{ $product->cost }}" >
                             <button type="submit" class="btn btn-sm btn-dark" >
                             <i class="fa fa-shopping-cart"></i> Add to cart
-                            </button> &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:gray">มีสินค้า {{ $product->quantity }} ชิ้น</span>
+                            </button> &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:gray">มีสินค้า {{ $product->quantity }} ชิ้น</span> </button> 
                         </form>
                     @else
-                            <hr>
-                            </button> &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red">สินค้าหมด!!</span>
+                           <p style="color:red" class="d-flex justify-content-start">สินค้าหมด!!</p>
                     @endif
                 </div>
           </div>
           <!-- DETAILS TABS-->
           <ul class="nav nav-tabs border-0" id="myTab" role="tablist" style="margin-top:20px">
-            <li class="nav-item"><a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a></li>
+            <li class="nav-item"><a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">รายละเอียด</a></li>
           </ul>
           <div class="tab-content mb-5" id="myTabContent">
             <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
@@ -57,9 +64,9 @@
                 <p class="text-muted text-small mb-0">{{ ($product->content) }}</p>
               </div>
             </div>
+            
     </div>
-
-    
+                    
     
 <!--           
     <div class="container">
@@ -215,6 +222,8 @@
             </div>
         </div>
     </div> -->
+
+   
 @endsection
 <script>
 $('#example-1').multifield();
