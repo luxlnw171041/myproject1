@@ -11,14 +11,14 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">profile</li>
+              <li class="breadcrumb-item"><a href="#">หน้าหลัก</a></li>
+              <li class="breadcrumb-item active">โปรไฟล์</li>
             </ol>
           </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
-
+    <h1 class="col-md-12 text-center">โปรไฟล์</h1><br>
     <!-- Main content -->
     <section class="content">
       <div class="container">
@@ -26,9 +26,6 @@
           <!-- left column -->
           <div class="col-md-12">
             <div class="card card-info">
-              <div class="card-header">
-                <h3 class="card-title">Edit Profile</h3>
-              </div>
               <!-- /.card-header -->
               <!-- form start -->
                 <form method="POST" action="{{ url('admin/users/' . $user->id ) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
@@ -39,9 +36,9 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                    <button type="submit" class="btn btn-primary float-right" href="javascript:history.back(1)">Update</button>
+                    <button type="submit" class="btn btn-primary float-right" href="javascript:history.back(1)">ยืนยัน</button>
                     
-                    <a class="btn btn-secondary btn-md" href="javascript:history.back(1)">Back</a>
+                    <a class="btn btn-secondary btn-md" href="javascript:history.back(1)">กลับ</a>
                     </div>
                     <!-- /.card-footer -->
               </form>

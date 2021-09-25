@@ -17,7 +17,11 @@
         </div>
       </div><!-- /.container-fluid -->
     </section> <div>
+    @if(!empty($year))
+    <h1 class="text-center">ยอดขายปี {{ $year }}</h1>
+    @else
       <h1 class="col-md-12 text-center">ยอดขายรายปี</h1><br>
+    @endif
     </div>
 <section class="content">
       <div class="container-fluid">
@@ -88,7 +92,7 @@
                 </table>
                 <h2>รวมทั้งหมด {{ number_format($orderproduct->sum('sum_total')) }} บาท</h2>
                 <h2>ต้นทุนทั้งหมด {{ number_format( (($orderproduct->sum('sum_total'))) -  (($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost')))) }} บาท</h2>
-                <h2>กำไล {{ number_format(($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost'))) }} บาท</h2>
+                <h2>กำไร {{ number_format(($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost'))) }} บาท</h2>
                 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <div id="chart_div"></div>
       

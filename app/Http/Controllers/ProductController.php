@@ -42,9 +42,13 @@ class ProductController extends Controller
                 ->where('cost',    'LIKE', '%' .$cost.'%')
                 ->where('cost',    'LIKE', '%' .$category_id.'%')
                 ->whereBetween('price', [$pricemin,$pricemax])
+                ->groupBy('title')
                 ->latest()->paginate($perPage);
         } else {
-            $product = Product::latest()->paginate($perPage);
+            $product = Product::groupBy('title')
+            ->latest()->paginate($perPage);
+            
+            
         }
 
         
@@ -93,9 +97,9 @@ class ProductController extends Controller
                 ->store('storage/uploads', 'public'); 
         }
 
-        echo "<pre>";
-        print_r($requestData);
-        echo "<pre>";
+        // echo "<pre>";
+        // print_r($requestData);
+        // echo "<pre>";
 
         for ($i=0; $i < $requestData['count_all'] ; $i++) { 
 
@@ -124,27 +128,62 @@ class ProductController extends Controller
     {
         $product = Product::all()->random(3);
         $product = Product::findOrFail($id);
-        $product_attribute = DB::table('product_attributes')->get();
+
+        $datapro = Product::where('id', "=" , $id)->get();
+        // $nameproduct 
+        // $product_attribute = DB::table('product_attributes')->get();
+        foreach($datapro as $item){
+            $nameproduct = $item->title ;
+        }
+
+        $allproduct = Product::where('title', $nameproduct)->get();
+        
+        $i = 0;
+        $quantityall = array();
+        $size = array();
+        $all = array();
+
+        foreach($allproduct as $item_2){
+            $all[$i][$quantityall] = $item_2->quantity ;
+            $size[$i] = $item_2->size ;
+            echo $quantityall[$i];
+            $i++;
+            echo "<br>";
+        }
+        // echo $allproduct;
         
 
-        $size = ProductAttribute::selectRaw('size')
-        ->where('product_id', $product->id)
-        ->groupBy('size')
-        ->get();
+        // $sum = 0 ;
+        // foreach($allproduct as $item_2){
+        //     $quantityall = $item_2->quantity ;
+        //     $sum = $sum + $quantityall ;
+        // }
+        // echo $sum;
+        // echo "<br>";
 
-        $color = ProductAttribute::selectRaw('color')
-        ->where('product_id', $product->id)
-        ->groupBy('color')
-        ->get();
+        echo "<pre>";
+        print_r($allproduct);
+        echo "<pre>";
 
-        $stock = ProductAttribute::selectRaw('stock')
-        ->where('id', $id)
-        ->groupBy('stock')
-        ->get();
+
+        // $size = ProductAttribute::selectRaw('size')
+        // ->where('product_id', $product->id)
+        // ->groupBy('size')
+        // ->get();
+
+        // $color = ProductAttribute::selectRaw('color')
+        // ->where('product_id', $product->id)
+        // ->groupBy('color')
+        // ->get();
+
+        // $stock = ProductAttribute::selectRaw('stock')
+        // ->where('id', $id)
+        // ->groupBy('stock')
+        // ->get();
 
         $category = Category::all(['id', 'category']);
         $procat = Procat::all(['id', 'product_id' ,'catagory_id']);
-        return view('product.show', compact('product' , 'size' , 'color' ,'stock' ,'product_attribute' ,'category' ,'procat'));
+        return view('product.show', compact('product' ,'quantityall'));
         
     }
 
@@ -160,8 +199,9 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $category = Category::all(['id', 'category']);
+        $count_start = 0 ;
 
-        return view('product.edit', compact('product' ,'category'));
+        return view('product.edit', compact('product' ,'category' , 'count_start'));
     }
 
     /**

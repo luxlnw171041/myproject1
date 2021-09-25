@@ -83,4 +83,17 @@
     'italic' => $fontDir . '/thsarabunnew-italic_9bcc6e757d468a9293f95c16a1530345',
     'bold_italic' => $fontDir . '/thsarabunnew-bold-italic_3617e786caa0b746a87a0fba403a827e',
   ),
+  'source sans pro' => array(
+    'italic' => $fontDir . '/source-sans-pro-italic_120f826d42ce02c5331340b891f821ef',
+    '300' => $fontDir . '/source-sans-pro-300_891cae020a7dc5d2aa8254f4fb770830',
+    'normal' => $fontDir . '/source-sans-pro-normal_b93742b4fdc85f7c597b89467e1a88ee',
+    'bold' => $fontDir . '/source-sans-pro-bold_0e2949c92ad09533088db418daa0361a',
+  ),
+  'font awesome 5 brands' => array(
+    'normal' => $fontDir . '/font-awesome-5-brands-normal_dadf0ff7af4ae802dba9693fe0f9858f',
+  ),
+  'font awesome 5 free' => array(
+    'normal' => $fontDir . '/font-awesome-5-free-normal_4adbdc937cd011cbcffc0ecb47f06e5d',
+    '900' => $fontDir . '/font-awesome-5-free-900_a518e7f507eaa10d9f5f8d8cd7fca198',
+  ),
 ) ?>

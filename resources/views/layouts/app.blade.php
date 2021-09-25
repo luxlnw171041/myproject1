@@ -53,11 +53,11 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('เข้าสู่ระบบ') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('สมัครสมาชิก') }}</a>
                                 </li>
                             @endif
                         @else
@@ -93,7 +93,7 @@
                                                 <i class="fa fa-file text-primary"></i> รายงานรายปี
                                             </a> -->
                                             <a class="dropdown-item" href="{{ url('/admin/stock') }}">
-                                                <i class="fas fa-users-cog text-primary"></i> Admin
+                                                <i class="fas fa-users-cog text-primary"></i> แอดมิน
                                             </a>
                                         @endif
                                     @endif
@@ -105,7 +105,7 @@
 
                                     @if (Auth::user()->role  == "guest" )
                                     <a class="dropdown-item" href="{{ url('admin/users/' . Auth::user()->id . '/edit') }}">
-                                        Profile
+                                        โปรไฟล์
                                     </a>
                                     @endif
 

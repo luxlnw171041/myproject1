@@ -8,8 +8,8 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ url('/product') }}">Home</a></li>
-              <li class="breadcrumb-item active">Payment</li>
+              <li class="breadcrumb-item"><a href="{{ url('/product') }}">หน้าหลัก</a></li>
+              <li class="breadcrumb-item active">ชำระเงิน</li>
             </ol>
           </div>
         </div>

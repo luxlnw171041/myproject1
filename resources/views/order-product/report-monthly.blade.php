@@ -18,7 +18,52 @@
       </div><!-- /.container-fluid -->
     </section>
     <div>
+    @if(!empty($month))
+    <h1 class="text-center">ยอดขายเดือน 
+    @switch($month)
+        @case('1')
+            <span>มกราคม</span>
+        @break
+        @case('2')
+            <span>กุมภาพันธ์</span>
+        @break
+        @case('3')
+            <span>มีนาคม</span>
+        @break
+        @case('4')
+            <span>เมษายน</span>
+        @break
+        @case('5')
+            <span>พฤษภาคม</span>
+        @break
+        @case('6')
+            <span>มิถุนายน</span>
+        @break
+        @case('7')
+            <span>กรกฏาคม</span>
+        @break
+        @case('8')
+            <span>สิงหาคม</span>
+        @break
+        @case('9')
+            <span>กันยายน</span>
+        @break
+        @case('10')
+            <span>ตุลาคม</span>
+        @break
+        @case('11')
+            <span>พฤศจิกายน</span>
+        @break
+        @case('12')
+            <span>ธันวาคม</span>
+        @break
+    @endswitch 
+        <span> ปี {{ $year }}  </span>
+    @else
       <h1 class="col-md-12 text-center">ยอดขายรายเดือน</h1><br>
+    @endif
+
+    
     </div>
 <section class="content">
       <div class="container-fluid">
@@ -104,7 +149,7 @@
                 </table>
                 <h2>รวมทั้งหมด {{ number_format($orderproduct->sum('sum_total')) }} บาท</h2>
                 <h2>ต้นทุนทั้งหมด {{ number_format( (($orderproduct->sum('sum_total'))) -  (($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost')))) }} บาท</h2>
-                <h2>กำไล {{ number_format(($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost'))) }} บาท</h2>
+                <h2>กำไร {{ number_format(($orderproduct->sum('sum_total')) - ($orderproduct->sum('sum_cost'))) }} บาท</h2>
               </div>
               <!-- /.card-body -->
             </div>

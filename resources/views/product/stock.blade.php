@@ -31,6 +31,7 @@
                   <a href="{{ url('/product/create') }}" class="btn btn-success btn-sm" title="Add New Product">
                       <i class="fa fa-plus" aria-hidden="true"></i> เพิ่มสินค้าใหม่
                   </a>
+                  
                 </div>
               </div>
               <!-- /.card-header -->
@@ -47,7 +48,9 @@
                                 <td>{{ $item->id }}</td>
                                 <td class="text-center"><img width="164px" src="{{ url('storage/'.$item->photo )}}" alt="..." /></td>
                                 <td>{{ $item->title }} </td>
-                                @if(($item->quantity < 5))
+                                @if(($item->quantity < 5  &&  $item->quantity > 0))
+                                  <td style="background-color:#F1C40F;">{{ $item->quantity }}</td>  
+                                @elseif(($item->quantity === 0 ))
                                   <td style="background-color:#E92E2B;">{{ $item->quantity }}</td>   
                                 @else
                                   <td>{{ $item->quantity }}</td>  

@@ -14,24 +14,32 @@ Route::get('/admin/user/{id}/edit', 'DashboardController@editadmin');
 Route::get('/', function () {
     return view('welcome');
 
+    
 });
+
+Route::get('/index', function () {
+    return view('index');
+});
+Route::get('/pdf', 'PdfController@pdf')->name('print');
+Route::get('/orderpdf', 'OrderProductController@reportdaily')->name('report');
+
 Route::get('/product/category/{category}', 'ProductController@category');
 Route::get('/product/category/{category}/{id}', 'ProductController@show');
 Auth::routes();
 
+Route::get('generate', 'PdfController@generatePDF');
+Route::get('/example/pdf', 'pdfController@pdf_index');
 
-Route::get('/paymemt/percost/pdf', 'PaymentController@pdf_percost');
+Route::get('/paymemt/percost/pdf', 'PdfController@generatePDF');
 Route::get('/home', 'ProductController@index')->name('home');
 Route::get('/admin/users/profile','UserController@profile');
 Route::get('admin/users/{id}','UserController@edit');
 Route::middleware(['auth', 'role:admin,guest'])->group(function () {
 Route::resource('contact','ContactController');
 
-
 Route::resource('payment/create?order_id={order_id}', 'PaymentController');
 
 
-Route::get('/example/pdf', 'PaymentController@pdf_index');
 Route::resource('productattribute', 'ProductAttributeController');
 
 });

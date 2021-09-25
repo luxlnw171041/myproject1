@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-
+<div class="row">
+            <a href="{{ route('print')}}" class="btn btn-sm btn-danger"> Print</a>
+        </div>
 
   <!-- Content Wrapper. Contains page content -->
     <!-- Main content -->
@@ -101,7 +103,7 @@
                                         <!-- Product name-->
                                         <h5 class="fw-bolder">
                                             <a href="{{ url('/product/' . $item->id) }}">
-                                                {{ $item->title }}
+                                                {{ $item->title }}  
                                             </a>
                                         </h5 class="d-flex align-items-end">
                                         <!-- Product price-->

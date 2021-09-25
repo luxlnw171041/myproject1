@@ -45,7 +45,7 @@
                             <input class="d-none" name="total" type="number" id="total_cost" value="" >
                             <input class="d-none" name="cost" type="number" id="cost" value="{{ $product->cost }}" >
                             <button type="submit" class="btn btn-sm btn-dark" >
-                            <i class="fa fa-shopping-cart"></i> Add to cart
+                            <i class="fa fa-shopping-cart"></i> เพิ่มไปยังรถเข็น
                             </button> &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:gray">มีสินค้า {{ $product->quantity }} ชิ้น</span> </button> 
                         </form>
                     @else
@@ -54,7 +54,22 @@
                 </div>
           </div>
           <!-- DETAILS TABS-->
-          <ul class="nav nav-tabs border-0" id="myTab" role="tablist" style="margin-top:20px">
+<div class="col-md-12">
+        <div class="m-4" style="margin-left:100px">
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="nav-item">
+                    <a href="#profile" class="nav-link" data-bs-toggle="tab">รายละเอียดสินค้า</a>
+                </li>
+            </ul>
+            <div class="tab-content ">
+                <div class="tab-pane fade" id="profile" style="background-color:white; padding:50px; border-radius: 0px 0px 15px 15px">
+                    <h4 class="mt-2">{{ $product->title }} {{ $quantityall[1] }} </h4>
+                    <p style="text-indent: 50px;">{{ $product->content }}</p>
+                </div>
+            </div>
+        </div>
+</div>
+          <!-- <ul class="nav nav-tabs border-0" id="myTab" role="tablist" style="margin-top:20px">
             <li class="nav-item"><a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">รายละเอียด</a></li>
           </ul>
           <div class="tab-content mb-5" id="myTabContent">
@@ -65,7 +80,7 @@
               </div>
             </div>
             
-    </div>
+    </div> -->
                     
     
 <!--           
@@ -227,4 +242,11 @@
 @endsection
 <script>
 $('#example-1').multifield();
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#myTab a:first").tab("show"); // show last tab
+});
 </script>
