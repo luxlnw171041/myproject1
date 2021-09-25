@@ -61,7 +61,9 @@ class ProductController extends Controller
     {
         $category = Category::all(['id', 'category']);
 
-        return view('product.create' , compact( 'category'));
+        $count_start = 0 ;
+
+        return view('product.create' , compact( 'category' ,'count_start'));
     }
 
     public function category(Request $request)
@@ -85,12 +87,24 @@ class ProductController extends Controller
     {
         
         $requestData = $request->all();
-                if ($request->hasFile('photo')) {
-            $requestData['photo'] = $request->file('photo')
+
+            if ($request->hasFile('photo')) {
+                $requestData['photo'] = $request->file('photo')
                 ->store('storage/uploads', 'public'); 
         }
 
-        Product::create($requestData);
+        echo "<pre>";
+        print_r($requestData);
+        echo "<pre>";
+
+        for ($i=0; $i < $requestData['count_all'] ; $i++) { 
+
+            $requestData['size'] = $requestData['size_'.$i];
+            $requestData['quantity'] = $requestData['amount_of_size_'.$i];
+            Product::create($requestData);
+
+        }
+
         if (\Auth::user()->role == 'admin') {
             return redirect('admin/stock')->with('flash_message', 'Product updated!');
             // or return route('routename');
