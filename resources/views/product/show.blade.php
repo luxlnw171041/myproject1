@@ -29,6 +29,11 @@
                 @if (Auth::user()->role === "admin" )
                 <span class="text-danger"> ต้นทุน: ฿{{ number_format($product->cost) }}</span>
                 @endif
+                <div class="col-12">
+                    @for($i=0; $i < $amount_size; $i++)
+                        <p>ขนาด : {{ $all_size[$i] }} เหลือ {{ $amount_of_size[$i] }}</p>
+                    @endfor
+                </div>
               <p class="text-small mb-4">{{ ($product->content) }}</p>
               <hr>
                 <div class="row  col-md-12">
@@ -46,7 +51,7 @@
                             <input class="d-none" name="cost" type="number" id="cost" value="{{ $product->cost }}" >
                             <button type="submit" class="btn btn-sm btn-dark" >
                             <i class="fa fa-shopping-cart"></i> เพิ่มไปยังรถเข็น
-                            </button> &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:gray">มีสินค้า {{ $product->quantity }} ชิ้น</span> </button> 
+                            </button> &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:gray">มีสินค้า {{ $sum }} ชิ้น</span> </button> 
                         </form>
                     @else
                            <p style="color:red" class="d-flex justify-content-start">สินค้าหมด!!</p>
@@ -63,7 +68,7 @@
             </ul>
             <div class="tab-content ">
                 <div class="tab-pane fade" id="profile" style="background-color:white; padding:50px; border-radius: 0px 0px 15px 15px">
-                    <h4 class="mt-2">{{ $product->title }} {{ $quantityall[1] }} </h4>
+                    <h4 class="mt-2">{{ $product->title }} </h4>
                     <p style="text-indent: 50px;">{{ $product->content }}</p>
                 </div>
             </div>

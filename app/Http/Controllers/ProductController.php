@@ -139,18 +139,26 @@ class ProductController extends Controller
         $allproduct = Product::where('title', $nameproduct)->get();
         
         $i = 0;
-        $quantityall = array();
+        $sum = 0 ;
+        $quantity_of_size = array();
         $size = array();
-        $all = array();
+
+        $all_size = array();
+        $amount_of_size = array();
 
         foreach($allproduct as $item_2){
-            $all[$i][$quantityall] = $item_2->quantity ;
+            $quantity_of_size[$i] = $item_2->quantity ;
             $size[$i] = $item_2->size ;
-            echo $quantityall[$i];
+
+            $sum = $sum + $quantity_of_size[$i] ;
+
+            array_push($all_size, $size[$i]);
+            array_push($amount_of_size, $quantity_of_size[$i]);
+
             $i++;
-            echo "<br>";
         }
-        // echo $allproduct;
+
+        $amount_size = count($all_size) ;
         
 
         // $sum = 0 ;
@@ -158,12 +166,13 @@ class ProductController extends Controller
         //     $quantityall = $item_2->quantity ;
         //     $sum = $sum + $quantityall ;
         // }
-        // echo $sum;
+        // echo count($all_size);
         // echo "<br>";
 
-        echo "<pre>";
-        print_r($allproduct);
-        echo "<pre>";
+        // echo "<pre>";
+        // print_r($all_size);
+        // echo "<pre>";
+        // exit();
 
 
         // $size = ProductAttribute::selectRaw('size')
@@ -183,7 +192,7 @@ class ProductController extends Controller
 
         $category = Category::all(['id', 'category']);
         $procat = Procat::all(['id', 'product_id' ,'catagory_id']);
-        return view('product.show', compact('product' ,'quantityall'));
+        return view('product.show', compact('product' ,'all_size','amount_size','amount_of_size' ,'sum'));
         
     }
 
