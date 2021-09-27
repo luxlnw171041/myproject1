@@ -17,7 +17,7 @@
             </div>
             <!-- PRODUCT DETAILS-->
             <div class="col-lg-6">
-              <h1>{{ $product->title }}</h1>
+              <h1 id="h1_title">{{ $product->title }}</h1>
               <p class="text-small mb-4">{{ ($product->content) }}</p>
               <p class="text-muted lead">฿{{ number_format($product->price) }} <br> 
                     @php
@@ -37,7 +37,7 @@
 <hr>
                 <div class="col-12">
                     @for($i=0; $i < $amount_size; $i++)
-                        <button id="btnsize_{{ $all_size[$i] }}" class="btn btn-outline-secondary" onclick="colorbtnsize('{{ $all_size[$i] }}' ,'{{ $amount_size }}');">ขนาด {{ $all_size[$i] }}</button>
+                        <button name="btnsize" id="btnsize_{{ $all_size[$i] }}" class="btn btn-secondary" onclick="colorbtnsize('{{ $all_size[$i] }}');">ขนาด {{ $all_size[$i] }}</button>
                         <p>เหลือ {{ $amount_of_size[$i] }} </p>
                         
                     @endfor
@@ -279,18 +279,35 @@ $(document).ready(function(){
 });
 </script>
 <script>
-    function colorbtnsize(size , amount) {
+    function colorbtnsize(size) {
+
+        let title = document.querySelector('#h1_title');
+
         document.querySelector('#size').value = size;
-        let btncolor = document.querySelector('#btnsize_'+ size);
+        fetch("{{ url('/') }}/api/colorbtnsize/"+title.innerText)
+            .then(response => response.json())
+            .then(result => {
 
-        btncolor.classList.remove('btn-outline-secondary');
+                for(let item of result){
+                    
+                    document.querySelector('#btnsize_'+ item.size).classList.remove('btn-primary');
 
-        let btn_color_class = document.createAttribute("class");
-                btn_color_class.value = "btn btn-secondary";
+                    let btn_color_class_2 = document.createAttribute("class");
+                        btn_color_class_2.value = "btn btn-secondary";
 
-                btncolor.setAttributeNode(btn_color_class);
-        
-        console.log(btncolor);
+                        document.querySelector('#btnsize_'+ item.size).setAttributeNode(btn_color_class_2);
+
+                    let btncolor = document.querySelector('#btnsize_'+ size);
+
+                    let btn_color_class = document.createAttribute("class");
+                        btn_color_class.value = "btn btn-primary";
+
+                        btncolor.setAttributeNode(btn_color_class);
+
+
+                }
+
+            });
         
     }
 </script>

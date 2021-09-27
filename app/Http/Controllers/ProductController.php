@@ -67,7 +67,9 @@ class ProductController extends Controller
 
         $count_start = 0 ;
 
-        return view('product.create' , compact( 'category' ,'count_start'));
+        $amount_size = -1 ;
+
+        return view('product.create' , compact( 'category' ,'count_start','amount_size'));
     }
 
     public function category(Request $request)
@@ -126,7 +128,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::all()->random(3);
+        // $product = Product::all()->random(3);
         $product = Product::findOrFail($id);
 
         $datapro = Product::where('id', "=" , $id)->get();
@@ -209,7 +211,7 @@ class ProductController extends Controller
     
     public function edit($id)
     {
-
+        $edit = 'true' ;
         $datapro = Product::where('id', "=" , $id)->get();
         // $nameproduct 
         // $product_attribute = DB::table('product_attributes')->get();
@@ -248,7 +250,7 @@ class ProductController extends Controller
         $category = Category::all(['id', 'category']);
         $count_start = 0 ;
 
-        return view('product.edit', compact('product' ,'category' , 'count_start','all_size','amount_size','amount_of_size' ,'sum' , 'allproduct' ,'datapro' ,'amount_id'));
+        return view('product.edit', compact('product' ,'category' , 'count_start','all_size','amount_size','amount_of_size' ,'sum' , 'allproduct' ,'datapro' ,'amount_id','edit'));
     }
 
     /**
@@ -312,6 +314,14 @@ class ProductController extends Controller
         }
 
         return view('product.stock', compact('product' ));
+    
+    }
+
+    public function colorbtnsize($title)
+    {
+        $all_size = Product::where('title', $title)->get();
+
+        return $all_size;
     
     }
     

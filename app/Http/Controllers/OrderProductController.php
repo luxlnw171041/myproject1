@@ -52,8 +52,8 @@ class OrderProductController extends Controller
         
         $requestData = $request->all();
         
-        echo "<br>";
-        echo $requestData['title'];
+        // echo "<br>";
+        // echo $requestData['title'];
         $nameproduct = Product::where('title' , '=' , $requestData['title'])
                         ->where('size' , '=' , $requestData['size'])
                         ->get();
