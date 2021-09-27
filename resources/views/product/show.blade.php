@@ -51,7 +51,7 @@
                                 <input class="d-none" name="title" type="text" id="title" value="{{ $product->title }}" > 
                                 <input class="d-none" name="order_id" type="number" id="order_id" value="" >                                                       
                                 <input class="d-none" name="user_id" type="number" id="user_id" value="" >   
-                                <input class="" name="size" type="number" id="size" value="" >         
+                                <input class="" name="size" type="float" id="size" value="" >         
                                 <input  name="quantity" type="number" id="quantity" value="1" >                                
                                 <input class="d-none" name="price" type="number" id="price" value="{{ $product->price }}" >                                
                                 <input class="d-none" name="total" type="number" id="total" value="" >
@@ -284,10 +284,13 @@ $(document).ready(function(){
 </script>
 <script>
     function colorbtnsize(size) {
-
         let title = document.querySelector('#h1_title');
+        
+        let tag_btn_size = document.querySelector('#btnsize_'+ size).innerText;
+            let text_size = tag_btn_size.replace("ขนาด ", "");
 
-        document.querySelector('#size').value = size;
+        document.querySelector('#size').value = text_size;
+
         fetch("{{ url('/') }}/api/colorbtnsize/"+title.innerText)
             .then(response => response.json())
             .then(result => {
