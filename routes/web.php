@@ -21,8 +21,7 @@ Route::get('/index', function () {
     return view('index');
 });
 Route::get('/pdf', 'PdfController@pdf')->name('print');
-Route::get('/orderpdf', 'OrderProductController@reportdaily')->name('report');
-
+Route::get('/orderpdf', 'OrderProductController@pdf')->name('report');
 Route::get('/product/category/{category}', 'ProductController@category');
 Route::get('/product/category/{category}/{id}', 'ProductController@show');
 Auth::routes();

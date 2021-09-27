@@ -53,7 +53,7 @@ body{
                     </tr>
                   </thead>
                     <tbody>
-                    @foreach($orderproduct as $item)
+                    @foreach ($orderproduct as $item)
                     <tr>
                         <td>{{ $item->user->name }}</td>
                         <td> {{ $item->created_at->thaidate('l j F Y') }} <br> เวลา {{ $item->created_at->format('h:i') }}</td>

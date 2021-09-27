@@ -34,26 +34,30 @@
                 <table class="table">
                   <thead class="bg-light">
                     <tr>
-                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">สินค้า</strong></th>
-                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">ราคา</strong></th>
-                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">จำนวน</strong></th>
-                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">รวม</strong></th>
-                      <th class="border-0" scope="col"> </th>
+                      <th class="border-0 text-center" scope="col"> <strong class="text-small text-uppercase">สินค้า</strong></th>
+                      <th class="border-0 text-center" scope="col"> <strong class="text-small text-uppercase">ขนาด</strong></th>
+                      <th class="border-0 text-center" scope="col"> <strong class="text-small text-uppercase">ราคา</strong></th>
+                      <th class="border-0 text-center" scope="col"> <strong class="text-small text-uppercase">จำนวน</strong></th>
+                      <th class="border-0 text-center" scope="col"> <strong class="text-small text-uppercase">รวม</strong></th>
+                      <th class="border-0 text-center" scope="col"> </th>
                     </tr>
                   </thead>
                   <tbody>
                   @foreach($orderproduct as $item)   
                     <tr>
                         <th class="pl-0 border-0" scope="row">
-                            <div class="media align-items-center"><a class="reset-anchor d-block animsition-link" href="detail.html"><img style="width: 100px;height: 120px;object-fit: contain;" src="{{ url('storage/'.$item->product->photo)}}" width="120" />
-                            <div class="media-body ml-3"><strong class="h6"><a class="reset-anchor animsition-link" href="detail.html"> <b class="text-dark">{{ $item->product->title }}</b> </a></strong></div>
+                            <!--  -->
+                            
                             </div>
                         </th>
+                        <td class="align-middle border-0 text-center">
+                            <p class="mb-0 small text-center"> {{ $item->size }} </p>
+                        </td>
                         <td class="align-middle border-0">
                             <p class="mb-0 small">฿ {{ number_format($item->price) }}</p>
                         </td>
                         <td class="align-middle border-0">
-                            <p class="mb-0 small text-center">{{ $item->quantity }}  </p>
+                            <p class="mb-0 small text-center">{{ $item->quantity }}   </p>
                         </td>
                         
                         <td class="align-middle border-0">

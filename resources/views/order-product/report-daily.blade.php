@@ -44,7 +44,8 @@
                     </div>               
                 </form>
                 <div class="row">
-            <a href="{{ route('report')}}" class="btn btn-sm btn-danger"> Print</a>
+            <!-- <a href="{{ route('report')}}" class="btn btn-sm btn-danger"> Print</a> -->
+            
         </div>
               <!-- /.card-header -->
               <div class="card-body"style="margin-top:-10px">

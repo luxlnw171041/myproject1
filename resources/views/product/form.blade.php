@@ -21,21 +21,40 @@
     </div>
     <div class="col-md-12 form-group {{ $errors->has('photo') ? 'has-error' : ''}}">
         <label for="photo" class="control-label">{{ 'รูปสินค้า' }}</label>
-        <input class="form-control" name="photo" type="file" id="photo" value="{{ isset($product->photo) ? $product->photo : ''}}" required>
+        <input class="form-control" name="photo" type="file" id="photo" value="{{ isset($product->photo) ? $product->photo : ''}}" >
         {!! $errors->first('photo', '<p class="help-block">:message</p>') !!}
     </div>
 
-    <div class="col-md-6 form-group {{ $errors->has('size') ? 'has-error' : ''}}">
-        <label for="size" class="control-label">{{ 'ขนาด' }}</label>
-        <input class="form-control" name="size_{{ $count_start }}" type="text" id="size_{{ $count_start }}" value="{{ isset($product->size) ? $product->size : ''}}" required>
-        {!! $errors->first('size', '<p class="help-block">:message</p>') !!}
-    </div>
+    
 
-    <div class="col-md-6 form-group {{ $errors->has('amount_of_size') ? 'has-error' : ''}}">
-        <label for="amount_of_size" class="control-label">{{ 'จำนวน' }}</label>
-        <input class="form-control" name="amount_of_size_{{ $count_start }}" type="number" id="amount_of_size_{{ $count_start }}" value="{{ isset($product->amount_of_size) ? $product->amount_of_size : ''}}" required >
-        {!! $errors->first('amount_of_size', '<p class="help-block">:message</p>') !!}
-    </div>
+        @for($i=0; $i < $amount_size; $i++)
+            <!-- <p>ขนาด : {{ $all_size[$i] }} เหลือ {{ $amount_of_size[$i] }}  -->
+            @if(!empty($amount_of_size[$i]) > 0)
+                <div class="col-md-6 form-group {{ $errors->has('amount_of_size') ? 'has-error' : ''}}">
+                    <label for="amount_of_size" class="control-label">{{ 'ขนาด' }}</label>
+                    <input class="form-control" name="size" type="number" id="size" value="{{ $all_size[$i] }}" placeholder="ขนาด {{ $all_size[$i] }}"> 
+                    {!! $errors->first('amount_of_size', '<p class="help-block">:message</p>') !!}
+                </div>
+                <div class="col-md-6 form-group {{ $errors->has('amount_of_size') ? 'has-error' : ''}}">
+                    <label for="amount_of_size" class="control-label">{{ 'จำนวน' }}</label>
+                    <input class="form-control" name="size_{{ $count_start }}" type="text" id="quantity" value="{{ isset($product->quantity) ? $amount_of_size[$i] : ''}}" required>
+                    {!! $errors->first('amount_of_size', '<p class="help-block">:message</p>') !!}
+                </div>
+            @else
+                <div class="col-md-6 form-group {{ $errors->has('size') ? 'has-error' : ''}}">
+                    <label for="size" class="control-label">{{ 'ขนาด' }}</label>
+                    <input class="form-control" name="size_{{ $count_start }}" type="text" id="size_{{ $count_start }}" value="{{ isset($product->size) ? $product->size : ''}}" required>
+                    {!! $errors->first('size', '<p class="help-block">:message</p>') !!}
+                </div>
+
+                <div class="col-md-6 form-group {{ $errors->has('amount_of_size') ? 'has-error' : ''}}">
+                    <label for="amount_of_size" class="control-label">{{ 'จำนวน' }}</label>
+                    <input class="form-control" name="amount_of_size_{{ $count_start }}" type="number" id="amount_of_size_{{ $count_start }}" value="{{ isset($product->amount_of_size) ? $product->amount_of_size : ''}}" required >
+                    {!! $errors->first('amount_of_size', '<p class="help-block">:message</p>') !!}
+                </div>
+            @endif
+        @endfor
+        
 
     <div class="col-md-12" >
         <div class="row" id="div_content">

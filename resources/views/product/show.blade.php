@@ -18,7 +18,7 @@
             <!-- PRODUCT DETAILS-->
             <div class="col-lg-6">
               <h1>{{ $product->title }}</h1>
-
+              <p class="text-small mb-4">{{ ($product->content) }}</p>
               <p class="text-muted lead">฿{{ number_format($product->price) }} <br> 
                     @php
                         $category = $product->categorys;
@@ -29,14 +29,37 @@
                 @if (Auth::user()->role === "admin" )
                 <span class="text-danger"> ต้นทุน: ฿{{ number_format($product->cost) }}</span>
                 @endif
+                <!-- <div class="col-12">
+                    @for($i=0; $i < $amount_size; $i++)
+                        <p>ขนาด : {{ $all_size[$i] }} เหลือ {{ $amount_of_size[$i] }}  {{$amount_id[$i]}}</p>
+                    @endfor
+                </div> -->
+<hr>
                 <div class="col-12">
                     @for($i=0; $i < $amount_size; $i++)
-                        <p>ขนาด : {{ $all_size[$i] }} เหลือ {{ $amount_of_size[$i] }}</p>
+                        <button id="btnsize_{{ $all_size[$i] }}" class="btn btn-outline-secondary" onclick="colorbtnsize('{{ $all_size[$i] }}' ,'{{ $amount_size }}');">ขนาด {{ $all_size[$i] }}</button>
+                        <p>เหลือ {{ $amount_of_size[$i] }} </p>
+                        
                     @endfor
                 </div>
-              <p class="text-small mb-4">{{ ($product->content) }}</p>
-              <hr>
-                <div class="row  col-md-12">
+                <form method="POST" action="{{ url('/order-product') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                <input class="d-none" name="title" type="text" id="title" value="{{ $product->title }}" > 
+                                <input class="d-none" name="order_id" type="number" id="order_id" value="" >                                                       
+                                <input class="d-none" name="user_id" type="number" id="user_id" value="" >   
+                                <input class="" name="size" type="number" id="size" value="" >         
+                                <input  name="quantity" type="number" id="quantity" value="1" >                                
+                                <input class="d-none" name="price" type="number" id="price" value="{{ $product->price }}" >                                
+                                <input class="d-none" name="total" type="number" id="total" value="" >
+                                <input class="d-none" name="total_cost" type="number" id="total_cost" value="" >
+                                <input class="d-none"  name="cost" type="number" id="cost" value="{{ $product->cost }}" >
+                                <button type="submit" class="btn btn-sm btn-dark" >
+                                <i class="fa fa-shopping-cart"></i> เพิ่มไปยังรถเข็น
+                                </button> &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:gray">มีสินค้า  ชิ้น</span> </button> 
+                            </form>
+              <!-- <p class="text-small mb-4">{{ ($product->content) }}</p> -->
+              <!-- <hr> -->
+                <!-- <div class="row  col-md-12">
                     @if(!empty($product->quantity)>0)
                         <form method="POST" action="{{ url('/order-product') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                             {{ csrf_field() }}
@@ -56,7 +79,7 @@
                     @else
                            <p style="color:red" class="d-flex justify-content-start">สินค้าหมด!!</p>
                     @endif
-                </div>
+                </div> -->
           </div>
           <!-- DETAILS TABS-->
 <div class="col-md-12">
@@ -254,4 +277,20 @@ $('#example-1').multifield();
 $(document).ready(function(){
     $("#myTab a:first").tab("show"); // show last tab
 });
+</script>
+<script>
+    function colorbtnsize(size , amount) {
+        document.querySelector('#size').value = size;
+        let btncolor = document.querySelector('#btnsize_'+ size);
+
+        btncolor.classList.remove('btn-outline-secondary');
+
+        let btn_color_class = document.createAttribute("class");
+                btn_color_class.value = "btn btn-secondary";
+
+                btncolor.setAttributeNode(btn_color_class);
+        
+        console.log(btncolor);
+        
+    }
 </script>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use PDF;
+use App\Product;
 use App\OrderProduct;
 use Illuminate\Http\Request;
 
@@ -50,13 +51,24 @@ class OrderProductController extends Controller
     {
         
         $requestData = $request->all();
+        
+        echo "<br>";
+        echo $requestData['title'];
+        $nameproduct = Product::where('title' , '=' , $requestData['title'])
+                        ->where('size' , '=' , $requestData['size'])
+                        ->get();
+        foreach ($nameproduct as $item){
+            $requestData['product_id'] = $item->id;
+        }
 
-        //คำนวณ total 
         $requestData['total'] = $requestData['quantity'] * $requestData['price'];
         $requestData['total_cost'] = $requestData['quantity'] * $requestData['cost'];
         //find user
         $requestData['user_id'] = Auth::id();
-
+        // echo "<pre>";
+        // print_r ($requestData);
+        // echo "<pre>";
+        // exit();
         OrderProduct::create($requestData);
 
         return redirect('order-product')->with('flash_message', 'OrderProduct added!');
@@ -125,19 +137,38 @@ class OrderProductController extends Controller
 
     public function reportdaily(Request $request)
     {      
-        $pdf = PDF::loadView('order-product.test_pdf');
+        
         $date = $request->get('date');
         //SELECT *, orders.completed_at, SUM(price) as sum_price, SUM(quantity) as sum_quantity FROM `order_products` GROUP BY product_id
+       
+        if ($request->has('date')){
         $orderproduct = OrderProduct::join('orders', 'order_products.order_id', '=', 'orders.id')
             ->select(DB::raw('order_products.*, orders.created_at, AVG(order_products.price) as avg_price,AVG(order_products.cost) as avg_cost,SUM(order_products.total_cost) as sum_cost, SUM(order_products.quantity) as sum_quantity, SUM(order_products.total) as sum_total'))
             ->whereDate('orders.created_at',$date)
             ->where('orders.status','completed')
             ->groupByRaw('product_id')
             ->get();       
+        return view('order-product.report-daily', compact('orderproduct' ,'date' ));
+        }
+        elseif ($request->has('PDF'))
+            {
+                $orderproduct = OrderProduct::join('orders', 'order_products.order_id', '=', 'orders.id');
+                // then use it in your function
+                $pdf = PDF::loadView('order-product.test_pdf',['date'=>$date],['orderproduct'=>$orderproduct])->setPaper('a3', 'landscape');
+                return $pdf->stream('pdf');
+            }
+        else{
 
-        
-         return  $pdf->stream('pdf', view('order-product.report-daily', compact('orderproduct' ,'date' )) );
-        
+            $orderproduct = OrderProduct::join('orders', 'order_products.order_id', '=', 'orders.id')
+            ->select(DB::raw('order_products.*, orders.created_at, AVG(order_products.price) as avg_price,AVG(order_products.cost) as avg_cost,SUM(order_products.total_cost) as sum_cost, SUM(order_products.quantity) as sum_quantity, SUM(order_products.total) as sum_total'))
+            ->whereDate('orders.created_at',$date)
+            ->where('orders.status','completed')
+            ->groupByRaw('product_id')
+            ->get();       
+        return view('order-product.report-daily', compact('orderproduct' ,'date' ));
+        }
+
+
     } 
 
     public function reportmonthly(Request $request)
@@ -169,20 +200,16 @@ class OrderProductController extends Controller
         return view('order-product.report-yearly', compact('orderproduct' ,'year'));
     } 
 
-    public function pdf(Request $request){
-        
+   
+
+    public function pdf(Request $request)
+        { 
+        // dd($request->school); // will provide an array
         $date = $request->get('date');
-        $orderproduct = OrderProduct::join('orders', 'order_products.order_id', '=', 'orders.id')
-            ->select(DB::raw('order_products.*, orders.created_at, AVG(order_products.price) as avg_price,AVG(order_products.cost) as avg_cost,SUM(order_products.total_cost) as sum_cost, SUM(order_products.quantity) as sum_quantity, SUM(order_products.total) as sum_total'))
-            ->whereDate('orders.created_at',$date)
-            ->where('orders.status','completed')
-            ->groupByRaw('product_id')
-            ->get();  
-
-        $pdf = PDF::loadView('order-product.test_pdf', compact( 'orderproduct' ,'date'));
-
-         return $pdf->stream('pdf');
-        
-    }
+        $orderproduct = OrderProduct::join('orders', 'order_products.order_id', '=', 'orders.id');
+        // then use it in your function
+        $pdf = PDF::loadView('order-product.test_pdf',['date'=>$date],['orderproduct'=>$orderproduct])->setPaper('a3', 'landscape');
+        return $pdf->stream('pdf');
+        }
  
 }

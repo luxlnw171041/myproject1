@@ -64,7 +64,7 @@
                                             <div class="grid-container col-md-12">
                                                     <div class="item2"><img src="{{ url('storage/'.$item->product->photo )}}" width="150" /></div>
                                                     <div class="item3"><br>{{ $item->product->title }}</div>  
-                                                    <div class="item5 d-flex justify-content-end text-right">x{{ $item->quantity }} <br> ฿{{ number_format($item->price) }}</div>
+                                                    <div class="item5 d-flex justify-content-end text-right"> ไซส์ {{ $item->size }} <br> x{{ $item->quantity }} <br> ฿{{ number_format($item->price) }}</div>
                                             
                                             </div>
                                         </a>

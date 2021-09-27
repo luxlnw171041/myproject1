@@ -141,12 +141,15 @@ class ProductController extends Controller
         $i = 0;
         $sum = 0 ;
         $quantity_of_size = array();
+        $quantity_of_id = array();
         $size = array();
 
         $all_size = array();
         $amount_of_size = array();
+        $amount_id = array();
 
         foreach($allproduct as $item_2){
+            $quantity_of_id[$i] = $item_2->id ;
             $quantity_of_size[$i] = $item_2->quantity ;
             $size[$i] = $item_2->size ;
 
@@ -154,7 +157,7 @@ class ProductController extends Controller
 
             array_push($all_size, $size[$i]);
             array_push($amount_of_size, $quantity_of_size[$i]);
-
+            array_push($amount_id, $quantity_of_id[$i]);
             $i++;
         }
 
@@ -170,7 +173,7 @@ class ProductController extends Controller
         // echo "<br>";
 
         // echo "<pre>";
-        // print_r($all_size);
+        // print_r($amount_id);
         // echo "<pre>";
         // exit();
 
@@ -192,7 +195,7 @@ class ProductController extends Controller
 
         $category = Category::all(['id', 'category']);
         $procat = Procat::all(['id', 'product_id' ,'catagory_id']);
-        return view('product.show', compact('product' ,'all_size','amount_size','amount_of_size' ,'sum'));
+        return view('product.show', compact('product' ,'all_size','amount_size','amount_of_size' ,'sum' , 'allproduct' ,'datapro' ,'amount_id'));
         
     }
 
@@ -206,11 +209,46 @@ class ProductController extends Controller
     
     public function edit($id)
     {
+
+        $datapro = Product::where('id', "=" , $id)->get();
+        // $nameproduct 
+        // $product_attribute = DB::table('product_attributes')->get();
+        foreach($datapro as $item){
+            $nameproduct = $item->title ;
+        }
+
+        $allproduct = Product::where('title', $nameproduct)->get();
+        
+        $i = 0;
+        $sum = 0 ;
+        $quantity_of_size = array();
+        $quantity_of_id = array();
+        $size = array();
+
+        $all_size = array();
+        $amount_of_size = array();
+        $amount_id = array();
+
+        foreach($allproduct as $item_2){
+            $quantity_of_id[$i] = $item_2->id ;
+            $quantity_of_size[$i] = $item_2->quantity ;
+            $size[$i] = $item_2->size ;
+
+            $sum = $sum + $quantity_of_size[$i] ;
+
+            array_push($all_size, $size[$i]);
+            array_push($amount_of_size, $quantity_of_size[$i]);
+            array_push($amount_id, $quantity_of_id[$i]);
+            $i++;
+        }
+
+        $amount_size = count($all_size) ;
+
         $product = Product::findOrFail($id);
         $category = Category::all(['id', 'category']);
         $count_start = 0 ;
 
-        return view('product.edit', compact('product' ,'category' , 'count_start'));
+        return view('product.edit', compact('product' ,'category' , 'count_start','all_size','amount_size','amount_of_size' ,'sum' , 'allproduct' ,'datapro' ,'amount_id'));
     }
 
     /**
