@@ -99,17 +99,20 @@ class ProductController extends Controller
                 ->store('storage/uploads', 'public'); 
         }
 
-        // echo "<pre>";
-        // print_r($requestData);
-        // echo "<pre>";
-
+        
+            // $str_size = str_replace("." , "_" , $requestData['size_'.$i]);
         for ($i=0; $i < $requestData['count_all'] ; $i++) { 
 
-            $requestData['size'] = $requestData['size_'.$i];
+            $requestData['size'] = str_replace("." , "_" , $requestData['size_'.$i]);
+
             $requestData['quantity'] = $requestData['amount_of_size_'.$i];
             Product::create($requestData);
 
         }
+        // echo "<pre>";
+        // print_r($requestData);
+        // echo "<pre>";
+        // exit();
 
         if (\Auth::user()->role == 'admin') {
             return redirect('admin/stock')->with('flash_message', 'Product updated!');

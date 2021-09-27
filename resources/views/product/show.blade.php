@@ -35,9 +35,13 @@
                     @endfor
                 </div> -->
 <hr>
+                
                 <div class="col-12">
-                    @for($i=0; $i < $amount_size; $i++)
-                        <button name="btnsize" id="btnsize_{{ $all_size[$i] }}" class="btn btn-secondary" onclick="colorbtnsize('{{ $all_size[$i] }}');">ขนาด {{ $all_size[$i] }}</button>
+                    @for($i=0; $i < $amount_size; $i++) 
+                        @php 
+                            $str_size = str_replace("_" , "." , $all_size[$i]);
+                        @endphp
+                        <button name="btnsize" id="btnsize_{{ $all_size[$i] }}" class="btn btn-secondary" onclick="colorbtnsize('{{ $all_size[$i] }}');">ขนาด {{ $str_size }}</button>
                         <p>เหลือ {{ $amount_of_size[$i] }} </p>
                         
                     @endfor
