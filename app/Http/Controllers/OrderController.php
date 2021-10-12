@@ -78,15 +78,16 @@ class OrderController extends Controller
         $requestData['status'] = "created"; 
         
         $order = Order::create($requestData);
-        
         OrderProduct::whereNull('order_id')
             ->where('user_id', Auth::id() )->update(['order_id'=> $order->id]);
 
-        $order_products = $order->order_products;
-        foreach($order_products as $item)
-        {
-            Product::where('id',$item->product_id)->decrement('quantity', $item->quantity);
-        }
+
+        // $order_products = $order->order_products;
+
+        // foreach($order_products as $item)
+        // {
+        //     Product::where('id',$item->product_id)->decrement('quantity', $item->quantity);
+        // }
 
         return redirect('order')->with('flash_message', 'Order added!');
     }

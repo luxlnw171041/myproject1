@@ -180,6 +180,7 @@
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
+      "ordering": false,
       "buttons": [
         { extend: 'print', key: 'p', text: 'พิมพ์' , title: "รายงานสินค้า"}],
       "oLanguage": {
@@ -214,6 +215,7 @@
 
   $("#order").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
+      "ordering": false,
       "buttons": [
         { extend: 'print', key: 'p', text: 'พิมพ์' , title: "<center>รายงานการสั่งสินค้า</center>"}],
       "oLanguage": {
@@ -233,6 +235,7 @@
 
     $("#payment").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
+      "ordering": false,
       "buttons": [
         {   extend: 'print', 
             key: 'p', 

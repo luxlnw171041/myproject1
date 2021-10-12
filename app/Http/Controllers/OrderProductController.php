@@ -51,15 +51,18 @@ class OrderProductController extends Controller
     {
         
         $requestData = $request->all();
-        
+        $size = str_replace("." , "_" , $requestData['size']);
         // echo "<br>";
-        // echo $requestData['title'];
+        // echo $size;
+        // exit();
         $nameproduct = Product::where('title' , '=' , $requestData['title'])
-                        ->where('size' , '=' , $requestData['size'])
+                        ->where('size' , '=' , $size)
                         ->get();
         foreach ($nameproduct as $item){
             $requestData['product_id'] = $item->id;
         }
+        
+
 
         $requestData['total'] = $requestData['quantity'] * $requestData['price'];
         $requestData['total_cost'] = $requestData['quantity'] * $requestData['cost'];

@@ -13,8 +13,6 @@
 Route::get('/admin/user/{id}/edit', 'DashboardController@editadmin');
 Route::get('/', function () {
     return view('welcome');
-
-    
 });
 
 Route::get('/index', function () {

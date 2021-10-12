@@ -39,22 +39,29 @@
                 <table id="stock" class="table table-bordered table-striped">
                   <thead>
                     <tr class="text-center">
-                        <th>รหัสสินค้า</th> <th>รูปสินค้า</th> <th>ชื่อสินค้า</th><th>จำนวน</th><th>ราคา</th><th>ต้นทุน</th><th>เครื่องมือ</th>
+                        <th>รูปสินค้า</th> <th>ชื่อสินค้า</th> <th>ขนาด</th> <th>จำนวน</th> <th>ราคา</th><th>ต้นทุน</th><th>เครื่องมือ</th>
                     </tr>
                   </thead>
                     <tbody>
                         @foreach($product as $item)
                             <tr class="text-center">
-                                <td>{{ $item->id }}</td>
+                                
                                 <td class="text-center"><img width="164px" src="{{ url('storage/'.$item->photo )}}" alt="..." /></td>
                                 <td>{{ $item->title }} </td>
+
+                                @php 
+                                    $str_size = str_replace("_" , "." , $item->size);
+                                @endphp
+                                
+                                <td>{{ $str_size }}</td>  
                                 @if(($item->quantity < 5  &&  $item->quantity > 0))
-                                  <td style="background-color:#F1C40F;">{{ $item->quantity }}</td>  
-                                @elseif(($item->quantity === 0 ))
+                                  <td style="background-color:#F1C40F;">{{ $item->sum_quantity }}</td>  
+                                @elseif(($item->quantity == 0 ))
                                   <td style="background-color:#E92E2B;">{{ $item->quantity }}</td>   
                                 @else
                                   <td>{{ $item->quantity }}</td>  
                                 @endif
+                                
                                 <td>{{ $item->price }}</td>      
                                 <td>{{ $item->cost }}</td>  
                                 <td>

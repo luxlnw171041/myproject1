@@ -44,24 +44,23 @@
                   </thead>
                   <tbody>
                   @foreach($orderproduct as $item)   
-                    <tr>
-                        <th class="pl-0 border-0" scope="row">
-                            <!--  -->
-                            
-                            </div>
+                    <tr style="padding:0px">
+                        <th class="pl-0 border-0" scope="row" >
+                              <div class="media align-items-center"><a class="reset-anchor d-block animsition-link" href="detail.html"><img style="width: 100px;height: 120px;object-fit: contain;" src="{{ url('storage/'.$item->product->photo)}}" width="120" />
+                              <div class="media-body ml-3"><strong class="h6"><a class="reset-anchor animsition-link" href="detail.html"> <b class="text-dark">{{ $item->product->title }}</b> </a></strong></div>
                         </th>
                         <td class="align-middle border-0 text-center">
                             <p class="mb-0 small text-center"> {{ $item->size }} </p>
                         </td>
-                        <td class="align-middle border-0">
-                            <p class="mb-0 small">฿ {{ number_format($item->price) }}</p>
+                        <td class="align-middle border-0" style="padding:0px">
+                            <p class="mb-0 small text-center">฿ {{ number_format($item->price) }}</p>
                         </td>
                         <td class="align-middle border-0">
                             <p class="mb-0 small text-center">{{ $item->quantity }}   </p>
                         </td>
                         
-                        <td class="align-middle border-0">
-                            <p class="mb-0 small">฿ {{ number_format($item->total) }}</p>
+                        <td class="align-middle border-0" style="padding:0px">
+                            <p class="mb-0 small text-center">฿ {{ number_format($item->total) }}</p>
                         </td>
                         <td class="align-middle border-0">
                             <form method="POST" action="{{ url('/order-product' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
@@ -100,7 +99,7 @@
                                 <button class="btn btn-dark btn-sm btn-block" type="submit"> ชำระเงิน</button>
                             </form>
                         </div>
-                      </form>
+                      </form> 
                     </li>
                   </ul>
                 </div>

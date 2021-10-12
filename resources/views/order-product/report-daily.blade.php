@@ -63,8 +63,10 @@
                         <td> {{ $item->created_at->thaidate('l j F Y') }} <br> เวลา {{ $item->created_at->format('h:i') }}</td>
                         <td>{{ $item->order_id }}</td> 
                         <td>                                            
-                            <div><img src="{{ url('storage/'.$item->product->photo )}}" width="100" /> </div>                                            
-                            <div>{{ $item->product->title }}</div>
+                            @if(!empty($item->product->photo))
+                                <img src="{{ url('storage/'.$item->product->photo )}}" width="100" /> 
+                                <div>{{ $item->product->title }}</div>
+                            @endif         
                         </td>
                         <td>{{ $item->sum_quantity }} </td>
                         <td>{{ number_format($item->avg_price) }}</td>

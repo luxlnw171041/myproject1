@@ -26,7 +26,7 @@ class ProductController extends Controller
         $pricemax  = $request->get('pricemax');
         $pricemin  = $request->get('pricemin');
         $title  = $request->get('title');
-        $category_id  = $request->get('$category_id');
+        $category_id  = $request->get('category_id');
         $cost  = $request->get('cost');
 
         $category = Category::all(['id', 'category']);
@@ -35,22 +35,29 @@ class ProductController extends Controller
         $pricemin = empty($pricemin) ? 0 :$pricemin;
         $pricemax = empty($pricemax) ? 99000000 :$pricemax;
         
+ 
+
         $needFilter =  !empty($pricemax)    || !empty($pricemin) || !empty($title) || !empty($cost) || !empty($category_id);
 
         if ($needFilter) {
             $product = Product::where('title', 'LIKE', '%' .$title.'%')
                 ->where('cost',    'LIKE', '%' .$cost.'%')
-                ->where('cost',    'LIKE', '%' .$category_id.'%')
+                ->where('category_id',    'LIKE', '%' .$category_id.'%')
+                ->select(DB::raw('products.*, SUM(products.quantity) as sum_quantity'))
                 ->whereBetween('price', [$pricemin,$pricemax])
                 ->groupBy('title')
                 ->latest()->paginate($perPage);
         } else {
             $product = Product::groupBy('title')
+            ->select(DB::raw('products.*, SUM(products.quantity) as sum_quantity'))
             ->latest()->paginate($perPage);
             
             
         }
-
+        // echo "<pre>";
+        // print_r($product);
+        // echo "<pre>";
+        // exit();
         
         return view('product.index', compact('product' , 'category'));
     }
@@ -311,9 +318,12 @@ class ProductController extends Controller
         if (!empty($keyword)) {
             $product = Product::where('title', 'LIKE', "%$keyword%")
                 ->orWhere('cost', 'LIKE', "%$keyword%")
+                ->groupBy('title')
                 ->latest()->paginate($perPage);
         } else {
-            $product = Product::latest()->paginate($perPage);
+            $product = Product::groupBy('id')
+            ->select(DB::raw('products.*, SUM(products.quantity) as sum_quantity'))
+            ->latest()->paginate($perPage);
         }
 
         return view('product.stock', compact('product' ));

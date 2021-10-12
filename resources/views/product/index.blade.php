@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row">
+<!-- <div class="row">
             <a href="{{ route('print')}}" class="btn btn-sm btn-danger"> Print</a>
-        </div>
+        </div> -->
 
   <!-- Content Wrapper. Contains page content -->
     <!-- Main content -->
@@ -16,6 +16,9 @@
                             <div class="col-md-3 filter ">  
                                 <input class="form-control" type="text" name="title" id="title" placeholder="ชื่อสินค้า" value="{{ request('title') }}">
                             </div> 
+                            <!-- <div class="col-md-3 filter ">  
+                                <input class="form-control" type="text" name="category_id" id="category_id" placeholder="asd" value="{{ request('category_id') }}">
+                            </div>  -->
                             <div class="col-md-3 filter ">  
                                 <select class="form-control" onchange="location = this.options[this.selectedIndex].value;" >
                                     <option value="">เลือกหมวดหมู่</option>   
@@ -103,7 +106,7 @@
                                         <!-- Product name-->
                                         <h5 class="fw-bolder">
                                             <a href="{{ url('/product/' . $item->id) }}">
-                                                {{ $item->title }}  
+                                                {{ $item->title }} 
                                             </a>
                                         </h5 class="d-flex align-items-end">
                                         <!-- Product price-->
@@ -113,9 +116,9 @@
                                 </div>
                                 <!-- Product actions-->
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent" style="padding:0px">
-                                    
-                                    @if(!empty($item->quantity)>0)
-                                    <form method="POST" action="{{ url('/order-product') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                
+                                    @if(!empty($item->sum_quantity)>0)
+                                    <!-- <form method="POST" action="{{ url('/order-product') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                                         {{ csrf_field() }}
                                         <div class="text-center"><button type="submit" class="btn btn-outline-dark">เพิ่มไปยังรถเข็น</button></div>
                                         <input class="d-none" name="order_id" type="number" id="order_id" value="" >                                
@@ -126,7 +129,7 @@
                                         <input class="d-none" name="total" type="number" id="total" value="" >
                                         <input class="d-none" name="total" type="number" id="total_cost" value="" >
                                         <input class="d-none" name="cost" type="number" id="cost" value="{{ $item->cost }}" >
-                                    </form>
+                                    </form> -->
                                     @else
                                         <hr>
                                         &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red" class="text-center">สินค้าหมด!!</span>

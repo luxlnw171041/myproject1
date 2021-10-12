@@ -53,7 +53,6 @@
                             <!--td>{{ $item->remark }}</td-->
                             <td>฿{{ number_format($item->total) }}</td>
                             <td>
-                                
                                 @switch($item->status)
                                     @case("created") 
                                         <div>รอหลักฐานการชำระเงิน</div>
@@ -99,15 +98,15 @@
                                             <button class="btn btn-primary btn-sm" type="submit">ส่งเลข Tracking</button>       
                                         </form>
                                         @endif
-                                        @break
+                                    @break
                                     @case("completed") 
                                         <div>ส่งสินค้าแล้ว</div>
-                                        <div>เลขติดตามพัสดู</div>
+                                        <div>เลขติดตามพัสดุ</div>
                                         <div>{{ $item->tracking }}</div>
-                                        @break
+                                    @break
                                     @case("cancelled") 
                                         <div>ยกเลิกออร์เดอร์แล้ว</div>                                                    
-                                        @break
+                                    @break
                                 @endswitch
                             </td>
                             <td>
@@ -141,7 +140,7 @@
                             <!--td>{{ $item->checking_at }}</td><td>{{ $item->paid_at }}</td><td>{{ $item->cancelled_at }}</td><td>{{ $item->completed_at }}</td-->
                             <!--td>{{ $item->tracking }}</td-->
                         </tr>
-                        @endforeach
+                    @endforeach
                 </table>
               </div>
               <!-- /.card-body -->

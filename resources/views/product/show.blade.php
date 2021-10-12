@@ -18,7 +18,7 @@
             <!-- PRODUCT DETAILS-->
             <div class="col-lg-6">
               <h1 id="h1_title">{{ $product->title }}</h1>
-              <p class="text-small mb-4">{{ ($product->content) }}</p>
+              <!-- <p class="text-small mb-4">{{ ($product->content) }}</p> -->
               <p class="text-muted lead">฿{{ number_format($product->price) }} <br> 
                     @php
                         $category = $product->categorys;
@@ -36,31 +36,43 @@
                 </div> -->
 <hr>
                 
-                <div class="col-12">
+                <div class="col-md-12">
                     @for($i=0; $i < $amount_size; $i++) 
                         @php 
                             $str_size = str_replace("_" , "." , $all_size[$i]);
                         @endphp
-                        <button name="btnsize" id="btnsize_{{ $all_size[$i] }}" class="btn btn-secondary" onclick="colorbtnsize('{{ $all_size[$i] }}');">ขนาด {{ $str_size }}</button>
-                        <p>เหลือ {{ $amount_of_size[$i] }} </p>
-                        
+                        @if(!empty($amount_of_size[$i])>0)
+                            <button name="btnsize" id="btnsize_{{ $all_size[$i] }}" class="btn btn-outline-dark" onclick="colorbtnsize('{{ $all_size[$i] }}');">ขนาด {{ $str_size }}</button>
+                            <!-- <span>เหลือ {{ $amount_of_size[$i] }} </span> -->
+                        @else
+                            <button disabled name="btnsize" id="btnsize_{{ $all_size[$i] }}" class="btn btn-secondary" onclick="colorbtnsize('{{ $all_size[$i] }}');">ขนาด {{ $str_size }}</button>
+                        @endif
                     @endfor
+                    <br><br>
+                    <!-- จำนวน<input class="col-md-1" disabled="disabled" style="background: transparent;border: none;" name="size" type="float" id="size" value="" > -->
                 </div>
-                <form method="POST" action="{{ url('/order-product') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                                {{ csrf_field() }}
-                                <input class="d-none" name="title" type="text" id="title" value="{{ $product->title }}" > 
-                                <input class="d-none" name="order_id" type="number" id="order_id" value="" >                                                       
-                                <input class="d-none" name="user_id" type="number" id="user_id" value="" >   
-                                <input class="" name="size" type="float" id="size" value="" >         
-                                <input  name="quantity" type="number" id="quantity" value="1" >                                
-                                <input class="d-none" name="price" type="number" id="price" value="{{ $product->price }}" >                                
-                                <input class="d-none" name="total" type="number" id="total" value="" >
-                                <input class="d-none" name="total_cost" type="number" id="total_cost" value="" >
-                                <input class="d-none"  name="cost" type="number" id="cost" value="{{ $product->cost }}" >
-                                <button type="submit" class="btn btn-sm btn-dark" >
-                                <i class="fa fa-shopping-cart"></i> เพิ่มไปยังรถเข็น
-                                </button> &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:gray">มีสินค้า  ชิ้น</span> </button> 
-                            </form>
+                <br>
+                @if(!empty($sum)>0)
+                    <form method="POST" action="{{ url('/order-product') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <input class="d-none" name="title" type="text" id="title" value="{{ $product->title }}" > 
+                        <input class="d-none" name="order_id" type="number" id="order_id" value="" >                                                       
+                        <input class="d-none" name="user_id" type="number" id="user_id" value="" >   
+                        <input class="d-none" name="size" type="float" id="size" value="" >         
+                        <input  class="col-md-1" name="quantity" type="number" id="quantity" value="1" >                                
+                        <input class="d-none" name="price" type="number" id="price" value="{{ $product->price }}" >                                
+                        <input class="d-none" name="total" type="number" id="total" value="" >
+                        <input class="d-none" name="total_cost" type="number" id="total_cost" value="" >
+                        <input class="d-none"  name="cost" type="number" id="cost" value="{{ $product->cost }}" >
+                        <button type="submit" class="btn btn-sm btn-dark" >
+                        <i class="fa fa-shopping-cart"></i> เพิ่มไปยังรถเข็น
+                        </button> 
+                    </form>
+                @else
+                        <p style="color:red" class="d-flex justify-content-start">สินค้าหมด!!</p>
+                @endif
+                    
+                            
               <!-- <p class="text-small mb-4">{{ ($product->content) }}</p> -->
               <!-- <hr> -->
                 <!-- <div class="row  col-md-12">
@@ -287,7 +299,7 @@ $(document).ready(function(){
         let title = document.querySelector('#h1_title');
         
         let tag_btn_size = document.querySelector('#btnsize_'+ size).innerText;
-            let text_size = tag_btn_size.replace("ขนาด ", "");
+        let text_size = tag_btn_size.replace("ขนาด ", "");
 
         document.querySelector('#size').value = text_size;
 
@@ -297,17 +309,17 @@ $(document).ready(function(){
 
                 for(let item of result){
                     
-                    document.querySelector('#btnsize_'+ item.size).classList.remove('btn-primary');
+                    document.querySelector('#btnsize_'+ item.size).classList.remove('btn-dark');
 
                     let btn_color_class_2 = document.createAttribute("class");
-                        btn_color_class_2.value = "btn btn-secondary";
+                        btn_color_class_2.value = "btn btn-outline-dark";
 
                         document.querySelector('#btnsize_'+ item.size).setAttributeNode(btn_color_class_2);
 
                     let btncolor = document.querySelector('#btnsize_'+ size);
 
                     let btn_color_class = document.createAttribute("class");
-                        btn_color_class.value = "btn btn-primary";
+                        btn_color_class.value = "btn btn-dark";
 
                         btncolor.setAttributeNode(btn_color_class);
 

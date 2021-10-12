@@ -75,16 +75,17 @@ class PaymentController extends Controller
     {
         
         $requestData = $request->all();
+
         if ($request->hasFile('slip')) {
             $requestData['slip'] = $request->file('slip')
                 ->store('uploads', 'public');
         }
+
         Payment::create($requestData);
 
         Order::where('id',$requestData['order_id'])
             ->update([
                 'status'=>'checking',
-                'checking_at'=>date("Y-m-d H:i:s"), //timestamp ปัจจุบัน
             ]);
             
         return redirect('payment')->with('flash_message', 'Payment added!');
